@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpector", "MySpector\MySpector.csproj", "{516AD3DB-5255-4BBB-9422-F70A01B0545F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpector.UnitTest", "MySpector.UnitTest\MySpector.UnitTest.csproj", "{0A9EDC21-FF76-4579-9D43-0FCFD5D05320}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{516AD3DB-5255-4BBB-9422-F70A01B0545F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516AD3DB-5255-4BBB-9422-F70A01B0545F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516AD3DB-5255-4BBB-9422-F70A01B0545F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516AD3DB-5255-4BBB-9422-F70A01B0545F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A9EDC21-FF76-4579-9D43-0FCFD5D05320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9EDC21-FF76-4579-9D43-0FCFD5D05320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9EDC21-FF76-4579-9D43-0FCFD5D05320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9EDC21-FF76-4579-9D43-0FCFD5D05320}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8331F703-A19D-402C-B30E-9784FAC81A97}
+	EndGlobalSection
+EndGlobal
