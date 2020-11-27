@@ -1,11 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Data;
 
 namespace MySpector
 {
-    class Trox
+    public class Data
     {
+        public string Value { get; }
+        public Data(string value)
+        {
+            Value = value;
+        }
+    }
 
+    public class Trox
+    {
+        public Data ExtractData(Rump rump, Rule rule)
+        {
+            string value = "100";
+            var ret = new Data(value);
+            return ret;
+        }
     }
 }
