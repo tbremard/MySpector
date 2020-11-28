@@ -13,7 +13,7 @@ namespace MySpector.UnitTest
         }
 
         [TestCase("1189,99", TestSampleId.ZOTAC_EN72070V_GALAXUS)]
-       // [TestCase("329", TestSamples.PS4_MEDIAMARK)]
+        [TestCase("329.52", TestSampleId.PS4_MEDIAMARK)]
         public void ExtractData_WhenContentIsThere_ThenFound(string expected, TestSampleId sampleId)
         {
             var sample = TestSampleFactory.CreateSample(sampleId);

@@ -9,7 +9,6 @@
         {
             Rump = CreateLocalRump(rumpContent);
             Rule = CreateLocaleRule(rule);
-
         }
 
         private ITroxRule CreateLocaleRule(string rule)
@@ -23,6 +22,5 @@
             var ret = new Rump(content);
             return ret;
         }
-
     }
 }
