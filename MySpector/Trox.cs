@@ -2,7 +2,7 @@
 {
     public class Trox
     {
-        public Data ExtractData(Rump rump, ITroxRule rule)
+        public Data ExtractData(IRump rump, ITroxRule rule)
         {
             string value = rule.GetOutput(rump);
             var ret = new Data(value);

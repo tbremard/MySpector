@@ -10,7 +10,7 @@ namespace MySpector
             _xPath = xPath;
         }
 
-        public string GetOutput(Rump rump)
+        public string GetOutput(IRump rump)
         {
             var htmldoc = new HtmlDocument();
             htmldoc.LoadHtml(rump.Content);

@@ -2,6 +2,6 @@
 {
     public interface ITroxRule
     {
-        string GetOutput(Rump rump);
+        string GetOutput(IRump rump);
     }
 }

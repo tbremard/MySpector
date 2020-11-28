@@ -1,6 +1,7 @@
 ﻿namespace MySpector
 {
-    public class Rump
+
+    public class Rump : IRump
     {
         public string Content { get; }
         public Rump(string content)
