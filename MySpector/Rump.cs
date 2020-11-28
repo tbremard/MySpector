@@ -2,6 +2,11 @@
 {
     public class Rump
     {
-        public string Content;
+        public string Content { get; }
+        public Rump(string content)
+        {
+            Content = content;
+        }
+
     }
 }
