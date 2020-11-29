@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,10 +6,11 @@
 
   <ItemGroup>
     <None Remove="ps4pro_saturn.html" />
+    <None Remove="Zotac_Galaxus.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ps4pro_saturn.html">
+    <Content Include="samples_html\ps4pro_saturn.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -24,6 +25,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MySpector\MySpector.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="samples_html\Zotac_Galaxus.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

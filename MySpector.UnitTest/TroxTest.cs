@@ -13,9 +13,10 @@ namespace MySpector.UnitTest
         }
 
         [TestCase(TestSampleId.ZOTAC_EN72070V_GALAXUS)]
+        [TestCase(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE)]
         [TestCase(TestSampleId.PS4_SATURN)]
         [TestCase(TestSampleId.PS4_SATURN_FULL_PAGE)]
-        public void ExtractData_WhenContentIsThere_ThenFound(TestSampleId sampleId)
+        public void ExtractData_WhenXpathIsValidAndContentIsThere_ThenFound(TestSampleId sampleId)
         {
             var sample = TestSampleFactory.CreateSample(sampleId);
 
