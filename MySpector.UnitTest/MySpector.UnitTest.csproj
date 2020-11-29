@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ps4pro_saturn.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ps4pro_saturn.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />

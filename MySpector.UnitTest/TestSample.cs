@@ -4,11 +4,13 @@
     {
         public IRump Rump { get; }
         public ITroxRule Rule { get; }
+        public string ExpectedOutput { get; }
 
-        public TestSample(string rumpContent, string rule)
+        public TestSample(string rumpContent, string rule, string expectedOutput)
         {
             Rump = CreateLocalRump(rumpContent);
             Rule = CreateLocaleRule(rule);
+            ExpectedOutput = expectedOutput;
         }
 
         private ITroxRule CreateLocaleRule(string rule)

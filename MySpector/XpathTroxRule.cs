@@ -5,6 +5,8 @@ namespace MySpector
     public class XpathTroxRule : ITroxRule
     {
         private readonly string _xPath;
+        private string NOT_FOUND="NOT_FOUND";
+
         public XpathTroxRule(string xPath)
         {
             _xPath = xPath;
@@ -15,7 +17,15 @@ namespace MySpector
             var htmldoc = new HtmlDocument();
             htmldoc.LoadHtml(rump.Content);
             var node = htmldoc.DocumentNode.SelectSingleNode(_xPath);
-            string ret = node.InnerText.Trim();
+            string ret;
+            if (node == null)
+            {
+                ret = NOT_FOUND;
+            }
+            else
+            {
+                ret = node.InnerText.Trim();
+            }
             return ret;
         }
     }
