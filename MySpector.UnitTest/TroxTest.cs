@@ -5,11 +5,11 @@ namespace MySpector.UnitTest
     public class TroxTest
     {
         Trox _sut;
-
         [SetUp]
         public void Setup()
         {
             _sut = new Trox();
+            TestSampleFactory.Setup();
         }
 
         [TestCase(TestSampleId.ZOTAC_EN72070V_GALAXUS)]
@@ -22,6 +22,7 @@ namespace MySpector.UnitTest
 
             var data = _sut.ExtractData(sample.Rump, sample.Rule);
 
+            Assert.AreEqual(sample.ExpectedOutput, data.Value);
             Assert.AreEqual(sample.ExpectedOutput, data.Value);
         }
     }

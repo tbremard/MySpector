@@ -1,11 +1,26 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MySpector.UnitTest
 {
     internal class TestSampleFactory
     {
+        static Dictionary<TestSampleId, TestDescriptor> samples;
+
+        public static void Setup()
+        {
+            if (samples != null)
+            {
+                return;
+            }
+            samples = new Dictionary<TestSampleId, TestDescriptor>();
+            samples.Add(TestSampleId.PS4_SATURN, PS4_SATURN);
+            samples.Add(TestSampleId.PS4_SATURN_FULL_PAGE, PS4_SATURN_FULL_PAGE);
+            samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS, ZOTAC_EN72070V_GALAXUS);
+            samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE, ZOTAC_EN72070V_GALAXUS_FULL_PAGE);
+        }
+
         static TestDescriptor PS4_SATURN = new TestDescriptor()
         {
             Html = "<html><body>"+
@@ -40,14 +55,9 @@ namespace MySpector.UnitTest
         internal static TestSample CreateSample(TestSampleId sampleId)
         {
             TestSample ret;
-            var samples = new Dictionary<TestSampleId, TestDescriptor>();
-            samples.Add(TestSampleId.PS4_SATURN, PS4_SATURN);
-            samples.Add(TestSampleId.PS4_SATURN_FULL_PAGE, PS4_SATURN_FULL_PAGE);
-            samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS, ZOTAC_EN72070V_GALAXUS);
-            samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE, ZOTAC_EN72070V_GALAXUS_FULL_PAGE);
             if (!samples.ContainsKey(sampleId))
             {
-                throw new InvalidEnumArgumentException();
+                throw new ArgumentOutOfRangeException("Dictionnary do not contain this test");
             }
             TestDescriptor selected = samples[sampleId];
             ret = new TestSample(selected.Html, selected.Xpath, selected.ExpectedOutput);
