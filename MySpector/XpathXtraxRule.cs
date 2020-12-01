@@ -2,17 +2,17 @@
 
 namespace MySpector
 {
-    public class XpathTroxRule : ITroxRule
+    public class XpathXtraxRule : XtraxRule
     {
         private readonly string _xPath;
         private string NOT_FOUND="NOT_FOUND";
 
-        public XpathTroxRule(string xPath)
+        public XpathXtraxRule(string xPath)
         {
             _xPath = xPath;
         }
 
-        public string GetOutput(IRump rump)
+        protected override string GetOutput(IRump rump)
         {
             var htmldoc = new HtmlDocument();
             htmldoc.LoadHtml(rump.Content);

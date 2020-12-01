@@ -1,6 +1,6 @@
 ﻿namespace MySpector
 {
-    public class BeforeTroxRule : ITroxRule
+    public class BeforeTroxRule : XtraxRule
     {
         private readonly string _suffix;
 
@@ -9,12 +9,12 @@
             _suffix = suffix;
         }
 
-        public string GetOutput(IRump rump)
+        protected override string GetOutput(IRump rump)
         {
             string ret;
             if (!rump.Content.Contains(_suffix))
             {
-                ret = TroxRuleConst.NOT_FOUND;
+                ret = XtraxRuleConst.NOT_FOUND;
             }
             else
             {

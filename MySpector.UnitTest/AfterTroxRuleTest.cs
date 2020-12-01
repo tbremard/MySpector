@@ -12,12 +12,12 @@ namespace MySpector.UnitTest
         }
 
         [TestCase("50.25", "The Price of the item is:    50.25   ")]
-        [TestCase(TroxRuleConst.NOT_FOUND, "  xxxxxxxxx   ")]
-        public void ExtractData_WhenContentIsThere_ThenFound(string expectedOutput, string content)
+        [TestCase(XtraxRuleConst.NOT_FOUND, "  xxxxxxxxx   ")]
+        public void GetOutputChained_WhenContentIsThere_ThenFound(string expectedOutput, string content)
         {
             var rump = new Rump(content);
 
-            var data = _sut.GetOutput(rump);
+            var data = _sut.GetOutputChained(rump);
 
             Assert.AreEqual(expectedOutput, data);
         }

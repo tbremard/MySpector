@@ -3,7 +3,7 @@
     public class TestSample
     {
         public IRump Rump { get; }
-        public ITroxRule Rule { get; }
+        public XtraxRule Rule { get; }
         public string ExpectedOutput { get; }
 
         public TestSample(string rumpContent, string rule, string expectedOutput)
@@ -13,9 +13,9 @@
             ExpectedOutput = expectedOutput;
         }
 
-        private ITroxRule CreateLocaleRule(string rule)
+        private XtraxRule CreateLocaleRule(string rule)
         {
-            var ret = new XpathTroxRule(rule);
+            var ret = new XpathXtraxRule(rule);
             return ret;
         }
 

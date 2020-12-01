@@ -26,10 +26,37 @@ namespace MySpector.UnitTest
             Assert.AreEqual(sample.ExpectedOutput, data.Value);
         }
 
+        [Test]
         public void ExtractData_When2Rules_ThenFound()
         {
+            string Html = "<html><head></head><body><div class=\"Z2\"><strong class=\"Z9v\">The price of the item is: 1189,99 EUR</strong></div></body></html>";
+            string Xpath = "/html/body/div/strong";
+            var rump = new Rump(Html);
+            var rootRule = new XpathXtraxRule(Xpath);
+            var nextRule = new BetweenXtraxRule("is:", "EUR");
+            rootRule.SetNext(nextRule);
 
-            
+            var data = _sut.ExtractData(rump, rootRule);
+
+            string ExpectedOutput = "1189,99";
+            Assert.AreEqual(ExpectedOutput, data.Value);
+        }
+
+        [TestCase(1123.56, "1 1 2 3 , 5 6")]
+        [TestCase(1123.56, "1123,56")]
+        [TestCase(1123.56, "1.123,56")]
+        [TestCase(1123.56, "1,123.56")]
+        [TestCase(1123.56, "1123.56")]
+        [TestCase(123.56,  "123,56")]
+        [TestCase(0,  "")]
+        [TestCase(0,  null)]
+        [TestCase(0,  "a")]
+        public void TransformStringToNumber_WhenStringIsValid_ThenNumberIsValid(decimal expectedNumber, string textNumber)
+        {
+            var actual = _sut.TransformStringToNumber(textNumber);
+
+            Assert.AreEqual(expectedNumber, actual);
+
         }
     }
 }
