@@ -56,7 +56,28 @@ namespace MySpector.UnitTest
             var actual = _sut.TransformStringToNumber(textNumber);
 
             Assert.AreEqual(expectedNumber, actual);
+        }
 
+        [Test]
+        public void TransformStringToNumber_WhenStringIsVeryLongWithLotOfComa_ThenNumberIsValid()
+        {
+            string textNumber= "111,222,333,444,123.5698";
+
+            var actual = _sut.TransformStringToNumber(textNumber);
+
+            decimal expectedNumber = 111222333444123.5698m;
+            Assert.AreEqual(expectedNumber, actual);
+        }
+
+        [Test]
+        public void TransformStringToNumber_WhenStringIsVeryLongWithLotOfPoints_ThenNumberIsValid()
+        {
+            string textNumber = "111.222.333.444.123,5698";
+
+            var actual = _sut.TransformStringToNumber(textNumber);
+
+            decimal expectedNumber = 111222333444123.5698m;
+            Assert.AreEqual(expectedNumber, actual);
         }
     }
 }
