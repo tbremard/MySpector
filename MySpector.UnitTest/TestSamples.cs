@@ -19,6 +19,7 @@ namespace MySpector.UnitTest
             samples.Add(TestSampleId.PS4_SATURN_FULL_PAGE, PS4_SATURN_FULL_PAGE);
             samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS, ZOTAC_EN72070V_GALAXUS);
             samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE, ZOTAC_EN72070V_GALAXUS_FULL_PAGE);
+            samples.Add(TestSampleId.BDIY_FULL_PAGE, BDIY_FULL_PAGE);
         }
 
         static TestDescriptor PS4_SATURN = new TestDescriptor()
@@ -50,6 +51,13 @@ namespace MySpector.UnitTest
             Xpath = "/html/body/div[1]/div/div[2]/div[1]/main/div/div[2]/div/div[2]/div/div[1]/strong",
             Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721",
             ExpectedOutput = "1189,99"
+        };
+        private static TestDescriptor BDIY_FULL_PAGE = new TestDescriptor()
+        {
+            Html = File.ReadAllText("samples_html\\BDIY.html"),
+            Xpath = "/html/body/div[6]/div/div/section[2]/div[1]/div[2]/section[1]/section/section[2]/section/div[1]",
+            Url = "https://www.bloomberg.com/quote/BDIY:IND?sref=GKjIETf1",
+            ExpectedOutput = "1,227.00USD"
         };
 
         internal static TestSample CreateSample(TestSampleId sampleId)

@@ -8,13 +8,14 @@ namespace MySpector.UnitTest
         [SetUp]
         public void Setup()
         {
-            _sut = new BeforeTroxRule("EUR");
         }
 
-        [TestCase("50.25", "    50.25   EUR")]
-        [TestCase(TroxRuleConst.NOT_FOUND, "  xxxxxxxxx   ")]
-        public void ExtractData_WhenContentIsThere_ThenFound(string expectedOutput, string content)
+        [TestCase("50.25", "    50.25   EUR", "EUR")]
+        [TestCase("1,227.00", "1,227.00USD", "USD")]
+        [TestCase(TroxRuleConst.NOT_FOUND, "  xxxxxxxxx   ", "EUR")]
+        public void ExtractData_WhenContentIsThere_ThenFound(string expectedOutput, string content, string token)
         {
+            _sut = new BeforeTroxRule(token);
             var rump = new Rump(content);
 
             var data = _sut.GetOutput(rump);
@@ -22,5 +23,4 @@ namespace MySpector.UnitTest
             Assert.AreEqual(expectedOutput, data);
         }
     }
-
 }

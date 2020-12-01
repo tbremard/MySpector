@@ -16,6 +16,7 @@ namespace MySpector.UnitTest
         [TestCase(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE)]
         [TestCase(TestSampleId.PS4_SATURN)]
         [TestCase(TestSampleId.PS4_SATURN_FULL_PAGE)]
+        [TestCase(TestSampleId.BDIY_FULL_PAGE)]
         public void ExtractData_WhenXpathIsValidAndContentIsThere_ThenFound(TestSampleId sampleId)
         {
             var sample = TestSampleFactory.CreateSample(sampleId);
@@ -23,7 +24,12 @@ namespace MySpector.UnitTest
             var data = _sut.ExtractData(sample.Rump, sample.Rule);
 
             Assert.AreEqual(sample.ExpectedOutput, data.Value);
-            Assert.AreEqual(sample.ExpectedOutput, data.Value);
+        }
+
+        public void ExtractData_When2Rules_ThenFound()
+        {
+
+            
         }
     }
 }
