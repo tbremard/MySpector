@@ -1,10 +1,10 @@
 ﻿+Transformation: Replace(text, old, new) : DONE
 
 +Check : 
-textDoContain
-textDoNotContain
+textDoContain    : Done
+textDoNotContain : Done
 NumberIsGreater
-NumberIsLess
+NumberIsLesser   : Done
 NumberIsEqual
 
 +Notify
