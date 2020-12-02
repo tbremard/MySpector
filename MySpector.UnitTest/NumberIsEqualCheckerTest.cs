@@ -29,5 +29,4 @@ namespace MySpector.UnitTest
             Assert.AreEqual(expectedOutput, data);
         }
     }
-
 }

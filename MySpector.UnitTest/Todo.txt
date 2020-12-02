@@ -5,11 +5,12 @@ textDoContain    : Done
 textDoNotContain : Done
 NumberIsGreater
 NumberIsLesser   : Done
-NumberIsEqual
+NumberIsEqual    : Done
 
-+Notify
-mail
-twitter
++Notifier
+StubNotifier   : Done
+MailNotifier
+TwitterNotifier
 myApp
 call webservice
 
@@ -17,3 +18,9 @@ call webservice
 
 + Expose result via webservice
 + Expose Result by iframe
+
+
+
+problem:
+apply Chain on : Transform , notifier
+bool Check(); must take input from Transform

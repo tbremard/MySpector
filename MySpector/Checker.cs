@@ -2,7 +2,7 @@
 
 namespace MySpector
 {
-    interface IChecker
+    public interface IChecker
     {
         public bool Check();
     }
