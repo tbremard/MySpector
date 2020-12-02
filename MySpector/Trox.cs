@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace MySpector
 {
@@ -11,7 +12,7 @@ namespace MySpector
             return ret;
         }
 
-        public decimal TransformStringToNumber(string textNumber)
+        public decimal TransformTextToNumber(string textNumber)
         {
             decimal ret;
             if (string.IsNullOrEmpty(textNumber))
@@ -57,9 +58,25 @@ namespace MySpector
                 }
             }
             if (decimal.TryParse(textNumber, out ret))
+            {
                 return ret;
-
+            }
             return 0;
+        }
+
+        public string TransformTextReplace(string text, string oldToken, string newToken)
+        {
+            string ret;
+            if (string.IsNullOrEmpty(text))
+            { 
+                return string.Empty; 
+            }
+            if (string.IsNullOrEmpty(oldToken))
+            {
+                return text;
+            }
+            ret = text.Replace(oldToken, newToken);
+            return ret;
         }
     }
 }

@@ -51,19 +51,19 @@ namespace MySpector.UnitTest
         [TestCase(0,  "")]
         [TestCase(0,  null)]
         [TestCase(0,  "a")]
-        public void TransformStringToNumber_WhenStringIsValid_ThenNumberIsValid(decimal expectedNumber, string textNumber)
+        public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal expectedNumber, string textNumber)
         {
-            var actual = _sut.TransformStringToNumber(textNumber);
+            var actual = _sut.TransformTextToNumber(textNumber);
 
             Assert.AreEqual(expectedNumber, actual);
         }
 
         [Test]
-        public void TransformStringToNumber_WhenStringIsVeryLongWithLotOfComa_ThenNumberIsValid()
+        public void TransformTextToNumber_WhenStringIsVeryLongWithLotOfComa_ThenNumberIsValid()
         {
             string textNumber= "111,222,333,444,123.5698";
 
-            var actual = _sut.TransformStringToNumber(textNumber);
+            var actual = _sut.TransformTextToNumber(textNumber);
 
             decimal expectedNumber = 111222333444123.5698m;
             Assert.AreEqual(expectedNumber, actual);
@@ -74,10 +74,26 @@ namespace MySpector.UnitTest
         {
             string textNumber = "111.222.333.444.123,5698";
 
-            var actual = _sut.TransformStringToNumber(textNumber);
+            var actual = _sut.TransformTextToNumber(textNumber);
 
             decimal expectedNumber = 111222333444123.5698m;
             Assert.AreEqual(expectedNumber, actual);
         }
+
+        [TestCase("aaaaXaaaaa", "aaaaXaaaaa", "XX", "Y")]
+        [TestCase("aaaaYaaaaa", "aaaaXaaaaa", "X", "Y")]
+        [TestCase("aaaaYaaaaa", "aaaaXXaaaaa", "XX", "Y")]
+        [TestCase("YaaaaYaaaaaY", "XXaaaaXXaaaaaXX", "XX", "Y")]
+        [TestCase("", "", "", "")]
+        [TestCase("", "", null, null)]
+        [TestCase("aaa", "aaa", null, null)]
+        [TestCase("", null, null, null)]
+        public void TransformTextReplace_WhenStringIsValid_ThenOk(string expected, string text, string oldToken, string newToken)
+        {
+            var actual = _sut.TransformTextReplace(text, oldToken, newToken);
+
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }

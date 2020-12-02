@@ -1,0 +1,19 @@
+﻿+Transformation: Replace(text, old, new) : DONE
+
++Check : 
+textDoContain
+textDoNotContain
+NumberIsGreater
+NumberIsLess
+NumberIsEqual
+
++Notify
+mail
+twitter
+myApp
+call webservice
+
++Download html
+
++ Expose result via webservice
++ Expose Result by iframe
