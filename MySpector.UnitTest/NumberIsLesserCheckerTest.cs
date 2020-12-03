@@ -26,9 +26,10 @@ namespace MySpector.UnitTest
         [TestCase(false, -4, -5, true)]
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, int sample, int reference, bool orEqual)
         {
-            _sut = new NumberIsLesserChecker(sample, reference, orEqual);
+            _sut = new NumberIsLesserChecker(reference, orEqual);
+            var input = new InputData(null, new decimal(sample));
 
-            var data = _sut.Check();
+            var data = _sut.Check(input);
 
             Assert.AreEqual(expectedOutput, data);
         }

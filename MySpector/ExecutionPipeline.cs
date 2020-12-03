@@ -21,20 +21,20 @@ namespace MySpector
 
         public bool Process()
         {
-            bool ret = false;
+            bool ret;
             try
             {
                 var trox = new Trox();
                 var data = trox.ExtractData(_rump, _rule);
-                var number = trox.TransformTextToNumber(data.Value);
-                bool isSignaled = _checker.Check();// BUG : should take as input data
+                var dataNumber = trox.TransformTextToNumber(data);
+                bool isSignaled = _checker.Check(dataNumber);
                 if (isSignaled)
                 {
                     _notifier.Notify("Pipeline triggered alert");
                 }
                 ret = true;
             }
-            catch (Exception e)
+            catch
             {
                 ret = false;
             }

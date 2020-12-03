@@ -4,18 +4,23 @@ namespace MySpector
 {
     public class Trox
     {
-        public Data ExtractData(IRump rump, XtraxRule rule)
+        public InputData ExtractData(IRump rump, XtraxRule rule)
         {
             string value = rule.GetOutputChained(rump);
-            var ret = new Data(value);
+            var ret = new InputData(value);
             return ret;
         }
 
-        public decimal TransformTextToNumber(string textNumber)
+        public IInputData TransformTextToNumber(IInputData dataIn)
         {
+            IInputData dataOut;
+            string textNumber = dataIn.GetText();
             decimal ret;
             if (string.IsNullOrEmpty(textNumber))
-                return 0;
+            {
+                dataOut = new InputData(textNumber, null);
+                return dataOut;
+            }
             textNumber = textNumber.Replace(" ", null);
             var provider = new NumberFormatInfo();
             if (textNumber.Contains('.') && textNumber.Contains(','))
@@ -37,7 +42,10 @@ namespace MySpector
                     provider.CurrencyGroupSeparator = ".";
                 }
                 if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
-                    return ret;
+                {
+                    dataOut = new InputData(textNumber, ret);
+                    return dataOut;
+                }
             }
             else
             {
@@ -46,21 +54,29 @@ namespace MySpector
                     provider.NumberGroupSeparator = "";
                     provider.NumberDecimalSeparator = ",";
                     if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
-                        return ret;
+                    {
+                        dataOut = new InputData(textNumber, ret);
+                        return dataOut;
+                    }
                 }
                 if (textNumber.Contains('.'))
                 {
                     provider.NumberGroupSeparator = "";
                     provider.NumberDecimalSeparator = ".";
                     if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
-                        return ret;
+                    {
+                        dataOut = new InputData(textNumber, ret);
+                        return dataOut;
+                    }
                 }
             }
             if (decimal.TryParse(textNumber, out ret))
             {
-                return ret;
+                dataOut = new InputData(textNumber, ret);
+                return dataOut;
             }
-            return 0;
+            dataOut = new InputData(textNumber, null);
+            return dataOut;
         }
 
         public string TransformTextReplace(string text, string oldToken, string newToken)

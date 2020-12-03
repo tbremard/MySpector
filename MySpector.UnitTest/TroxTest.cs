@@ -23,7 +23,8 @@ namespace MySpector.UnitTest
 
             var data = _sut.ExtractData(sample.Rump, sample.Rule);
 
-            Assert.AreEqual(sample.ExpectedOutput, data.Value);
+            string actual = data.GetText();
+            Assert.AreEqual(sample.ExpectedOutput, actual);
         }
 
         [Test]
@@ -39,7 +40,8 @@ namespace MySpector.UnitTest
             var data = _sut.ExtractData(rump, rootRule);
 
             string ExpectedOutput = "1189,99";
-            Assert.AreEqual(ExpectedOutput, data.Value);
+            string actual = data.GetText();
+            Assert.AreEqual(ExpectedOutput, actual);
         }
 
         [TestCase(1123.56, "1 1 2 3 , 5 6")]
@@ -48,14 +50,16 @@ namespace MySpector.UnitTest
         [TestCase(1123.56, "1,123.56")]
         [TestCase(1123.56, "1123.56")]
         [TestCase(123.56,  "123,56")]
-        [TestCase(0,  "")]
-        [TestCase(0,  null)]
-        [TestCase(0,  "a")]
-        public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal expectedNumber, string textNumber)
+        [TestCase(null,  "")]
+        [TestCase(null,  null)]
+        [TestCase(null,  "a")]
+        public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal? expectedNumber, string textNumber)
         {
-            var actual = _sut.TransformTextToNumber(textNumber);
+            var actual = _sut.TransformTextToNumber(InputData.CreateText(textNumber));
 
-            Assert.AreEqual(expectedNumber, actual);
+            Assert.IsNotNull(actual);
+            decimal? actualNumber = actual.GetNumber();
+            Assert.AreEqual(expectedNumber, actualNumber);
         }
 
         [Test]
@@ -63,10 +67,12 @@ namespace MySpector.UnitTest
         {
             string textNumber= "111,222,333,444,123.5698";
 
-            var actual = _sut.TransformTextToNumber(textNumber);
+            var actual = _sut.TransformTextToNumber(InputData.CreateText(textNumber));
 
+            Assert.IsNotNull(actual);
+            decimal? actualNumber = actual.GetNumber();
             decimal expectedNumber = 111222333444123.5698m;
-            Assert.AreEqual(expectedNumber, actual);
+            Assert.AreEqual(expectedNumber, actualNumber);
         }
 
         [Test]
@@ -74,10 +80,12 @@ namespace MySpector.UnitTest
         {
             string textNumber = "111.222.333.444.123,5698";
 
-            var actual = _sut.TransformTextToNumber(textNumber);
+            var actual = _sut.TransformTextToNumber(InputData.CreateText(textNumber));
 
+            Assert.IsNotNull(actual);
+            decimal? actualNumber = actual.GetNumber();
             decimal expectedNumber = 111222333444123.5698m;
-            Assert.AreEqual(expectedNumber, actual);
+            Assert.AreEqual(expectedNumber, actualNumber);
         }
 
         [TestCase("aaaaXaaaaa", "aaaaXaaaaa", "XX", "Y")]

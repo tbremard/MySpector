@@ -17,9 +17,10 @@ namespace MySpector.UnitTest
         [TestCase(false, "zzzzzzzzzzzYYY", "yyy", false)]
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, string text, string token, bool ignoreCase)
         {
-            _sut = new TextDoContainChecker(text, token, ignoreCase);
+            _sut = new TextDoContainChecker(token, ignoreCase);
+            var inputText = InputData.CreateText(text);
 
-            var data = _sut.Check();
+            var data = _sut.Check(inputText);
 
             Assert.AreEqual(expectedOutput, data);
         }
@@ -40,9 +41,10 @@ namespace MySpector.UnitTest
         [TestCase(true, "zzzzzzzzzzzYYY", "yyy", false)]
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, string text, string token, bool ignoreCase)
         {
-            _sut = new TextDoNotContainChecker(text, token, ignoreCase);
+            _sut = new TextDoNotContainChecker(token, ignoreCase);
+            var inputText = InputData.CreateText(text);
 
-            var data = _sut.Check();
+            var data = _sut.Check(inputText);
 
             Assert.AreEqual(expectedOutput, data);
         }

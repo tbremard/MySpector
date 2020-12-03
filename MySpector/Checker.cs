@@ -2,9 +2,10 @@
 
 namespace MySpector
 {
+
     public interface IChecker
     {
-        public bool Check();
+        public bool Check(IInputData input);
     }
 
     public class TextDoContainChecker : IChecker
@@ -13,15 +14,15 @@ namespace MySpector
         string Token;
         bool IgnoreCase;
 
-        public TextDoContainChecker(string text, string token, bool ignoreCase)
+        public TextDoContainChecker(string token, bool ignoreCase)
         {
-            Text = text;
             Token = token;
             IgnoreCase = ignoreCase;
         }
 
-        public bool Check()
+        public bool Check(IInputData input)
         {
+            Text = input?.GetText();
             StringComparison comparisonType = IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
             bool ret = Text.Contains(Token, comparisonType);
             return ret;
@@ -34,46 +35,18 @@ namespace MySpector
         string Token;
         bool IgnoreCase;
 
-        public TextDoNotContainChecker(string text, string token, bool ignoreCase)
+        public TextDoNotContainChecker(string token, bool ignoreCase)
         {
-            Text = text;
             Token = token;
             IgnoreCase = ignoreCase;
         }
 
-        public bool Check()
+        public bool Check(IInputData input)
         {
+            Text = input?.GetText();
             StringComparison comparisonType = IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
             bool doContain = Text.Contains(Token, comparisonType);
             bool ret = !doContain;
-            return ret;
-        }
-    }
-
-    public class NumberIsLesserChecker : IChecker
-    {
-        decimal Sample;
-        decimal Reference;
-        bool OrEqual;
-
-        public NumberIsLesserChecker(decimal sample, decimal reference, bool orEqual)
-        {
-            Sample = sample;
-            Reference = reference;
-            OrEqual = orEqual;
-        }
-
-        public bool Check()
-        {
-            bool ret;
-            if (OrEqual)
-            {
-                ret = Sample <= Reference;
-            }
-            else
-            {
-                ret = Sample < Reference;
-            }
             return ret;
         }
     }

@@ -1,13 +1,15 @@
 ﻿namespace MySpector
 {
-    public class NumberIsEqualChecker : IChecker
+    public class NumberIsLesserChecker : IChecker
     {
         decimal Sample;
         decimal Reference;
+        bool OrEqual;
 
-        public NumberIsEqualChecker(decimal reference)
+        public NumberIsLesserChecker(decimal reference, bool orEqual)
         {
             Reference = reference;
+            OrEqual = orEqual;
         }
 
         public bool Check(IInputData input)
@@ -21,7 +23,14 @@
                 return false;
             }
             Sample = number.Value;
-            ret = Sample == Reference;
+            if (OrEqual)
+            {
+                ret = Sample <= Reference;
+            }
+            else
+            {
+                ret = Sample < Reference;
+            }
             return ret;
         }
     }
