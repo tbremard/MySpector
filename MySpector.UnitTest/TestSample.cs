@@ -2,13 +2,13 @@
 {
     public class TestSample
     {
-        public IRump Rump { get; }
+        public IInputData Data { get; }
         public XtraxRule Rule { get; }
         public string ExpectedOutput { get; }
 
         public TestSample(string rumpContent, string rule, string expectedOutput)
         {
-            Rump = CreateLocalRump(rumpContent);
+            Data = CreateLocalData(rumpContent);
             Rule = CreateLocaleRule(rule);
             ExpectedOutput = expectedOutput;
         }
@@ -19,9 +19,9 @@
             return ret;
         }
 
-        private Rump CreateLocalRump(string content)
+        private IInputData CreateLocalData(string content)
         {
-            var ret = new Rump(content);
+            var ret = InputData.CreateText(content);
             return ret;
         }
     }

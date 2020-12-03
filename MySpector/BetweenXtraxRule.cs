@@ -1,6 +1,5 @@
 ﻿namespace MySpector
 {
-
     public class BetweenXtraxRule : XtraxRule
     {
         private readonly XtraxRule _before;
@@ -12,16 +11,15 @@
             _before = new BeforeTroxRule(suffix);
         }
 
-        protected override string GetOutput(IRump rump)
+        protected override IInputData GetOutput(IInputData data)
         {
-            string ret;
-            string after = _after.GetOutputChained(rump);
-            if (after == XtraxRuleConst.NOT_FOUND)
+            IInputData ret;
+            var after = _after.GetOutputChained(data);
+            if (after.GetText() == XtraxRuleConst.NOT_FOUND)
             {
-                return XtraxRuleConst.NOT_FOUND;
+                return InputData.CreateText(XtraxRuleConst.NOT_FOUND);
             }
-            var tempRump = new Rump(after);
-            ret = _before.GetOutputChained(tempRump);
+            ret = _before.GetOutputChained(after);
             return ret;
         }
     }

@@ -4,13 +4,6 @@ namespace MySpector
 {
     public class Trox
     {
-        public InputData ExtractData(IRump rump, XtraxRule rule)
-        {
-            string value = rule.GetOutputChained(rump);
-            var ret = new InputData(value);
-            return ret;
-        }
-
         public IInputData TransformTextToNumber(IInputData dataIn)
         {
             IInputData dataOut;

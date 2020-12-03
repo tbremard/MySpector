@@ -4,15 +4,15 @@ namespace MySpector
 {
     public class ExecutionPipeline
     {
-        private IRump _rump;
+        private IInputData _data;
         private XtraxRule _rule;
         private object _transformer;
         private IChecker _checker;
         private INotifier _notifier;
 
-        public ExecutionPipeline(IRump rump, XtraxRule rule, object transformer, IChecker checker, INotifier notifier)
+        public ExecutionPipeline(IInputData data, XtraxRule rule, object transformer, IChecker checker, INotifier notifier)
         {
-            this._rump = rump;
+            this._data = data;
             this._rule = rule;
             this._transformer = transformer;
             this._checker = checker;
@@ -25,7 +25,7 @@ namespace MySpector
             try
             {
                 var trox = new Trox();
-                var data = trox.ExtractData(_rump, _rule);
+                var data = _rule.GetOutputChained(_data);
                 var dataNumber = trox.TransformTextToNumber(data);
                 bool isSignaled = _checker.Check(dataNumber);
                 if (isSignaled)

@@ -3,8 +3,9 @@ using NUnit.Framework;
 
 namespace MySpector.UnitTest
 {
-    public class ScenarioTest
+    public class ExecutionPipelineTest
     {
+
         [SetUp]
         public void Setup()
         {
@@ -12,15 +13,16 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        public void Process_WhenPriceIsBelowTarget_ThenCheckNotificationIsTriggered()
+        public void Process_WhenPriceIsEqualToTarget_ThenCheckNotificationIsTriggered()
         {
             var stubNotifier = Substitute.For<INotifier>();
             var sample = TestSampleFactory.CreateSample(TestSampleId.PS4_SATURN);
-            var checker = new NumberIsEqualChecker(329.52m);
+            const decimal TARGET_PRICE = 329.52m;
+            var checker = new NumberIsEqualChecker(TARGET_PRICE);
             object transformer = null;
-            var pipeline = new ExecutionPipeline(sample.Rump, sample.Rule, transformer, checker, stubNotifier);
+            var sut = new ExecutionPipeline(sample.Data, sample.Rule, transformer, checker, stubNotifier);
 
-            bool isOk = pipeline.Process();
+            bool isOk = sut.Process();
 
             Assert.IsTrue(isOk);
             stubNotifier.Received().Notify(Arg.Any<string>());

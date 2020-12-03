@@ -15,11 +15,11 @@ namespace MySpector.UnitTest
         [TestCase(XtraxRuleConst.NOT_FOUND, "  xxxxxxxxx   ")]
         public void GetOutputChained_WhenContentIsThere_ThenFound(string expectedOutput, string content)
         {
-            var rump = new Rump(content);
+            var rump = InputData.CreateText(content);
 
             var data = _sut.GetOutputChained(rump);
 
-            Assert.AreEqual(expectedOutput, data);
+            Assert.AreEqual(expectedOutput, data.GetText());
         }
     }
 }

@@ -19,8 +19,6 @@ call webservice
 + Expose result via webservice
 + Expose Result by iframe
 
-
-
 problem:
 apply Chain on : Transform , notifier
-bool Check(); must take input from Transform
+bool Check(); must take input from Transform : Done: created InputData

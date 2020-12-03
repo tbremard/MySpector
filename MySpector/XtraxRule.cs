@@ -2,7 +2,7 @@
 {
     public abstract class XtraxRule
     {
-        protected abstract string GetOutput(IRump rump);
+        protected abstract IInputData GetOutput(IInputData data);
         protected XtraxRule Next; // pointer to next action to perform
                                   // if null the current element is the last element of chain
         /// <summary>
@@ -18,12 +18,12 @@
             }
         }
 
-        public string GetOutputChained(IRump rump)
+        public IInputData GetOutputChained(IInputData data)
         {
-            string ret = GetOutput(rump);
+            IInputData ret = GetOutput(data);
             if (Next != null)
             {
-                var nextRump = new Rump(ret);
+                var nextRump = new InputData(ret.GetText());
                 ret = Next.GetOutputChained(nextRump);
             }
             return ret;

@@ -21,7 +21,7 @@ namespace MySpector.UnitTest
         {
             var sample = TestSampleFactory.CreateSample(sampleId);
 
-            var data = _sut.ExtractData(sample.Rump, sample.Rule);
+            var data = sample.Rule.GetOutputChained(sample.Data);
 
             string actual = data.GetText();
             Assert.AreEqual(sample.ExpectedOutput, actual);
@@ -32,12 +32,12 @@ namespace MySpector.UnitTest
         {
             string Html = "<html><head></head><body><div class=\"Z2\"><strong class=\"Z9v\">The price of the item is: 1189,99 EUR</strong></div></body></html>";
             string Xpath = "/html/body/div/strong";
-            var rump = new Rump(Html);
+            var rump = InputData.CreateText(Html);
             var rootRule = new XpathXtraxRule(Xpath);
             var nextRule = new BetweenXtraxRule("is:", "EUR");
             rootRule.SetNext(nextRule);
 
-            var data = _sut.ExtractData(rump, rootRule);
+            var data = rootRule.GetOutputChained(rump);
 
             string ExpectedOutput = "1189,99";
             string actual = data.GetText();

@@ -9,18 +9,19 @@
             _suffix = suffix;
         }
 
-        protected override string GetOutput(IRump rump)
+        protected override IInputData GetOutput(IInputData data)
         {
-            string ret;
-            if (!rump.Content.Contains(_suffix))
+            IInputData ret;
+            string content = data.GetText();
+            if (!content.Contains(_suffix))
             {
-                ret = XtraxRuleConst.NOT_FOUND;
+                ret = InputData.CreateText(XtraxRuleConst.NOT_FOUND);
             }
             else
             {
-                int index = rump.Content.IndexOf(_suffix);
-                string contentExtracted = rump.Content.Substring(0, index);
-                ret = contentExtracted.Trim();
+                int index = content.IndexOf(_suffix);
+                string contentExtracted = content.Substring(0, index);
+                ret = InputData.CreateText(contentExtracted.Trim());
             }
             return ret;
         }
