@@ -2,9 +2,9 @@
 
 namespace MySpector
 {
-    public class Trox
+    public class TextToNumberTransformer : ITransformer
     {
-        public IDataTruck TransformTextToNumber(IDataTruck dataIn)
+        public IDataTruck Transform(IDataTruck dataIn)
         {
             IDataTruck dataOut;
             string textNumber = dataIn.GetText();
@@ -72,19 +72,5 @@ namespace MySpector
             return dataOut;
         }
 
-        public string TransformTextReplace(string text, string oldToken, string newToken)
-        {
-            string ret;
-            if (string.IsNullOrEmpty(text))
-            { 
-                return string.Empty; 
-            }
-            if (string.IsNullOrEmpty(oldToken))
-            {
-                return text;
-            }
-            ret = text.Replace(oldToken, newToken);
-            return ret;
-        }
     }
 }

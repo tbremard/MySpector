@@ -19,7 +19,7 @@ namespace MySpector.UnitTest
             var sample = TestSampleFactory.CreateSample(TestSampleId.PS4_SATURN);
             const decimal TARGET_PRICE = 329.52m;
             var checker = new NumberIsEqualChecker(TARGET_PRICE);
-            object transformer = null;
+            var transformer = new TextToNumberTransformer();
             var sut = new ExecutionPipeline(sample.Data, sample.Rule, transformer, checker, stubNotifier);
 
             bool isOk = sut.Process();

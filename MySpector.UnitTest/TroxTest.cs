@@ -4,11 +4,9 @@ namespace MySpector.UnitTest
 {
     public class TroxTest
     {
-        Trox _sut;
         [SetUp]
         public void Setup()
         {
-            _sut = new Trox();
             TestSampleFactory.Setup();
         }
 
@@ -55,7 +53,9 @@ namespace MySpector.UnitTest
         [TestCase(null,  "a")]
         public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal? expectedNumber, string textNumber)
         {
-            var actual = _sut.TransformTextToNumber(DataTruck.CreateText(textNumber));
+            var _sut = new TextToNumberTransformer();
+
+            var actual = _sut.Transform(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -65,9 +65,10 @@ namespace MySpector.UnitTest
         [Test]
         public void TransformTextToNumber_WhenStringIsVeryLongWithLotOfComa_ThenNumberIsValid()
         {
-            string textNumber= "111,222,333,444,123.5698";
+            var _sut = new TextToNumberTransformer();
+            string textNumber = "111,222,333,444,123.5698";
 
-            var actual = _sut.TransformTextToNumber(DataTruck.CreateText(textNumber));
+            var actual = _sut.Transform(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -78,9 +79,10 @@ namespace MySpector.UnitTest
         [Test]
         public void TransformStringToNumber_WhenStringIsVeryLongWithLotOfPoints_ThenNumberIsValid()
         {
+            var _sut = new TextToNumberTransformer();
             string textNumber = "111.222.333.444.123,5698";
 
-            var actual = _sut.TransformTextToNumber(DataTruck.CreateText(textNumber));
+            var actual = _sut.Transform(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -98,9 +100,11 @@ namespace MySpector.UnitTest
         [TestCase("", null, null, null)]
         public void TransformTextReplace_WhenStringIsValid_ThenOk(string expected, string text, string oldToken, string newToken)
         {
-            var actual = _sut.TransformTextReplace(text, oldToken, newToken);
+            var _sut = new TextReplaceTransformer(oldToken, newToken);
 
-            Assert.AreEqual(expected, actual);
+            var actual = _sut.Transform(DataTruck.CreateText(text));
+
+            Assert.AreEqual(expected, actual.GetText());
         }
 
     }

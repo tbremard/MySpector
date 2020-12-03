@@ -6,17 +6,17 @@ namespace MySpector
     {
         private IDataTruck _data;
         private XtraxRule _rule;
-        private object _transformer;
+        private ITransformer _transformer;
         private IChecker _checker;
         private INotifier _notifier;
 
-        public ExecutionPipeline(IDataTruck data, XtraxRule rule, object transformer, IChecker checker, INotifier notifier)
+        public ExecutionPipeline(IDataTruck data, XtraxRule rule, ITransformer transformer, IChecker checker, INotifier notifier)
         {
-            this._data = data;
-            this._rule = rule;
-            this._transformer = transformer;
-            this._checker = checker;
-            this._notifier = notifier;
+            _data = data;
+            _rule = rule;
+            _transformer = transformer;
+            _checker = checker;
+            _notifier = notifier;
         }
 
         public bool Process()
@@ -24,9 +24,8 @@ namespace MySpector
             bool ret;
             try
             {
-                var trox = new Trox();
                 var data = _rule.GetOutputChained(_data);
-                var dataNumber = trox.TransformTextToNumber(data);
+                var dataNumber = _transformer.Transform(data);
                 bool isSignaled = _checker.Check(dataNumber);
                 if (isSignaled)
                 {
