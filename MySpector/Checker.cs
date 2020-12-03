@@ -5,7 +5,7 @@ namespace MySpector
 
     public interface IChecker
     {
-        public bool Check(IInputData input);
+        public bool Check(IDataTruck input);
     }
 
     public class TextDoContainChecker : IChecker
@@ -20,7 +20,7 @@ namespace MySpector
             IgnoreCase = ignoreCase;
         }
 
-        public bool Check(IInputData input)
+        public bool Check(IDataTruck input)
         {
             Text = input?.GetText();
             StringComparison comparisonType = IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
@@ -41,7 +41,7 @@ namespace MySpector
             IgnoreCase = ignoreCase;
         }
 
-        public bool Check(IInputData input)
+        public bool Check(IDataTruck input)
         {
             Text = input?.GetText();
             StringComparison comparisonType = IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;

@@ -4,14 +4,14 @@ namespace MySpector
 {
     public class Trox
     {
-        public IInputData TransformTextToNumber(IInputData dataIn)
+        public IDataTruck TransformTextToNumber(IDataTruck dataIn)
         {
-            IInputData dataOut;
+            IDataTruck dataOut;
             string textNumber = dataIn.GetText();
             decimal ret;
             if (string.IsNullOrEmpty(textNumber))
             {
-                dataOut = new InputData(textNumber, null);
+                dataOut = new DataTruck(textNumber, null);
                 return dataOut;
             }
             textNumber = textNumber.Replace(" ", null);
@@ -36,7 +36,7 @@ namespace MySpector
                 }
                 if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
                 {
-                    dataOut = new InputData(textNumber, ret);
+                    dataOut = new DataTruck(textNumber, ret);
                     return dataOut;
                 }
             }
@@ -48,7 +48,7 @@ namespace MySpector
                     provider.NumberDecimalSeparator = ",";
                     if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
                     {
-                        dataOut = new InputData(textNumber, ret);
+                        dataOut = new DataTruck(textNumber, ret);
                         return dataOut;
                     }
                 }
@@ -58,17 +58,17 @@ namespace MySpector
                     provider.NumberDecimalSeparator = ".";
                     if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
                     {
-                        dataOut = new InputData(textNumber, ret);
+                        dataOut = new DataTruck(textNumber, ret);
                         return dataOut;
                     }
                 }
             }
             if (decimal.TryParse(textNumber, out ret))
             {
-                dataOut = new InputData(textNumber, ret);
+                dataOut = new DataTruck(textNumber, ret);
                 return dataOut;
             }
-            dataOut = new InputData(textNumber, null);
+            dataOut = new DataTruck(textNumber, null);
             return dataOut;
         }
 

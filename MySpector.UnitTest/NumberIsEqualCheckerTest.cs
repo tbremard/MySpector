@@ -23,7 +23,7 @@ namespace MySpector.UnitTest
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, double sample, double reference)
         {
             _sut = new NumberIsEqualChecker(new decimal(reference));
-            var input = new InputData(null, new decimal(sample));
+            var input = new DataTruck(null, new decimal(sample));
 
             var data = _sut.Check(input);
 

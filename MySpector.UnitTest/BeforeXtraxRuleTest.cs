@@ -16,7 +16,7 @@ namespace MySpector.UnitTest
         public void GetOutputChained_WhenContentIsThere_ThenFound(string expectedOutput, string content, string token)
         {
             _sut = new BeforeTroxRule(token);
-            var rump = InputData.CreateText(content);
+            var rump = DataTruck.CreateText(content);
 
             var data = _sut.GetOutputChained(rump);
 

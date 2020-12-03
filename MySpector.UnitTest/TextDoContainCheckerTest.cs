@@ -18,7 +18,7 @@ namespace MySpector.UnitTest
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, string text, string token, bool ignoreCase)
         {
             _sut = new TextDoContainChecker(token, ignoreCase);
-            var inputText = InputData.CreateText(text);
+            var inputText = DataTruck.CreateText(text);
 
             var data = _sut.Check(inputText);
 
@@ -42,7 +42,7 @@ namespace MySpector.UnitTest
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, string text, string token, bool ignoreCase)
         {
             _sut = new TextDoNotContainChecker(token, ignoreCase);
-            var inputText = InputData.CreateText(text);
+            var inputText = DataTruck.CreateText(text);
 
             var data = _sut.Check(inputText);
 

@@ -2,7 +2,7 @@
 {
     public class TestSample
     {
-        public IInputData Data { get; }
+        public IDataTruck Data { get; }
         public XtraxRule Rule { get; }
         public string ExpectedOutput { get; }
 
@@ -19,9 +19,9 @@
             return ret;
         }
 
-        private IInputData CreateLocalData(string content)
+        private IDataTruck CreateLocalData(string content)
         {
-            var ret = InputData.CreateText(content);
+            var ret = DataTruck.CreateText(content);
             return ret;
         }
     }

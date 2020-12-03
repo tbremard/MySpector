@@ -1,23 +1,23 @@
 ﻿namespace MySpector
 {
-    public interface IInputData
+    public interface IDataTruck
     {
         public string GetText();
         public decimal? GetNumber();
     }
 
-    public class InputData : IInputData
+    public class DataTruck : IDataTruck
     {
         decimal? _number;
         string _text;
 
-        public InputData(string text, decimal? number)
+        public DataTruck(string text, decimal? number)
         {
             _text = text;
             _number = number;
         }
 
-        public InputData(string text)
+        public DataTruck(string text)
         {
             _text = text;
             _number = null;
@@ -33,9 +33,9 @@
             return _text;
         }
 
-        public static IInputData CreateText(string text)
+        public static IDataTruck CreateText(string text)
         {
-            IInputData ret = new InputData(text);
+            IDataTruck ret = new DataTruck(text);
             return ret;
         }
     }

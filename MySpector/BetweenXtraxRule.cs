@@ -11,13 +11,13 @@
             _before = new BeforeTroxRule(suffix);
         }
 
-        protected override IInputData GetOutput(IInputData data)
+        protected override IDataTruck GetOutput(IDataTruck data)
         {
-            IInputData ret;
+            IDataTruck ret;
             var after = _after.GetOutputChained(data);
             if (after.GetText() == XtraxRuleConst.NOT_FOUND)
             {
-                return InputData.CreateText(XtraxRuleConst.NOT_FOUND);
+                return DataTruck.CreateText(XtraxRuleConst.NOT_FOUND);
             }
             ret = _before.GetOutputChained(after);
             return ret;

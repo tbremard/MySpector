@@ -12,7 +12,7 @@
             OrEqual = orEqual;
         }
 
-        public bool Check(IInputData input)
+        public bool Check(IDataTruck input)
         {
             bool ret;
             if (input == null)

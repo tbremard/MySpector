@@ -12,19 +12,19 @@ namespace MySpector
             _xPath = xPath;
         }
 
-        protected override IInputData GetOutput(IInputData data)
+        protected override IDataTruck GetOutput(IDataTruck data)
         {
             var htmldoc = new HtmlDocument();
             htmldoc.LoadHtml(data.GetText());
             var node = htmldoc.DocumentNode.SelectSingleNode(_xPath);
-            IInputData ret;
+            IDataTruck ret;
             if (node == null)
             {
-                ret = InputData.CreateText(NOT_FOUND);
+                ret = DataTruck.CreateText(NOT_FOUND);
             }
             else
             {
-                ret = InputData.CreateText(node.InnerText.Trim());
+                ret = DataTruck.CreateText(node.InnerText.Trim());
             }
             return ret;
         }

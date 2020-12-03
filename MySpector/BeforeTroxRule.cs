@@ -9,19 +9,19 @@
             _suffix = suffix;
         }
 
-        protected override IInputData GetOutput(IInputData data)
+        protected override IDataTruck GetOutput(IDataTruck data)
         {
-            IInputData ret;
+            IDataTruck ret;
             string content = data.GetText();
             if (!content.Contains(_suffix))
             {
-                ret = InputData.CreateText(XtraxRuleConst.NOT_FOUND);
+                ret = DataTruck.CreateText(XtraxRuleConst.NOT_FOUND);
             }
             else
             {
                 int index = content.IndexOf(_suffix);
                 string contentExtracted = content.Substring(0, index);
-                ret = InputData.CreateText(contentExtracted.Trim());
+                ret = DataTruck.CreateText(contentExtracted.Trim());
             }
             return ret;
         }

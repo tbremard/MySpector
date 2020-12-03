@@ -4,13 +4,13 @@ namespace MySpector
 {
     public class ExecutionPipeline
     {
-        private IInputData _data;
+        private IDataTruck _data;
         private XtraxRule _rule;
         private object _transformer;
         private IChecker _checker;
         private INotifier _notifier;
 
-        public ExecutionPipeline(IInputData data, XtraxRule rule, object transformer, IChecker checker, INotifier notifier)
+        public ExecutionPipeline(IDataTruck data, XtraxRule rule, object transformer, IChecker checker, INotifier notifier)
         {
             this._data = data;
             this._rule = rule;

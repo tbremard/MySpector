@@ -32,7 +32,7 @@ namespace MySpector.UnitTest
         {
             string Html = "<html><head></head><body><div class=\"Z2\"><strong class=\"Z9v\">The price of the item is: 1189,99 EUR</strong></div></body></html>";
             string Xpath = "/html/body/div/strong";
-            var rump = InputData.CreateText(Html);
+            var rump = DataTruck.CreateText(Html);
             var rootRule = new XpathXtraxRule(Xpath);
             var nextRule = new BetweenXtraxRule("is:", "EUR");
             rootRule.SetNext(nextRule);
@@ -55,7 +55,7 @@ namespace MySpector.UnitTest
         [TestCase(null,  "a")]
         public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal? expectedNumber, string textNumber)
         {
-            var actual = _sut.TransformTextToNumber(InputData.CreateText(textNumber));
+            var actual = _sut.TransformTextToNumber(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -67,7 +67,7 @@ namespace MySpector.UnitTest
         {
             string textNumber= "111,222,333,444,123.5698";
 
-            var actual = _sut.TransformTextToNumber(InputData.CreateText(textNumber));
+            var actual = _sut.TransformTextToNumber(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -80,7 +80,7 @@ namespace MySpector.UnitTest
         {
             string textNumber = "111.222.333.444.123,5698";
 
-            var actual = _sut.TransformTextToNumber(InputData.CreateText(textNumber));
+            var actual = _sut.TransformTextToNumber(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
