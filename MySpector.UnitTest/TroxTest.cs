@@ -15,7 +15,7 @@ namespace MySpector.UnitTest
         [TestCase(TestSampleId.PS4_SATURN)]
         [TestCase(TestSampleId.PS4_SATURN_FULL_PAGE)]
         [TestCase(TestSampleId.BDIY_FULL_PAGE)]
-        public void ExtractData_WhenXpathIsValidAndContentIsThere_ThenFound(TestSampleId sampleId)
+        public void GetOutputChained_WhenXpathIsValidAndContentIsThere_ThenFound(TestSampleId sampleId)
         {
             var sample = TestSampleFactory.CreateSample(sampleId);
 
@@ -25,22 +25,6 @@ namespace MySpector.UnitTest
             Assert.AreEqual(sample.ExpectedOutput, actual);
         }
 
-        [Test]
-        public void ExtractData_When2Rules_ThenFound()
-        {
-            string Html = "<html><head></head><body><div class=\"Z2\"><strong class=\"Z9v\">The price of the item is: 1189,99 EUR</strong></div></body></html>";
-            string Xpath = "/html/body/div/strong";
-            var rump = DataTruck.CreateText(Html);
-            var rootRule = new XpathXtraxRule(Xpath);
-            var nextRule = new BetweenXtraxRule("is:", "EUR");
-            rootRule.SetNext(nextRule);
-
-            var data = rootRule.GetOutputChained(rump);
-
-            string ExpectedOutput = "1189,99";
-            string actual = data.GetText();
-            Assert.AreEqual(ExpectedOutput, actual);
-        }
 
         [TestCase(1123.56, "1 1 2 3 , 5 6")]
         [TestCase(1123.56, "1123,56")]

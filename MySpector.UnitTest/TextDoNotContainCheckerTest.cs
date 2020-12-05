@@ -2,22 +2,22 @@
 
 namespace MySpector.UnitTest
 {
-    public class TextDoContainCheckerTest
+    public class TextDoNotContainCheckerTest
     {
-        TextDoContainChecker _sut;
+        TextDoNotContainChecker _sut;
         [SetUp]
         public void Setup()
         {
-            
+
         }
 
-        [TestCase(false, "zzzzzzzzzzzzzz", "yyy", true)]
-        [TestCase(true,  "zzzyyyzzzzzzzz", "yyy", true)]
-        [TestCase(true,  "zzzzzzzzzzzyyy", "yyy", true)]
-        [TestCase(false, "zzzzzzzzzzzYYY", "yyy", false)]
+        [TestCase(true, "zzzzzzzzzzzzzz", "yyy", true)]
+        [TestCase(false, "zzzyyyzzzzzzzz", "yyy", true)]
+        [TestCase(false, "zzzzzzzzzzzyyy", "yyy", true)]
+        [TestCase(true, "zzzzzzzzzzzYYY", "yyy", false)]
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, string text, string token, bool ignoreCase)
         {
-            _sut = new TextDoContainChecker(token, ignoreCase);
+            _sut = new TextDoNotContainChecker(token, ignoreCase);
             var inputText = DataTruck.CreateText(text);
 
             var data = _sut.Check(inputText);

@@ -8,7 +8,7 @@
         public BetweenXtraxRule(string prefix, string suffix)
         {
             _after = new AfterTroxRule(prefix);
-            _before = new BeforeTroxRule(suffix);
+            _before = new BeforeXtraxRule(suffix);
         }
 
         protected override IDataTruck GetOutput(IDataTruck data)

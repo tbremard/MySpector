@@ -9,16 +9,16 @@ NumberIsEqual    : Done
 
 +Notifier
 StubNotifier   : Done
-MailNotifier
+MailNotifier      ------------ 3
 TwitterNotifier
 myApp
 call webservice
 
-+Download html
-
++ Download html  -------------1
++ Daily analysis on 5 targets --------2
 + Expose result via webservice
 + Expose Result by iframe
 
 problem:
 apply Chain on : Transform , notifier
-bool Check(); must take input from Transform : Done: created InputData
+bool Check(); must take input from Transform : Done: created DataTruck

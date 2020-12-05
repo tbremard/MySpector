@@ -45,7 +45,7 @@ namespace MySpector.UnitTest
             Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721",
             ExpectedOutput = "1189,99"
         };
-        static TestDescriptor ZOTAC_EN72070V_GALAXUS_FULL_PAGE = new TestDescriptor()
+        public static TestDescriptor ZOTAC_EN72070V_GALAXUS_FULL_PAGE = new TestDescriptor()
         {
             Html = File.ReadAllText("samples_html\\Zotac_Galaxus.html"),
             Xpath = "/html/body/div[1]/div/div[2]/div[1]/main/div/div[2]/div/div[2]/div/div[1]/strong",

@@ -1,10 +1,10 @@
 ﻿namespace MySpector
 {
-    public class BeforeTroxRule : XtraxRule
+    public class BeforeXtraxRule: XtraxRule
     {
         private readonly string _suffix;
 
-        public BeforeTroxRule(string suffix)
+        public BeforeXtraxRule(string suffix)
         {
             _suffix = suffix;
         }
@@ -26,5 +26,4 @@
             return ret;
         }
     }
-
 }
