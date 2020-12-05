@@ -1,4 +1,6 @@
-﻿namespace MySpector
+﻿using MySpector.Core;
+
+namespace MySpector
 {
     public class BetweenXtraxRule : XtraxRule
     {

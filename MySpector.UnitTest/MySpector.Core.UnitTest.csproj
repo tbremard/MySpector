@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MySpector\MySpector.csproj" />
+    <ProjectReference Include="..\MySpector\MySpector.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

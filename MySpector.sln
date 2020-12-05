@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpector", "MySpector\MySpector.csproj", "{516AD3DB-5255-4BBB-9422-F70A01B0545F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpector.Core", "MySpector\MySpector.Core.csproj", "{516AD3DB-5255-4BBB-9422-F70A01B0545F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpector.UnitTest", "MySpector.UnitTest\MySpector.UnitTest.csproj", "{0A9EDC21-FF76-4579-9D43-0FCFD5D05320}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpector.Core.UnitTest", "MySpector.UnitTest\MySpector.Core.UnitTest.csproj", "{0A9EDC21-FF76-4579-9D43-0FCFD5D05320}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

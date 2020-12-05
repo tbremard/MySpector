@@ -1,4 +1,4 @@
-﻿namespace MySpector
+﻿namespace MySpector.Core
 {
     public class AfterTroxRule : XtraxRule
     {
