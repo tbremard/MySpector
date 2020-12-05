@@ -1,13 +1,7 @@
 ﻿using System.Net.Http;
-using System.Net;
 
 namespace MySpector
 {
-    public class HttpResponse
-    {
-        public HttpStatusCode HttpResponseCode;
-        public string Content;
-    }
 
     public class Downloader
     {
@@ -15,10 +9,15 @@ namespace MySpector
         {
         }
 
-        public HttpResponse HttpRequest(HttpTarget httpTarget)
+        public static Downloader Create()
+        {
+            return new Downloader();
+        }
+
+        public HttpResponse HttpRequest(HttpTarget target)
         {
             var client = new HttpClient();
-            var myGetTask = client.GetAsync(httpTarget.Uri);
+            var myGetTask = client.GetAsync(target.Uri);
             var response = myGetTask.Result;
             var ret = new HttpResponse();
             ret.HttpResponseCode = response.StatusCode;

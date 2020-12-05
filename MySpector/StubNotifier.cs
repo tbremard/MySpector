@@ -9,5 +9,4 @@ namespace MySpector
             Console.WriteLine("Notification: "+message);
         }
     }
-
 }

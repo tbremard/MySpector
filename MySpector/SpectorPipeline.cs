@@ -19,17 +19,19 @@
 
         public bool Process()
         {
-            bool ret;
+            bool ret = false;
             try
             {
                 var data = _rule.GetOutputChained(_data);
+                if (data.GetText() == XtraxRuleConst.NOT_FOUND)
+                    return false;
                 var dataNumber = _transformer.Transform(data);
                 bool isSignaled = _checker.Check(dataNumber);
                 if (isSignaled)
                 {
                     _notifier.Notify("Pipeline triggered alert");
+                    ret = true;
                 }
-                ret = true;
             }
             catch
             {
