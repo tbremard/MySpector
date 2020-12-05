@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace MySpector
+﻿namespace MySpector
 {
-    public class ExecutionPipeline
+    public class SpectorPipeline
     {
         private IDataTruck _data;
         private XtraxRule _rule;
@@ -10,7 +8,7 @@ namespace MySpector
         private IChecker _checker;
         private INotifier _notifier;
 
-        public ExecutionPipeline(IDataTruck data, XtraxRule rule, ITransformer transformer, IChecker checker, INotifier notifier)
+        public SpectorPipeline(IDataTruck data, XtraxRule rule, ITransformer transformer, IChecker checker, INotifier notifier)
         {
             _data = data;
             _rule = rule;

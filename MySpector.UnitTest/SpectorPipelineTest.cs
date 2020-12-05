@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace MySpector.UnitTest
 {
-    public class ExecutionPipelineTest
+    public class SpectorPipelineTest
     {
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace MySpector.UnitTest
             const decimal TARGET_PRICE = 329.52m;
             var checker = new NumberIsEqualChecker(TARGET_PRICE);
             var transformer = new TextToNumberTransformer();
-            var sut = new ExecutionPipeline(sample.Data, sample.Rule, transformer, checker, stubNotifier);
+            var sut = new SpectorPipeline(sample.Data, sample.Rule, transformer, checker, stubNotifier);
 
             bool isOk = sut.Process();
 
