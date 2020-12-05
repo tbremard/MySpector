@@ -9,13 +9,13 @@ namespace MySpector
         public string Content;
     }
 
-    public class FileScraper
+    public class Downloader
     {
-        public FileScraper()
+        public Downloader()
         {
         }
 
-        public HttpResponse HttpDownload(HttpTarget httpTarget)
+        public HttpResponse HttpRequest(HttpTarget httpTarget)
         {
             var client = new HttpClient();
             var myGetTask = client.GetAsync(httpTarget.Uri);
