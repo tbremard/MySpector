@@ -21,5 +21,16 @@ namespace MySpector.UnitTest
 
             Assert.AreEqual(HttpStatusCode.OK, data.HttpResponseCode);
         }
+
+        [Test]
+        public void HttpRequest_WenServerSpotRobot_ThenOk()
+        {
+            System.Console.WriteLine("xxxxxxxxxxxxx");
+            var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url);
+
+            var data = _sut.HttpRequest(httpTarget);
+
+            Assert.AreEqual(HttpStatusCode.OK, data.HttpResponseCode);
+        }
     }
 }

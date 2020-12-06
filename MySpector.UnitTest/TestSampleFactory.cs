@@ -31,7 +31,7 @@ namespace MySpector.UnitTest
             Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html",
             ExpectedOutput = "329.52"
         };
-        static TestDescriptor PS4_SATURN_FULL_PAGE = new TestDescriptor()
+        public static TestDescriptor PS4_SATURN_FULL_PAGE = new TestDescriptor()
         {
             Html = File.ReadAllText("samples_html\\ps4pro_saturn.html"),
             Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]",
