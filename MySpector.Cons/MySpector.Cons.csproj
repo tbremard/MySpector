@@ -6,7 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MySpector\MySpector.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

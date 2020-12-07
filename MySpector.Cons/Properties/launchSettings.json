@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MySpector.Cons": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

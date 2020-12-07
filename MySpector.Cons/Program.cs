@@ -3,11 +3,13 @@ using System.Net;
 using System.IO;
 using System.Collections.Generic;
 using MySpector.Core;
+using NLog;
 
 namespace MySpector.Cons
 {
     class Program
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
         static Random random;
         const string BDI_XPath = "/html/body/div[6]/div/div/section[2]/div[1]/div[2]/section[1]/section/section[2]/section/div[1]/span[1]";
         const string BDI_URL = "https://www.bloomberg.com/quote/BDIY:IND?sref=GKjIETf1";
@@ -19,13 +21,14 @@ namespace MySpector.Cons
         static IList<WatchItem> CreateWatchList()
         {
             var ret = new List<WatchItem>();
-            ret.Add(new WatchItem() {Name= "Galaxus: Zotac 72070 ",  Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721", Xpath = "/html/body/div[1]/div/div[2]/div[1]/main/div/div[2]/div/div[2]/div/div[1]/strong" });
+          //  ret.Add(new WatchItem() {Name= "Galaxus: Zotac 72070 ",  Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721", Xpath = "/html/body/div[1]/div/div[2]/div[1]/main/div/div[2]/div/div[2]/div/div[1]/strong" });
             ret.Add(new WatchItem() { Name = "Saturn: PS4 Pro ", Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html", Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]" });
             return ret;
         }
 
         static void Main(string[] args)
         {
+            _log.Debug("starting...");
             random = new Random((int)DateTime.Now.Ticks);
             var watchList = CreateWatchList();
             foreach (var item in watchList)
@@ -38,8 +41,8 @@ namespace MySpector.Cons
 
         private static void Process(WatchItem item)
         {
-            Console.WriteLine($"--------------------");
-            Console.WriteLine($"Process: {item.Name}");
+            _log.Debug($"--------------------");
+            _log.Debug($"Process: {item.Name}");
             HttpTarget target = HttpTarget.Create(item.Url);
             var downloader = Downloader.Create();
             var response = downloader.HttpRequest(target);
@@ -47,10 +50,10 @@ namespace MySpector.Cons
             int rand = random.Next(1, 1000);
             string fileName = timeStamp + "__" + rand + "_dl.html";
             File.WriteAllText(fileName, response.Content);
-            Console.WriteLine("File saved: " + fileName);
+            _log.Debug("File saved: " + fileName);
             if (response.HttpResponseCode != HttpStatusCode.OK)
             {
-                Console.WriteLine("Error in download");
+                _log.Debug("Error in download");
                 return;
             }
             var stubNotifier = new StubNotifier();
@@ -60,7 +63,7 @@ namespace MySpector.Cons
             var rootRule = new XpathXtraxRule(item.Xpath);
             var sut = new SpectorPipeline(truck, rootRule, transformer, checker, stubNotifier) {Name = item.Name };
             bool isOk = sut.Process();
-            Console.WriteLine($"isOk:{isOk}");
+            _log.Debug($"isOk:{isOk}");
         }
     }
 }

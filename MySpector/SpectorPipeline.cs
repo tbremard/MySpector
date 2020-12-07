@@ -1,9 +1,10 @@
-﻿using System;
+﻿using NLog;
 
 namespace MySpector
 {
     public class SpectorPipeline
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
         public string Name;
         private IDataTruck _data;
         private XtraxRule _rule;
@@ -28,7 +29,7 @@ namespace MySpector
                 var data = _rule.GetOutputChained(_data);
                 if (data.GetText() == XtraxRuleConst.NOT_FOUND)
                     return false;
-                Console.WriteLine(Name + ": " + data.GetText());
+                _log.Debug(Name + ": " + data.GetText());
                 var dataNumber = _transformer.Transform(data);
                 bool isSignaled = _checker.Check(dataNumber);
                 if (isSignaled)
