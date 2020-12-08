@@ -29,12 +29,14 @@ namespace MySpector.Cons
         static void Main(string[] args)
         {
             _log.Debug("starting...");
+            new EventSourceCreatedListener();
+            new EventSourceListener("Microsoft-System-Net-Http");            
+//            bool b = System.Net.NetEventSource.IsEnabled;
             random = new Random((int)DateTime.Now.Ticks);
             var watchList = CreateWatchList();
             foreach (var item in watchList)
             {
                 Process(item);
-
             }
             Console.ReadKey();
         }
@@ -46,10 +48,14 @@ namespace MySpector.Cons
             HttpTarget target = HttpTarget.Create(item.Url);
             var downloader = Downloader.Create();
             var response = downloader.HttpRequest(target);
-            string timeStamp = DateTime.Now.ToString("yyyy-mm-dd_hh-mm-ss");
+            string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
             int rand = random.Next(1, 1000);
             string fileName = timeStamp + "__" + rand + "_dl.html";
-            File.WriteAllText(fileName, response.Content);
+            string directory = "Downloads";
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+            string filePath = Path.Combine(directory, fileName);
+            File.WriteAllText(filePath, response.Content);
             _log.Debug("File saved: " + fileName);
             if (response.HttpResponseCode != HttpStatusCode.OK)
             {

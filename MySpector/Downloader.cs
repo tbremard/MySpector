@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
 using NLog;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Authentication;
 
 namespace MySpector
 {
@@ -33,7 +36,8 @@ namespace MySpector
 
         public HttpResponse req2(HttpTarget target)
         {
-            AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12;
+            // AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(target.Uri),
@@ -44,14 +48,18 @@ namespace MySpector
             request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
             request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             request.Headers.Add("Accept-Language", "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3");
-//            request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
+            request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
             request.Headers.Add("Connection", "keep-alive");
             request.Headers.Add("Upgrade-Insecure-Requests", "1");
             request.Headers.Add("Cache-Control", "max-age=0 ");
             request.Version = new Version(1,1);
             //            var client = new HttpClient(new LoggingHandler(new HttpClientHandler()));
             var handler = new HttpClientHandler();
+            //X509Certificate2 certificate = GetMyX509Certificate();
+            //handler.ClientCertificates.Add(certificate);
             handler.UseDefaultCredentials = true;
+            handler.SslProtocols = SslProtocols.Tls13| SslProtocols.Tls12;
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             var client = new HttpClient(handler);
             var myGetTask = client.SendAsync(request);
             var response = myGetTask.Result;
