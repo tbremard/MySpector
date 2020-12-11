@@ -21,17 +21,23 @@ namespace MySpector.Cons
         static IList<WatchItem> CreateWatchList()
         {
             var ret = new List<WatchItem>();
-          //  ret.Add(new WatchItem() {Name= "Galaxus: Zotac 72070 ",  Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721", Xpath = "/html/body/div[1]/div/div[2]/div[1]/main/div/div[2]/div/div[2]/div/div[1]/strong" });
-            ret.Add(new WatchItem() { Name = "Saturn: PS4 Pro ", Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html", Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]" });
+            ret.Add(new WatchItem() 
+            {
+                Name= "Galaxus: Zotac 72070",  
+                Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721", 
+                Xpath = "/html/body/div[1]/div/div[2]/div[1]/main/div/div[2]/div/div[2]/div/div[1]/strong"
+            });
+          //  ret.Add(new WatchItem() { Name = "Saturn: PS4 Pro", Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html", Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]" });
             return ret;
         }
 
         static void Main(string[] args)
         {
             _log.Debug("starting...");
+#if HTTP_DEBUG
             new EventSourceCreatedListener();
-            new EventSourceListener("Microsoft-System-Net-Http");            
-//            bool b = System.Net.NetEventSource.IsEnabled;
+            new EventSourceListener("Microsoft-System-Net-Http");
+#endif
             random = new Random((int)DateTime.Now.Ticks);
             var watchList = CreateWatchList();
             foreach (var item in watchList)
@@ -45,10 +51,29 @@ namespace MySpector.Cons
         {
             _log.Debug($"--------------------");
             _log.Debug($"Process: {item.Name}");
+            string filePath = DownloadToLocalFile(item);
+            var truck = DataTruck.CreateTextFromFile(filePath);
+            if (truck == null)
+            {
+                _log.Error("cannot load data");
+                return;
+            }
+            var stubNotifier = new StubNotifier();
+            var checker = new NumberIsEqualChecker(1m);
+            var transformer = new TextToNumberTransformer();
+            var rootRule = new XpathXtraxRule(item.Xpath);
+            var sut = new SpectorPipeline(truck, rootRule, transformer, checker, stubNotifier) { Name = item.Name };
+            bool isOk = sut.Process();
+            _log.Debug($"isOk:{isOk}");
+        }
+
+        private static string DownloadToLocalFile(WatchItem item)
+        {
+            HttpResponse response;
             HttpTarget target = HttpTarget.Create(item.Url);
             var downloader = Downloader.Create();
-            var response = downloader.HttpRequest(target);
-            string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+            response = downloader.HttpRequest(target);
+            string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             int rand = random.Next(1, 1000);
             string fileName = timeStamp + "__" + rand + "_dl.html";
             string directory = "Downloads";
@@ -60,16 +85,9 @@ namespace MySpector.Cons
             if (response.HttpResponseCode != HttpStatusCode.OK)
             {
                 _log.Debug("Error in download");
-                return;
+                return null;
             }
-            var stubNotifier = new StubNotifier();
-            var checker = new NumberIsEqualChecker(1m);
-            var transformer = new TextToNumberTransformer();
-            var truck = DataTruck.CreateText(response.Content);
-            var rootRule = new XpathXtraxRule(item.Xpath);
-            var sut = new SpectorPipeline(truck, rootRule, transformer, checker, stubNotifier) {Name = item.Name };
-            bool isOk = sut.Process();
-            _log.Debug($"isOk:{isOk}");
+            return filePath;
         }
     }
 }

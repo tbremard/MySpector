@@ -5,7 +5,7 @@ namespace MySpector
     public class SpectorPipeline
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-        public string Name;
+        public string Name;//{ get; }
         private IDataTruck _data;
         private XtraxRule _rule;
         private ITransformer _transformer;
@@ -28,8 +28,11 @@ namespace MySpector
             {
                 var data = _rule.GetOutputChained(_data);
                 if (data.GetText() == XtraxRuleConst.NOT_FOUND)
+                {
+                    _log.Error($"Data extraction failed for item: '${Name}'");
                     return false;
-                _log.Debug(Name + ": " + data.GetText());
+                }
+                _log.Debug($"Extraction of '{Name}' = " + data.GetText());
                 var dataNumber = _transformer.Transform(data);
                 bool isSignaled = _checker.Check(dataNumber);
                 if (isSignaled)

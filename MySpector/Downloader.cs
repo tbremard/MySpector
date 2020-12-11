@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-using System.Threading;
 using NLog;
-using System.Security.Cryptography.X509Certificates;
 using System.Security.Authentication;
 
 namespace MySpector
 {
     public class Downloader
     {
+        const string SWITCH_HTTP2_SUPPORT = "System.Net.Http.SocketsHttpHandler.Http2Support";
+        const string SWITCH_USE_SOCKET_HTTP_HANDLER = "System.Net.Http.UseSocketsHttpHandler";
+
         static Logger _log = LogManager.GetCurrentClassLogger();
 
         public Downloader()
@@ -24,35 +24,27 @@ namespace MySpector
 
         public HttpResponse HttpRequest(HttpTarget target)
         {
-            return req2(target);
-            var client = new HttpClient();
-            var myGetTask = client.GetAsync(target.Uri);
-            var response = myGetTask.Result;
-            var ret = new HttpResponse();
-            ret.HttpResponseCode = response.StatusCode;
-            ret.Content = response.Content.ReadAsStringAsync().Result;
-            return ret;
-        }
-
-        public HttpResponse req2(HttpTarget target)
-        {
+            SetSwitch(SWITCH_HTTP2_SUPPORT, true);
+            SetSwitch(SWITCH_USE_SOCKET_HTTP_HANDLER, true);
+            DisplaySwitch(SWITCH_HTTP2_SUPPORT);
+            DisplaySwitch(SWITCH_USE_SOCKET_HTTP_HANDLER);
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12;
-            // AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandler", false);
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(target.Uri),
                 Method = HttpMethod.Get,
             };
-            //          request.Headers.Add("Host", "www.saturn.de");
             request.Headers.Clear();
-            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
-            request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+//            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
+            request.Headers.Add("User-Agent", "Mozilla/5.0");
+            //request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            request.Headers.Add("Accept", "*/*");
             request.Headers.Add("Accept-Language", "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3");
-            request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
+//            request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
             request.Headers.Add("Connection", "keep-alive");
             request.Headers.Add("Upgrade-Insecure-Requests", "1");
             request.Headers.Add("Cache-Control", "max-age=0 ");
-            request.Version = new Version(1,1);
+            request.Version = new Version(2,0);
             //            var client = new HttpClient(new LoggingHandler(new HttpClientHandler()));
             var handler = new HttpClientHandler();
             //X509Certificate2 certificate = GetMyX509Certificate();
@@ -66,36 +58,27 @@ namespace MySpector
             var ret = new HttpResponse();
             ret.HttpResponseCode = response.StatusCode;
             ret.Content = response.Content.ReadAsStringAsync().Result;
+            handler.Dispose();
+            client.Dispose();
             return ret;
         }
-    }
 
-    public class LoggingHandler : DelegatingHandler
-    {
-        static Logger _log = LogManager.GetCurrentClassLogger();
-
-        public LoggingHandler(HttpMessageHandler innerHandler)
-            : base(innerHandler)
+        private void SetSwitch(string switchName, bool switchValue)
         {
+            AppContext.SetSwitch(switchName, switchValue);
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        private void DisplaySwitch(string switchName)
         {
-            _log.Debug("Request:");
-            _log.Debug(request.ToString());
-            if (request.Content != null)
+            bool switchValue;
+            if (AppContext.TryGetSwitch(switchName, out switchValue))
             {
-                _log.Debug(await request.Content.ReadAsStringAsync());
+                _log.Debug(switchName + ": " + switchValue);
             }
-            HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
-
-            _log.Debug("Response:");
-            _log.Debug(response.ToString());
-            if (response.Content != null)
+            else
             {
-                _log.Debug(await response.Content.ReadAsStringAsync());
+                _log.Debug(switchName + ": not set");
             }
-            return response;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MySpector
+﻿using System.IO;
+
+namespace MySpector
 {
     public interface IDataTruck
     {
@@ -36,6 +38,17 @@
         public static IDataTruck CreateText(string text)
         {
             IDataTruck ret = new DataTruck(text);
+            return ret;
+        }
+
+        public static IDataTruck CreateTextFromFile(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+            string content = File.ReadAllText(filePath);
+            IDataTruck ret = new DataTruck(content);
             return ret;
         }
     }
