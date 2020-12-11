@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Net;
 using NLog;
+using MySpector.Core;
 
 namespace MySpector.UnitTest
 {
@@ -35,6 +36,34 @@ namespace MySpector.UnitTest
             var data = _sut.HttpRequest(httpTarget);
 
             Assert.AreEqual(HttpStatusCode.OK, data.HttpResponseCode);
+        }
+    }
+
+
+
+
+    public class CheckerFactoryTest
+    {
+        static Logger _log = LogManager.GetCurrentClassLogger();
+
+        //Downloader _sut;
+        //[SetUp]
+        //public void Setup()
+        //{
+        //    _sut = new Downloader();
+        //}
+
+        [Test]
+        public void Create_WenInputIsValid_ThenOk()
+        {
+            const string arg = "1200";
+            var param = new CheckerParam(CheckerType.IsLess, arg);
+            var checker = CheckerFactory.Create(param);
+            var number = DataTruck.CreateNumber(900m);
+
+            bool ret = checker.Check(number);
+
+            Assert.IsTrue(ret);
         }
     }
 }

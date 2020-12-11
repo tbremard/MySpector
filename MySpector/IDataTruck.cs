@@ -25,6 +25,12 @@ namespace MySpector
             _number = null;
         }
 
+        public DataTruck(decimal? number)
+        {
+            _text = null;
+            _number = number;
+        }
+
         public decimal? GetNumber()
         {
             return _number;
@@ -33,6 +39,12 @@ namespace MySpector
         public string GetText()
         {
             return _text;
+        }
+
+        public static IDataTruck CreateNumber(decimal? number)
+        {
+            IDataTruck ret = new DataTruck(number);
+            return ret;
         }
 
         public static IDataTruck CreateText(string text)

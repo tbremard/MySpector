@@ -1,12 +1,12 @@
 ﻿namespace MySpector
 {
-    public class NumberIsLesserChecker : IChecker
+    public class NumberIsLessChecker : IChecker
     {
         decimal Sample;
         decimal Reference;
         bool OrEqual;
 
-        public NumberIsLesserChecker(decimal reference, bool orEqual)
+        public NumberIsLessChecker(decimal reference, bool orEqual)
         {
             Reference = reference;
             OrEqual = orEqual;
