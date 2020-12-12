@@ -3,22 +3,23 @@
 +Check : 
 textDoContain    : Done
 textDoNotContain : Done
-NumberIsGreater
-NumberIsLesser   : Done
+NumberIsGreater  : Done
+NumberIsLess     : Done
 NumberIsEqual    : Done
 
++ ExtractionFactory --------------1
++ Download html  : Done
++ Daily analysis on 5 targets --------2
++ Expose result via webservice
++ Expose Result by iframe
+
 +Notifier
-StubNotifier   : Done
+StubNotifier     : Done
 MailNotifier      ------------ 3
 TwitterNotifier
 myApp
 call webservice
 
-+ Download html  -------------1
-+ Daily analysis on 5 targets --------2
-+ Expose result via webservice
-+ Expose Result by iframe
-
 problem:
 apply Chain on : Transform , notifier
-bool Check(); must take input from Transform : Done: created DataTruck
+bool Check(); must take input from Transform: Done: created DataTruck

@@ -16,15 +16,15 @@ namespace MySpector.UnitTest
         //}
 
         [Test]
-        public void Create_WenNumberIsLessThanReference_ThenCheckIsSucess()
+        public void Create_WenCheckerTypeIsLess_ThenCheckIsSucess()
         {
             const string arg = "{\"Reference\":1200, \"OrEqual\":true}";
             var param = new CheckerParam(CheckerType.IsLess, arg);
+
             var checker = CheckerFactory.Create(param);
+
             var number = DataTruck.CreateNumber(900m);
-
             bool ret = checker.Check(number);
-
             Assert.IsTrue(ret);
         }
     }

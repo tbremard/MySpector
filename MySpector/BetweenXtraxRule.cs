@@ -9,7 +9,7 @@ namespace MySpector
 
         public BetweenXtraxRule(string prefix, string suffix)
         {
-            _after = new AfterTroxRule(prefix);
+            _after = new AfterXtraxRule(prefix);
             _before = new BeforeXtraxRule(suffix);
         }
 

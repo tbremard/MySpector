@@ -3,13 +3,13 @@ using NUnit.Framework;
 
 namespace MySpector.UnitTest
 {
-    public class AfterTroxRuleTest
+    public class AfterXtraxRuleTest
     {
-        AfterTroxRule _sut;
+        AfterXtraxRule _sut;
         [SetUp]
         public void Setup()
         {
-            _sut = new AfterTroxRule("The Price of the item is:");
+            _sut = new AfterXtraxRule("The Price of the item is:");
         }
 
         [TestCase("50.25", "The Price of the item is:    50.25   ")]

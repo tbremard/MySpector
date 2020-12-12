@@ -1,10 +1,12 @@
 ﻿namespace MySpector.Core
 {
-    public class AfterTroxRule : XtraxRule
+
+
+    public class AfterXtraxRule : XtraxRule
     {
         private readonly string _prefix;
 
-        public AfterTroxRule(string prefix)
+        public AfterXtraxRule(string prefix)
         {
             _prefix = prefix;
         }
@@ -27,5 +29,4 @@
             return ret;
         }
     }
-
 }
