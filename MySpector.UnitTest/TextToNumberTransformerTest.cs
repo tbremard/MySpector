@@ -2,30 +2,8 @@
 
 namespace MySpector.UnitTest
 {
-    public class TroxTest
+    public class TextToNumberTransformerTest
     {
-        [SetUp]
-        public void Setup()
-        {
-            TestSampleFactory.Setup();
-        }
-
-        [TestCase(TestSampleId.ZOTAC_EN72070V_GALAXUS)]
-        [TestCase(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE)]
-        [TestCase(TestSampleId.PS4_SATURN)]
-        [TestCase(TestSampleId.PS4_SATURN_FULL_PAGE)]
-        [TestCase(TestSampleId.BDIY_FULL_PAGE)]
-        public void GetOutputChained_WhenXpathIsValidAndContentIsThere_ThenFound(TestSampleId sampleId)
-        {
-            var sample = TestSampleFactory.CreateSample(sampleId);
-
-            var data = sample.Rule.GetOutputChained(sample.Data);
-
-            string actual = data.GetText();
-            Assert.AreEqual(sample.ExpectedOutput, actual);
-        }
-
-
         [TestCase(1123.56, "1 1 2 3 , 5 6")]
         [TestCase(1123.56, "1123,56")]
         [TestCase(1123.56, "1.123,56")]

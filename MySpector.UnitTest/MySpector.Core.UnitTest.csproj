@@ -7,11 +7,15 @@
   <ItemGroup>
     <None Remove="ps4pro_saturn.html" />
     <None Remove="samples_html\BDIY.html" />
+    <None Remove="samples_html\Hystou_F7.html" />
     <None Remove="Zotac_Galaxus.html" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="samples_html\BDIY.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples_html\Hystou_F7.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="samples_html\ps4pro_saturn.html">

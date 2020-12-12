@@ -20,6 +20,8 @@ namespace MySpector.UnitTest
             samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS, ZOTAC_EN72070V_GALAXUS);
             samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE, ZOTAC_EN72070V_GALAXUS_FULL_PAGE);
             samples.Add(TestSampleId.BDIY_FULL_PAGE, BDIY_FULL_PAGE);
+            samples.Add(TestSampleId.HYSTOU_F7_FULL_PAGE, HYSTOU_F7_FULL_PAGE);
+            
         }
 
         static TestDescriptor PS4_SATURN = new TestDescriptor()
@@ -58,6 +60,14 @@ namespace MySpector.UnitTest
             Xpath = "/html/body/div[6]/div/div/section[2]/div[1]/div[2]/section[1]/section/section[2]/section/div[1]",
             Url = "https://www.bloomberg.com/quote/BDIY:IND?sref=GKjIETf1",
             ExpectedOutput = "1,227.00USD"
+        };
+
+        public static TestDescriptor HYSTOU_F7_FULL_PAGE = new TestDescriptor()
+        {
+            Html = File.ReadAllText("samples_html\\Hystou_F7.html"),
+            Xpath = "//*[@id=\"goods_price\"]",
+            Url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html",
+            ExpectedOutput = "US$ 886.29"
         };
 
         internal static TestSample CreateSample(TestSampleId sampleId)

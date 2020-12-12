@@ -5,7 +5,6 @@
         public string Name;
         public string Url;
         public string Xpath;
-
-        public CheckerParam Checker { get; set; }
+        public CheckerParam CheckerParam { get; set; }
     }
 }

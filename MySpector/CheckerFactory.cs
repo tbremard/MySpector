@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json;
 
 namespace MySpector.Core
 {
@@ -10,9 +11,8 @@ namespace MySpector.Core
             switch (param.CheckerType)
             {
                 case CheckerType.IsLess:
-                    decimal reference = 1m;
-                    bool orEqual = true;
-                    ret = new NumberIsLessChecker(reference, orEqual);
+                    var arg = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);
+                    ret = new NumberIsLessChecker(arg.Reference, arg.OrEqual);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("checker type is not handled");
