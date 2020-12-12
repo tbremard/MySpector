@@ -4,7 +4,7 @@
     {
         public string Name;
         public string Url;
-        public string Xpath;
+        public XtraxRule XtraxChain;
         public CheckerParam CheckerParam { get; set; }
     }
 }
