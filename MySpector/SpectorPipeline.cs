@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 
 namespace MySpector
 {
@@ -41,8 +42,10 @@ namespace MySpector
                     ret = true;
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                _log.Error($"Data extraction failed for item: '${Name}'");
+                _log.Error(ex);
                 ret = false;
             }
             return ret;

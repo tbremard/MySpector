@@ -1,9 +1,12 @@
 ﻿using HtmlAgilityPack;
+using System;
+using NLog;
 
 namespace MySpector
 {
     public class XpathXtraxRule : XtraxRule
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
         private readonly string _xPath;
         private string NOT_FOUND="NOT_FOUND";
 
@@ -14,17 +17,25 @@ namespace MySpector
 
         protected override IDataTruck GetOutput(IDataTruck data)
         {
-            var htmldoc = new HtmlDocument();
-            htmldoc.LoadHtml(data.GetText());
-            var node = htmldoc.DocumentNode.SelectSingleNode(_xPath);
             IDataTruck ret;
-            if (node == null)
+            try
             {
-                ret = DataTruck.CreateText(NOT_FOUND);
+                var htmldoc = new HtmlDocument();
+                htmldoc.LoadHtml(data.GetText());
+                var node = htmldoc.DocumentNode.SelectSingleNode(_xPath);
+                if (node == null)
+                {
+                    ret = DataTruck.CreateText(NOT_FOUND);
+                }
+                else
+                {
+                    ret = DataTruck.CreateText(node.InnerText.Trim());
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ret = DataTruck.CreateText(node.InnerText.Trim());
+                _log.Error(ex);
+                ret = DataTruck.CreateText(NOT_FOUND);
             }
             return ret;
         }

@@ -11,12 +11,6 @@ namespace MySpector.Cons
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         static Random random;
-        const string BDI_XPath = "/html/body/div[6]/div/div/section[2]/div[1]/div[2]/section[1]/section/section[2]/section/div[1]/span[1]";
-        const string BDI_URL = "https://www.bloomberg.com/quote/BDIY:IND?sref=GKjIETf1";
-
-        const string myToys_Url = "https://www.mytoys.de/hasbro-looping-louie-4097320.html?sku=4097320";
-        const string myToys_xpath = "/html/body/div[2]/div[3]/div[2]/div[2]/div[2]/div[1]/div";
-        const decimal myToys_price = 19.99m; 
 
         static IList<WatchItem> CreateWatchList()
         {
@@ -28,7 +22,14 @@ namespace MySpector.Cons
                 Xpath = "/html/body/div/div/div[2]/div/main/div/div[1]/div/div[2]/div/div[1]/strong",
                 CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1200, \"OrEqual\":true}")
             });
-          //  ret.Add(new WatchItem() { Name = "Saturn: PS4 Pro", Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html", Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]" });
+            ret.Add(new WatchItem()
+            {
+                Name = "Hystou: F7",
+                Url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html",
+                Xpath = "//*[@id=\"goods_price\"]",
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":900, \"OrEqual\":true}")
+            });
+            //  ret.Add(new WatchItem() { Name = "Saturn: PS4 Pro", Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html", Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]" });
             return ret;
         }
 
@@ -65,7 +66,7 @@ namespace MySpector.Cons
             var rootRule = new XpathXtraxRule(item.Xpath);
             var sut = new SpectorPipeline(truck, rootRule, transformer, checker, stubNotifier) { Name = item.Name };
             bool isOk = sut.Process();
-            _log.Debug($"isOk:{isOk}");
+            _log.Debug($"isOk: {isOk}");
         }
 
         private static string DownloadToLocalFile(WatchItem item)

@@ -26,8 +26,10 @@ namespace MySpector
         {
             SetSwitch(SWITCH_HTTP2_SUPPORT, true);
             SetSwitch(SWITCH_USE_SOCKET_HTTP_HANDLER, true);
+#if HTTP_DEBUG
             DisplaySwitch(SWITCH_HTTP2_SUPPORT);
             DisplaySwitch(SWITCH_USE_SOCKET_HTTP_HANDLER);
+#endif
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12;
             var request = new HttpRequestMessage
             {
