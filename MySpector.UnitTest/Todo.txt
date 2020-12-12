@@ -7,19 +7,23 @@ NumberIsGreater  : Done
 NumberIsLess     : Done
 NumberIsEqual    : Done
 
-+ ExtractionFactory --------------1
-+ Download html  : Done
++ ExtractionFactory           : Done
++ Download html               : Done
 + Daily analysis on 5 targets --------2
 + Expose result via webservice
 + Expose Result by iframe
+
++TransformerFactory
 
 +Notifier
 StubNotifier     : Done
 MailNotifier      ------------ 3
 TwitterNotifier
-myApp
 call webservice
 
+ConsoleRunner    : Done
+
 problem:
-apply Chain on : Transform , notifier
+apply Chain on : Transform
+apply Chain on : Notifier
 bool Check(); must take input from Transform: Done: created DataTruck
