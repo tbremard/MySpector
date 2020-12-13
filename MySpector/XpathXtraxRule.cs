@@ -25,6 +25,7 @@ namespace MySpector
                 var node = htmldoc.DocumentNode.SelectSingleNode(_xPath);
                 if (node == null)
                 {
+                    _log.Error($"Node not found '{_xPath}'");
                     ret = DataTruck.CreateText(NOT_FOUND);
                 }
                 else

@@ -31,7 +31,8 @@ namespace MySpector.Cons
                 Name = "Galaxus: Zotac 72070",
                 Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1200, \"OrEqual\":true}")
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1200, \"OrEqual\":true}"),
+                Enabled = false
             };
             return ret;
         }
@@ -50,7 +51,8 @@ namespace MySpector.Cons
                 Name = "AllianzOblig",
                 Url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":105, \"OrEqual\":true}")
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":105, \"OrEqual\":true}"),
+                Enabled = false
             };
             return ret;
         }
@@ -71,17 +73,19 @@ namespace MySpector.Cons
                 Name = "Hystou: F7",
                 Url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":900, \"OrEqual\":true}")
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":900, \"OrEqual\":true}"),
+                Enabled = false
             };
             return ret;
         }
 
         private static WatchItem CreateIdealoPs4Pro()
         {
-            string rawString = "/html/body/div[1]/div/main/div[3]/div/div[2]/div[5]/div/div[1]/div[1]/a/span";
+//          string rawString = "/html/body/div[1]/div/main/div[3]/div/div[2]/div[5]/div/div[1]/div[1]/a/span";
+            string rawString = "/html/body/div/div/main/div[3]/div/div[2]/div[3]/div/div[1]/a[1]/span";
             string escapedString = EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var afterParam = new XtraxDefinition(XtraxType.Before, "{\"Suffix\":\"$\"}");
+            var afterParam = new XtraxDefinition(XtraxType.Before, "{\"Suffix\":\"€\"}");
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);

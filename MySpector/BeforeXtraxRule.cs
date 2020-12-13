@@ -1,7 +1,10 @@
-﻿namespace MySpector
+﻿using NLog;
+
+namespace MySpector
 {
     public class BeforeXtraxRule: XtraxRule
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
         private readonly string _suffix;
 
         public BeforeXtraxRule(string suffix)
@@ -15,6 +18,7 @@
             string content = data.GetText();
             if (!content.Contains(_suffix))
             {
+                _log.Error($"data do not contain '{_suffix}'");
                 ret = DataTruck.CreateText(XtraxRuleConst.NOT_FOUND);
             }
             else

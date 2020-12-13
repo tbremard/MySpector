@@ -23,11 +23,10 @@
             IDataTruck ret = GetOutput(data);
             if (Next != null)
             {
-                var nextRump = new DataTruck(ret.GetText());
-                ret = Next.GetOutputChained(nextRump);
+                //var nextRump = new DataTruck(ret.GetText());
+                ret = Next.GetOutputChained(ret);
             }
             return ret;
         }
     }
-
 }

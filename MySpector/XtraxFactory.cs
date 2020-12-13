@@ -38,7 +38,7 @@ namespace MySpector
                     break;
                 case XtraxType.Before:
                     var argBefore = JsonSerializer.Deserialize<BeforeArg>(param.Arg);
-                    ret = new AfterXtraxRule(argBefore.Suffix);
+                    ret = new BeforeXtraxRule(argBefore.Suffix);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("unknown XtraxType: "+param.XtraxType);

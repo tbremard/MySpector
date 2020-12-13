@@ -1,9 +1,10 @@
-﻿namespace MySpector.Core
+﻿using NLog;
+
+namespace MySpector.Core
 {
-
-
     public class AfterXtraxRule : XtraxRule
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
         private readonly string _prefix;
 
         public AfterXtraxRule(string prefix)
@@ -17,6 +18,7 @@
             string content = data.GetText();
             if (!content.Contains(_prefix))
             {
+                _log.Error($"data do not contain '{_prefix}'");
                 ret = DataTruck.CreateText(XtraxRuleConst.NOT_FOUND);
             }
             else

@@ -31,6 +31,11 @@ namespace MySpector.Cons
         {
             _log.Debug($"--------------------");
             _log.Debug($"Process: {item.Name}");
+            if(!item.Enabled)
+            {
+                _log.Debug($"{item.Name} is disabled");
+                return;
+            }
             string filePath = DownloadToLocalFile(item);
             var truck = DataTruck.CreateTextFromFile(filePath);
             if (truck == null)
@@ -55,7 +60,7 @@ namespace MySpector.Cons
             response = downloader.HttpRequest(target);
             string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             int rand = random.Next(1, 1000);
-            string fileName = timeStamp + "__" + rand + "_dl.html";
+            string fileName = timeStamp + "__" + item.Token +"_" +rand + "_dl.html";
             string directory = "Downloads";
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
