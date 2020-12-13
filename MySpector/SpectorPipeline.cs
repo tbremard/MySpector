@@ -30,7 +30,7 @@ namespace MySpector
                 var data = _rule.GetOutputChained(_data);
                 if (data.GetText() == XtraxRuleConst.NOT_FOUND)
                 {
-                    _log.Error($"Data extraction failed for item: '${Name}'");
+                    _log.Error($"Data extraction failed for item: '{Name}'");
                     return false;
                 }
                 _log.Debug($"Extraction of '{Name}' = " + data.GetText());
@@ -44,7 +44,7 @@ namespace MySpector
             }
             catch(Exception ex)
             {
-                _log.Error($"Data extraction failed for item: '${Name}'");
+                _log.Error($"Data extraction failed for item: '{Name}'");
                 _log.Error(ex);
                 ret = false;
             }

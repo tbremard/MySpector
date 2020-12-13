@@ -1,5 +1,4 @@
 ﻿using MySpector.Core;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
@@ -10,8 +9,12 @@ namespace MySpector
     {
         public string Prefix { get; set; }
     }
-
     
+    public class BeforeArg
+    {
+        public string Suffix { get; set; }
+    }
+
     public class XpathArg
     {
         public string Path { get; set; }
@@ -30,8 +33,12 @@ namespace MySpector
                     ret = new XpathXtraxRule(xpathArg.Path);
                     break;
                 case XtraxType.After:
-                    var arg = JsonSerializer.Deserialize<AfterArg>(param.Arg);
-                    ret = new AfterXtraxRule(arg.Prefix);
+                    var argAfter = JsonSerializer.Deserialize<AfterArg>(param.Arg);
+                    ret = new AfterXtraxRule(argAfter.Prefix);
+                    break;
+                case XtraxType.Before:
+                    var argBefore = JsonSerializer.Deserialize<BeforeArg>(param.Arg);
+                    ret = new AfterXtraxRule(argBefore.Suffix);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("unknown XtraxType: "+param.XtraxType);
