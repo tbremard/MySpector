@@ -9,17 +9,17 @@ NumberIsEqual    : Done
 
 + ExtractionFactory           : Done
 + Download html               : Done
-+ Daily analysis on 5 targets --------2
++ Daily analysis on 4 targets : Done
 + Expose result via webservice
 + Expose Result by iframe
 
-+TransformerFactory
++TransformerFactory    ------- 2
 
 +Notifier
 StubNotifier     : Done
-MailNotifier      ------------ 3
-TwitterNotifier
-call webservice
+MailNotifier      ------------ : Problem : need Smtp Tls server
+WebNotifier:     
+TwitterNotifier:
 
 ConsoleRunner    : Done
 
