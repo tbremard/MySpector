@@ -8,11 +8,11 @@ namespace MySpector.UnitTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        Downloader _sut;
+        HttpDownloader _sut;
         [SetUp]
         public void Setup()
         {
-            _sut = new Downloader();
+            _sut = new HttpDownloader();
         }
 
         [Test]

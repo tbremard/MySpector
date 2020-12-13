@@ -3,23 +3,24 @@ using System.Net;
 using System.Net.Http;
 using NLog;
 using System.Security.Authentication;
+using MySpector.Core;
 
 namespace MySpector
 {
-    public class Downloader
+    public class HttpDownloader
     {
         const string SWITCH_HTTP2_SUPPORT = "System.Net.Http.SocketsHttpHandler.Http2Support";
         const string SWITCH_USE_SOCKET_HTTP_HANDLER = "System.Net.Http.UseSocketsHttpHandler";
 
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public Downloader()
+        public HttpDownloader()
         {
         }
 
-        public static Downloader Create()
+        public static HttpDownloader Create()
         {
-            return new Downloader();
+            return new HttpDownloader();
         }
 
         public HttpResponse HttpRequest(HttpTarget target)
@@ -62,6 +63,16 @@ namespace MySpector
             ret.Content = response.Content.ReadAsStringAsync().Result;
             handler.Dispose();
             client.Dispose();
+            return ret;
+        }
+
+        public DownloadResponse Download(WatchItem item)
+        {
+
+            HttpTarget target = HttpTarget.Create(item.Url);
+            HttpResponse response = HttpRequest(target);
+            bool success = response.HttpResponseCode == HttpStatusCode.OK;
+            var ret = new DownloadResponse(response.Content, success);
             return ret;
         }
 

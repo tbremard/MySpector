@@ -81,7 +81,6 @@ namespace MySpector.Cons
 
         private static WatchItem CreateIdealoPs4Pro()
         {
-//          string rawString = "/html/body/div[1]/div/main/div[3]/div/div[2]/div[5]/div/div[1]/div[1]/a/span";
             string rawString = "/html/body/div/div/main/div[3]/div/div[2]/div[3]/div/div[1]/a[1]/span";
             string escapedString = EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
@@ -90,7 +89,6 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
-
             var ret = new WatchItem()
             {
                 Name = "Idealo: PS4 Pro",

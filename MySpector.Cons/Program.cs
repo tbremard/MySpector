@@ -2,6 +2,7 @@
 using System.Net;
 using System.IO;
 using MySpector.Core;
+using MySpector;
 using NLog;
 
 namespace MySpector.Cons
@@ -37,10 +38,15 @@ namespace MySpector.Cons
                 return;
             }
             string filePath = DownloadToLocalFile(item);
+            if (filePath == null)
+            {
+                _log.Error("Error in Download: Aborting processing");
+                return;
+            }
             var truck = DataTruck.CreateTextFromFile(filePath);
             if (truck == null)
             {
-                _log.Error("cannot load data");
+                _log.Error("Cannot load data");
                 return;
             }
             var stubNotifier = new StubNotifier();
@@ -54,24 +60,28 @@ namespace MySpector.Cons
 
         private static string DownloadToLocalFile(WatchItem item)
         {
-            HttpResponse response;
-            HttpTarget target = HttpTarget.Create(item.Url);
-            var downloader = Downloader.Create();
-            response = downloader.HttpRequest(target);
+            var downloader = HttpDownloader.Create();// protocol to be at the control of user
+            var response = downloader.Download(item);
+            string filePath = GenerateFilePath(item);
+            File.WriteAllText(filePath, response.Content);
+            if (!response.Success)
+            {
+                _log.Error("Error in download");
+                return null;
+            }
+            return filePath;
+        }
+
+        private static string GenerateFilePath(WatchItem item)
+        {
             string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             int rand = random.Next(1, 1000);
-            string fileName = timeStamp + "__" + item.Token +"_" +rand + "_dl.html";
+            string fileName = timeStamp + "__" + item.Token + "_" + rand + "_dl.html";
+            _log.Debug("File saved: " + fileName);
             string directory = "Downloads";
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
             string filePath = Path.Combine(directory, fileName);
-            File.WriteAllText(filePath, response.Content);
-            _log.Debug("File saved: " + fileName);
-            if (response.HttpResponseCode != HttpStatusCode.OK)
-            {
-                _log.Debug("Error in download");
-                return null;
-            }
             return filePath;
         }
     }
