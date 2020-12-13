@@ -1,7 +1,10 @@
-﻿namespace MySpector
+﻿using NLog;
+
+namespace MySpector
 {
     public class NumberIsLessChecker : IChecker
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
         decimal Sample;
         decimal Reference;
         bool OrEqual;
@@ -20,6 +23,7 @@
             decimal? number = input.GetNumber();
             if (!number.HasValue)
             {
+                _log.Error("invalid number");
                 return false;
             }
             Sample = number.Value;
@@ -31,6 +35,7 @@
             {
                 ret = Sample < Reference;
             }
+            _log.Debug($"{Sample} < {Reference}: {ret}");
             return ret;
         }
     }

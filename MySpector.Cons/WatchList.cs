@@ -31,8 +31,8 @@ namespace MySpector.Cons
                 Name = "Galaxus: Zotac 72070",
                 Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1200, \"OrEqual\":true}"),
-                Enabled = false
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":800, \"OrEqual\":true}"),
+                Enabled = true
             };
             return ret;
         }
@@ -52,7 +52,7 @@ namespace MySpector.Cons
                 Url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04",
                 XtraxChain = xtraxChain,
                 CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":105, \"OrEqual\":true}"),
-                Enabled = false
+                Enabled = true
             };
             return ret;
         }
@@ -73,8 +73,8 @@ namespace MySpector.Cons
                 Name = "Hystou: F7",
                 Url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":900, \"OrEqual\":true}"),
-                Enabled = false
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":500, \"OrEqual\":true}"),
+                Enabled = true
             };
             return ret;
         }
@@ -94,7 +94,8 @@ namespace MySpector.Cons
                 Name = "Idealo: PS4 Pro",
                 Url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":400, \"OrEqual\":true}")
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":400, \"OrEqual\":true}"),
+                Enabled = true
             };
             return ret;
         }
