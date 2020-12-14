@@ -94,7 +94,7 @@ namespace MySpector.Cons
                 Name = "Idealo: PS4 Pro",
                 Url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":400, \"OrEqual\":true}"),
+                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":250, \"OrEqual\":true}"),
                 Enabled = true
             };
             return ret;

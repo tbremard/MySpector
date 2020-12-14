@@ -17,10 +17,11 @@ namespace MySpector.UnitTest
         {
             var stubNotifier = Substitute.For<INotifier>();
             var sample = TestSampleFactory.CreateSample(TestSampleId.PS4_SATURN);
+            var transformer = new TextToNumberXtraxRule();
+            sample.Rule.SetNext(transformer);
             const decimal TARGET_PRICE = 329.52m;
             var checker = new NumberIsEqualChecker(TARGET_PRICE);
-            var transformer = new TextToNumberTransformer();
-            var sut = new SpectorPipeline(sample.Data, sample.Rule, transformer, checker, stubNotifier);
+            var sut = new SpectorPipeline(sample.Name, sample.Data, sample.Rule, checker, stubNotifier);
 
             bool isOk = sut.Process();
 

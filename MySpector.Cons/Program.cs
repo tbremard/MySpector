@@ -42,9 +42,8 @@ namespace MySpector.Cons
             }
             var stubNotifier = new StubNotifier();
             var checker = CheckerFactory.Create(item.CheckerParam);
-            var transformer = new TextToNumberTransformer();
             var rootRule = item.XtraxChain;
-            var sut = new SpectorPipeline(truck, rootRule, transformer, checker, stubNotifier) { Name = item.Name };
+            var sut = new SpectorPipeline(item.Name, truck, rootRule, checker, stubNotifier);
             bool isOk = sut.Process();
             _log.Debug($"isOk: {isOk}");
         }

@@ -18,8 +18,13 @@ NumberIsEqual    : Done
 +Notifier
 StubNotifier     : Done
 MailNotifier      ------------ : Problem : need Smtp Tls server
-WebNotifier:     
-TwitterNotifier:
+WebNotifier      :     
+TwitterNotifier  :
+
+textToNumber must be an element of Xtrax
+xtrax: implement replace()
+
+Checker must be available on text : Contains / DoNotContain
 
 ConsoleRunner    : Done
 

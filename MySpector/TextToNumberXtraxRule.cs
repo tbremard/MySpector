@@ -2,9 +2,9 @@
 
 namespace MySpector
 {
-    public class TextToNumberTransformer : ITransformer
+    public class TextToNumberXtraxRule : XtraxRule
     {
-        public IDataTruck Transform(IDataTruck dataIn)
+        protected override IDataTruck GetOutput(IDataTruck dataIn)
         {
             IDataTruck dataOut;
             string textNumber = dataIn.GetText();
@@ -71,6 +71,5 @@ namespace MySpector
             dataOut = new DataTruck(textNumber, null);
             return dataOut;
         }
-
     }
 }

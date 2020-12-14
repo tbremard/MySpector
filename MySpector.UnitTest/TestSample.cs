@@ -5,17 +5,19 @@
         public IDataTruck Data { get; }
         public XtraxRule Rule { get; }
         public string ExpectedOutput { get; }
+        public string Name { get; }
 
-        public TestSample(string rumpContent, string rule, string expectedOutput)
+        public TestSample(string name, string rumpContent, string rule, string expectedOutput)
         {
             Data = CreateLocalData(rumpContent);
-            Rule = CreateLocaleRule(rule);
+            Rule = CreateXpathRule(rule);
             ExpectedOutput = expectedOutput;
+            Name = name;
         }
 
-        private XtraxRule CreateLocaleRule(string rule)
+        private XtraxRule CreateXpathRule(string rule)
         {
-            var ret = new XpathXtraxRule(rule);
+            var ret = new XpathXtraxRule(rule);// do not chain other rules here because some test rely on it
             return ret;
         }
 

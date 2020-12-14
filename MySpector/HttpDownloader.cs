@@ -68,7 +68,7 @@ namespace MySpector
 
         public DownloadResponse Download(WatchItem item)
         {
-
+            _log.Debug(item.Url);
             HttpTarget target = HttpTarget.Create(item.Url);
             HttpResponse response = HttpRequest(target);
             bool success = response.HttpResponseCode == HttpStatusCode.OK;

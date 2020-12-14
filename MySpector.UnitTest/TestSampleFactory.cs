@@ -21,11 +21,11 @@ namespace MySpector.UnitTest
             samples.Add(TestSampleId.ZOTAC_EN72070V_GALAXUS_FULL_PAGE, ZOTAC_EN72070V_GALAXUS_FULL_PAGE);
             samples.Add(TestSampleId.BDIY_FULL_PAGE, BDIY_FULL_PAGE);
             samples.Add(TestSampleId.HYSTOU_F7_FULL_PAGE, HYSTOU_F7_FULL_PAGE);
-            
         }
 
         static TestDescriptor PS4_SATURN = new TestDescriptor()
         {
+            Name= "PS4_SATURN",
             Html = "<html><body>"+
                    "<span display=\"inline-block\" font-size=\"xxxxxl\" font-family=\"price\" class=\"Typ bWz Pr bU\">329.<sup font-size=\"xxxl\" font-family=\"price\" class=\"Typo0 gmP Pried_0 b\">52</sup></span>"+
                    "</body></html>",
@@ -35,6 +35,7 @@ namespace MySpector.UnitTest
         };
         public static TestDescriptor PS4_SATURN_FULL_PAGE = new TestDescriptor()
         {
+            Name = "PS4_SATURN_FULL_PAGE",
             Html = File.ReadAllText("samples_html\\ps4pro_saturn.html"),
             Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]",
             Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html",
@@ -49,6 +50,7 @@ namespace MySpector.UnitTest
         };
         public static TestDescriptor ZOTAC_EN72070V_GALAXUS_FULL_PAGE = new TestDescriptor()
         {
+            Name = "ZOTAC_EN72070V_GALAXUS_FULL_PAGE",
             Html = File.ReadAllText("samples_html\\Zotac_Galaxus.html"),
             Xpath = "/html/body/div[1]/div/div[2]/div[1]/main/div/div[2]/div/div[2]/div/div[1]/strong",
             Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721",
@@ -56,6 +58,7 @@ namespace MySpector.UnitTest
         };
         private static TestDescriptor BDIY_FULL_PAGE = new TestDescriptor()
         {
+            Name = "BDIY_FULL_PAGE",
             Html = File.ReadAllText("samples_html\\BDIY.html"),
             Xpath = "/html/body/div[6]/div/div/section[2]/div[1]/div[2]/section[1]/section/section[2]/section/div[1]",
             Url = "https://www.bloomberg.com/quote/BDIY:IND?sref=GKjIETf1",
@@ -64,6 +67,7 @@ namespace MySpector.UnitTest
 
         public static TestDescriptor HYSTOU_F7_FULL_PAGE = new TestDescriptor()
         {
+            Name = "HYSTOU_F7_FULL_PAGE",
             Html = File.ReadAllText("samples_html\\Hystou_F7.html"),
             Xpath = "//*[@id=\"goods_price\"]",
             Url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html",
@@ -78,7 +82,7 @@ namespace MySpector.UnitTest
                 throw new ArgumentOutOfRangeException("Dictionnary do not contain this test");
             }
             TestDescriptor selected = samples[sampleId];
-            ret = new TestSample(selected.Html, selected.Xpath, selected.ExpectedOutput);
+            ret = new TestSample(selected.Name, selected.Html, selected.Xpath, selected.ExpectedOutput);
             return ret;
         }
     }

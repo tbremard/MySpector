@@ -15,9 +15,9 @@ namespace MySpector.UnitTest
         [TestCase(null,  "a")]
         public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal? expectedNumber, string textNumber)
         {
-            var _sut = new TextToNumberTransformer();
+            var _sut = new TextToNumberXtraxRule();
 
-            var actual = _sut.Transform(DataTruck.CreateText(textNumber));
+            var actual = _sut.GetOutputChained(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -27,10 +27,10 @@ namespace MySpector.UnitTest
         [Test]
         public void TransformTextToNumber_WhenStringIsVeryLongWithLotOfComa_ThenNumberIsValid()
         {
-            var _sut = new TextToNumberTransformer();
+            var _sut = new TextToNumberXtraxRule();
             string textNumber = "111,222,333,444,123.5698";
 
-            var actual = _sut.Transform(DataTruck.CreateText(textNumber));
+            var actual = _sut.GetOutputChained(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -41,10 +41,10 @@ namespace MySpector.UnitTest
         [Test]
         public void TransformStringToNumber_WhenStringIsVeryLongWithLotOfPoints_ThenNumberIsValid()
         {
-            var _sut = new TextToNumberTransformer();
+            var _sut = new TextToNumberXtraxRule();
             string textNumber = "111.222.333.444.123,5698";
 
-            var actual = _sut.Transform(DataTruck.CreateText(textNumber));
+            var actual = _sut.GetOutputChained(DataTruck.CreateText(textNumber));
 
             Assert.IsNotNull(actual);
             decimal? actualNumber = actual.GetNumber();
@@ -62,9 +62,9 @@ namespace MySpector.UnitTest
         [TestCase("", null, null, null)]
         public void TransformTextReplace_WhenStringIsValid_ThenOk(string expected, string text, string oldToken, string newToken)
         {
-            var _sut = new TextReplaceTransformer(oldToken, newToken);
+            var _sut = new TextReplaceXtraxRule(oldToken, newToken);
 
-            var actual = _sut.Transform(DataTruck.CreateText(text));
+            var actual = _sut.GetOutputChained(DataTruck.CreateText(text));
 
             Assert.AreEqual(expected, actual.GetText());
         }
