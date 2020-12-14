@@ -22,8 +22,10 @@ namespace MySpector.Cons
             string rawString = "/html/body/div/div/div[2]/div/main/div/div[1]/div/div[2]/div/div[1]/strong";
             string escapedString = EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
+            xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
 
             var ret = new WatchItem()
@@ -42,8 +44,10 @@ namespace MySpector.Cons
             string rawString = "/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]";
             string escapedString = EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
+            xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
 
             var ret = new WatchItem()
@@ -63,9 +67,11 @@ namespace MySpector.Cons
             string escapedString = EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
             var afterParam = new XtraxDefinition(XtraxType.After, "{\"Prefix\":\"$\"}");
+            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);
+            xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
 
             var ret = new WatchItem()
@@ -81,13 +87,15 @@ namespace MySpector.Cons
 
         private static WatchItem CreateIdealoPs4Pro()
         {
-            string rawString = "/html/body/div/div/main/div[3]/div/div[2]/div[3]/div/div[1]/a[1]/span";
+            string rawString = "/html/head/title";
             string escapedString = EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var afterParam = new XtraxDefinition(XtraxType.Before, "{\"Suffix\":\"€\"}");
+            var betweenParam = new XtraxDefinition(XtraxType.Between, "{\"Prefix\":\"ab\", \"Suffix\":\"€\"}");
+            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
-            xTraxParams.Add(afterParam);
+            xTraxParams.Add(betweenParam);
+            xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var ret = new WatchItem()
             {

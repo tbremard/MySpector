@@ -3,11 +3,6 @@
 namespace MySpector
 {
 
-    public interface IChecker
-    {
-        public bool Check(IDataTruck input);
-    }
-
     public class TextDoContainChecker : IChecker
     {
         string Text;

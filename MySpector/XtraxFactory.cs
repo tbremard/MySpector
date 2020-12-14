@@ -20,12 +20,19 @@ namespace MySpector
         public string Path { get; set; }
     }
 
+    
+    public class BetweenArg
+    {
+        public string Prefix { get; set; }
+        public string Suffix { get; set; }
+    }
+
+
     public class XtraxFactory
     {
-
         public static XtraxRule Create(XtraxDefinition param)
         {
-            XtraxRule ret=null;
+            XtraxRule ret;
             switch (param.XtraxType)
             {
                 case XtraxType.Xpath:
@@ -39,6 +46,13 @@ namespace MySpector
                 case XtraxType.Before:
                     var argBefore = JsonSerializer.Deserialize<BeforeArg>(param.Arg);
                     ret = new BeforeXtraxRule(argBefore.Suffix);
+                    break;
+                case XtraxType.Between:
+                    var argBetween = JsonSerializer.Deserialize<BetweenArg>(param.Arg);
+                    ret = new BetweenXtraxRule(argBetween.Prefix, argBetween.Suffix);
+                    break;
+                case XtraxType.TextToNumber:
+                    ret = new TextToNumberXtraxRule();
                     break;
                 default:
                     throw new InvalidEnumArgumentException("unknown XtraxType: "+param.XtraxType);

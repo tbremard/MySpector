@@ -5,5 +5,7 @@
         Xpath,
         After,
         Before,
+        TextToNumber,
+        Between,
     }
 }

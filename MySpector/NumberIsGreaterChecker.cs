@@ -2,25 +2,24 @@
 
 namespace MySpector
 {
-    public class NumberIsEqualChecker : IChecker
+    public class NumberIsGreaterChecker : IChecker
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         decimal Sample;
         decimal Reference;
+        bool OrEqual;
 
-        public NumberIsEqualChecker(decimal reference)
+        public NumberIsGreaterChecker(decimal reference, bool orEqual)
         {
             Reference = reference;
+            OrEqual = orEqual;
         }
 
         public bool Check(IDataTruck input)
         {
             bool ret;
             if (input == null)
-            {
-                _log.Error("Invalid number (did you miss TextToNumber?)");
                 return false;
-            }
             decimal? number = input.GetNumber();
             if (!number.HasValue)
             {
@@ -28,8 +27,15 @@ namespace MySpector
                 return false;
             }
             Sample = number.Value;
-            ret = Sample == Reference;
-            _log.Debug($"{Sample} == {Reference}: {ret}");
+            if (OrEqual)
+            {
+                ret = Sample >= Reference;
+            }
+            else
+            {
+                ret = Sample > Reference;
+            }
+            _log.Debug($"{Sample} > {Reference}: {ret}");
             return ret;
         }
     }

@@ -23,7 +23,7 @@ namespace MySpector
             decimal? number = input.GetNumber();
             if (!number.HasValue)
             {
-                _log.Error("invalid number");
+                _log.Error("Invalid number (did you miss TextToNumber?)");
                 return false;
             }
             Sample = number.Value;
