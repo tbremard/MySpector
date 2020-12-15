@@ -2,13 +2,13 @@
 
 namespace MySpector.UnitTest
 {
-    public class MailNotifierTest
+    public class WebCallbackNotifierTest
     {
-        MailNotifier _sut;
+        WebCallbackNotifier _sut;
         [SetUp]
         public void Setup()
         {
-            _sut = new MailNotifier();
+            _sut = new WebCallbackNotifier();
         }
 
         [Test]
@@ -16,7 +16,7 @@ namespace MySpector.UnitTest
         {
             var ret = _sut.Notify("This is a test");
 
-            Assert.IsTrue(ret, "cannot send mail");
+            Assert.IsTrue(ret, "cannot send webcallback");
         }
     }
 }

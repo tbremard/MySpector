@@ -2,6 +2,6 @@
 {
     public interface INotifier
     {
-        public void Notify(string message);
+        public bool Notify(string message);
     }
 }
