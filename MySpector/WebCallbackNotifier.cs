@@ -9,8 +9,7 @@ namespace MySpector
         public bool Notify(string msg)
         {
             _log.Debug($"Preparing to callback with message: '{msg}'");
-            return true;
+            return false;
         }
-
     }
 }

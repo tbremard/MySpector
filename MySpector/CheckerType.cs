@@ -2,6 +2,7 @@
 {
     public enum CheckerType
     {
-        IsLess
+        IsLess,
+        IsGreater
     }
 }

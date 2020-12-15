@@ -55,7 +55,7 @@ namespace MySpector.Cons
                 Name = "AllianzOblig",
                 Url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04",
                 XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":105, \"OrEqual\":true}"),
+                CheckerParam = new CheckerParam(CheckerType.IsGreater, "{\"Reference\":105, \"OrEqual\":true}"),
                 Enabled = true
             };
             return ret;

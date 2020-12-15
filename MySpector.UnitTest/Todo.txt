@@ -45,3 +45,8 @@ problem:
 apply Chain on : Transform: Done (Transformer is an Xtraxer)
 apply Chain on : Notifier ------------------------------------------------------3
 bool Check(); must take input from Transform: Done: created DataTruck
+
+
+todo:
+each cell (Trox/checker) must log input / output
+implement NumberIsDifferent
