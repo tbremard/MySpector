@@ -27,7 +27,8 @@ xtrax: GetLen(dataTruck)    -----------------------------------------------
 
 Checker must be available on text : Contains / DoNotContain
 create test to isolate Title with Between operator   : Done
-create use case to check if number Greater than reference ----------------- 1 : Allianz oblig
+create use case to check if number Greater than reference(Allianz oblig) : Done  
+create use case to check if number is Different than reference           : Done  
 
 Rename "XtraxRule" to "Trox"
 ConsoleRunner    : Done

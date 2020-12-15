@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace MySpector
 {
@@ -6,6 +7,7 @@ namespace MySpector
     {
         public string GetText();
         public decimal? GetNumber();
+        string PreviewText { get; }
     }
 
     public class DataTruck : IDataTruck
@@ -39,6 +41,16 @@ namespace MySpector
         public string GetText()
         {
             return _text;
+        }
+
+        public string PreviewText
+        {
+            get
+            {
+                int len = Math.Min(20, _text.Length);
+                string ret = _text.Substring(0, len) + "...";
+                return ret;
+            }
         }
 
         public static IDataTruck CreateNumber(decimal? number)

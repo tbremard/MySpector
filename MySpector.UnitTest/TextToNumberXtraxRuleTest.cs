@@ -2,7 +2,7 @@
 
 namespace MySpector.UnitTest
 {
-    public class TextToNumberTransformerTest
+    public class TextToNumberXtraxRuleTest
     {
         [TestCase(1123.56, "1 1 2 3 , 5 6")]
         [TestCase(1123.56, "1123,56")]
