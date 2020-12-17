@@ -4,11 +4,13 @@ namespace MySpector.Core
 {
     public class WatchItem
     {
-        public string Name;
-        public string Url;
         public bool Enabled = true;
-        public XtraxRule XtraxChain;
-        public CheckerParam CheckerParam { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public XtraxRule XtraxChain { get; set; }
+        public IChecker Checker => CheckerFactory.Create(CheckerParam);
+        public INotifier NotifyChain => new StubNotifier();
+        public CheckerParam CheckerParam{ get; set; }
         public string Token
         {
             get

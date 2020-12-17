@@ -10,6 +10,7 @@ namespace MySpector.UnitTest
         [TestCase(1123.56, "1,123.56")]
         [TestCase(1123.56, "1123.56")]
         [TestCase(123.56,  "123,56")]
+        [TestCase(1209,    "1209,-")]
         [TestCase(null,  "")]
         [TestCase(null,  null)]
         [TestCase(null,  "a")]
@@ -51,23 +52,5 @@ namespace MySpector.UnitTest
             decimal expectedNumber = 111222333444123.5698m;
             Assert.AreEqual(expectedNumber, actualNumber);
         }
-
-        [TestCase("aaaaXaaaaa", "aaaaXaaaaa", "XX", "Y")]
-        [TestCase("aaaaYaaaaa", "aaaaXaaaaa", "X", "Y")]
-        [TestCase("aaaaYaaaaa", "aaaaXXaaaaa", "XX", "Y")]
-        [TestCase("YaaaaYaaaaaY", "XXaaaaXXaaaaaXX", "XX", "Y")]
-        [TestCase("", "", "", "")]
-        [TestCase("", "", null, null)]
-        [TestCase("aaa", "aaa", null, null)]
-        [TestCase("", null, null, null)]
-        public void TransformTextReplace_WhenStringIsValid_ThenOk(string expected, string text, string oldToken, string newToken)
-        {
-            var _sut = new TextReplaceXtraxRule(oldToken, newToken);
-
-            var actual = _sut.GetOutputChained(DataTruck.CreateText(text));
-
-            Assert.AreEqual(expected, actual.GetText());
-        }
-
     }
 }

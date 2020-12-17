@@ -18,8 +18,8 @@ NumberIsEqual    : Done
 +Notifier
 StubNotifier     : Done
 MailNotifier     : Problem : need Smtp Tls server
-WebCallback      :     -----------------------------------------------------2
-TwitterNotifier  :
+WebCallback      :     TODO
+TwitterNotifier  :     TODO
 
 textToNumber must be an element of Xtrax : Done
 xtrax: implement replace() : done
@@ -30,7 +30,8 @@ create test to isolate Title with Between operator   : Done
 create use case to check if number Greater than reference(Allianz oblig) : Done  
 create use case to check if number is Different than reference           : Done  
 
-Rename "XtraxRule" to "Trox"
+
+Rename "XtraxRule" to "Trox"-----------------------------------------
 ConsoleRunner    : Done
 
 Database : each Ressource can be linked to a set of pipelines
@@ -40,14 +41,13 @@ use case: an indicrect pipeline can find the minimum price on a set of pipelines
 
 each pipeline is organized in a folder hierarchy with 'Composite pattern': there are Containers and items . a pipeline is an item
 
-
-
 problem:
 apply Chain on : Transform: Done (Transformer is an Xtraxer)
 apply Chain on : Notifier ------------------------------------------------------3
 bool Check(); must take input from Transform: Done: created DataTruck
 
-
 todo:
 each cell (Trox/checker) must log input / output
 implement NumberIsDifferent
+
+console factory / db data ---------------------1

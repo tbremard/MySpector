@@ -40,9 +40,7 @@ namespace MySpector.Cons
                 _log.Error("Cannot load data");
                 return;
             }
-            var stubNotifier = new StubNotifier();
-            var checker = CheckerFactory.Create(item.CheckerParam);
-            var sut = new SpectorPipeline(item.Name, truck, item.XtraxChain, checker, stubNotifier);
+            var sut = new SpectorPipeline(item.Name, truck, item.XtraxChain, item.Checker, item.NotifyChain);
             bool isOk = sut.Process();
             _log.Debug($"isOk: {isOk}");
         }
