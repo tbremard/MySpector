@@ -47,8 +47,20 @@ namespace MySpector
         {
             get
             {
-                int len = Math.Min(20, _text.Length);
-                string ret = _text.Substring(0, len) + "...";
+                const int MaxLength = 20;
+                int len;
+                string suffix;
+                if (_text.Length > MaxLength)
+                {
+                    len = MaxLength;
+                    suffix = "...";
+                }
+                else
+                {
+                    len = _text.Length;
+                    suffix = string.Empty;
+                }
+                string ret = _text.Substring(0, len) + suffix;
                 return ret;
             }
         }

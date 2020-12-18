@@ -1,9 +1,12 @@
 ﻿using System.Globalization;
+using NLog;
 
 namespace MySpector
 {
     public class TextToNumberXtraxRule : XtraxRule
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
+
         protected override IDataTruck GetOutput(IDataTruck dataIn)
         {
             IDataTruck dataOut;
@@ -11,10 +14,16 @@ namespace MySpector
             decimal ret;
             if (string.IsNullOrEmpty(textNumber))
             {
+                _log.Error("Input: NULL");
                 dataOut = new DataTruck(textNumber, null);
                 return dataOut;
             }
+            _log.Trace($"Input: '{dataIn.PreviewText}'");
             textNumber = textNumber.Replace(" ", null);
+            textNumber = textNumber.Replace(",-", null);
+            textNumber = textNumber.Replace(",–", null);
+            textNumber = textNumber.Replace(".-", null);
+            textNumber = textNumber.Replace(".–", null);
             var provider = new NumberFormatInfo();
             if (textNumber.Contains('.') && textNumber.Contains(','))
             {
