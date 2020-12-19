@@ -9,7 +9,6 @@ namespace MySpector.Core
         static Logger _log = LogManager.GetCurrentClassLogger();
         static Random random = new Random((int)DateTime.Now.Ticks);
 
-
         public static string DownloadToLocalFile(WatchItem item)
         {
             var downloader = HttpDownloader.Create();// protocol to be at the control of user
@@ -30,7 +29,10 @@ namespace MySpector.Core
             int rand = random.Next(1, 1000);
             string fileName = timeStamp + "__" + item.Token + "_" + rand + "_dl.html";
             _log.Debug("File saved: " + fileName);
-            string directory = "Downloads";
+            string month = DateTime.Now.ToString("yyyy-MM");
+            string day = DateTime.Now.ToString("dd");
+            const string ROOT_DIR = "Downloads";
+            string directory = Path.Combine(ROOT_DIR, month, day);
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
             string filePath = Path.Combine(directory, fileName);

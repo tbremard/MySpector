@@ -51,3 +51,4 @@ each cell (Trox/checker) must log input / output
 implement NumberIsDifferent
 
 console factory / db data ---------------------1
+
