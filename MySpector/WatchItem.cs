@@ -7,11 +7,10 @@ namespace MySpector.Core
         public bool Enabled = true;
         public string Name { get; set; }
         public string Url { get; set; }
-        public XtraxRule XtraxChain { get; set; }
-        public IChecker Checker => CheckerFactory.Create(CheckerParam);
-        public INotifier NotifyChain => new StubNotifier();
-        public CheckerParam CheckerParam{ get; set; }
-        public string Token
+        public XtraxRule XtraxChain { get; }
+        public IChecker Checker { get; }
+        public INotifier NotifyChain { get; }
+        public string FileToken
         {
             get
             {
@@ -19,6 +18,13 @@ namespace MySpector.Core
                 string ret = new string(alphas.ToArray());
                 return ret;
             }
+        }
+
+        public WatchItem(XtraxRule xtraxChain, IChecker checker, INotifier notifyChain)
+        {
+            XtraxChain = xtraxChain;
+            Checker = checker;
+            NotifyChain = notifyChain;
         }
     }
 }

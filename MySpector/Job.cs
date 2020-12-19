@@ -37,6 +37,7 @@ namespace MySpector.Core
         public bool Process(IList<WatchItem> watchList)
         {
             bool ret = true;
+            _log.Debug("Processing " + watchList.Count + " items");
             foreach (var item in watchList)
             {
                 ret &= Process(item);

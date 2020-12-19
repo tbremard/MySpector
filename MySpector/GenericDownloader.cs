@@ -27,7 +27,7 @@ namespace MySpector.Core
         {
             string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             int rand = random.Next(1, 1000);
-            string fileName = timeStamp + "__" + item.Token + "_" + rand + "_dl.html";
+            string fileName = timeStamp + "__" + item.FileToken + "_" + rand + "_dl.html";
             _log.Debug("File saved: " + fileName);
             string month = DateTime.Now.ToString("yyyy-MM");
             string day = DateTime.Now.ToString("dd");

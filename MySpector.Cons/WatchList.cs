@@ -12,8 +12,6 @@ namespace MySpector.Cons
             ret.Add(CreateHystouF7());
             ret.Add(CreateAllianzOblig());
             ret.Add(CreateIdealoPs4Pro());
-
-            //  ret.Add(new WatchItem() { Name = "Saturn: PS4 Pro", Url = "https://www.saturn.de/de/product/_sony-playstation-4-pro-1tb-jet-black-g-eur-2495539.html", Xpath = "/html/body/div[1]/div[2]/div[2]/div[1]/div/div[4]/div/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/span[2]" });
             return ret;
         }
 
@@ -27,13 +25,13 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
-
-            var ret = new WatchItem()
+            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":800, \"OrEqual\":true}");
+            var checker = CheckerFactory.Create(checkerParam);
+            var notifier = new StubNotifier();
+            var ret = new WatchItem(xtraxChain, checker, notifier)
             {
                 Name = "Galaxus: Zotac 72070",
                 Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721",
-                XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":800, \"OrEqual\":true}"),
                 Enabled = true
             };
             return ret;
@@ -49,13 +47,13 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
-
-            var ret = new WatchItem()
+            var checkerParam = new CheckerParam(CheckerType.IsGreater, "{\"Reference\":105, \"OrEqual\":true}");
+            var checker = CheckerFactory.Create(checkerParam);
+            var notifier = new StubNotifier();
+            var ret = new WatchItem(xtraxChain, checker, notifier)
             {
                 Name = "AllianzOblig",
                 Url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04",
-                XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsGreater, "{\"Reference\":105, \"OrEqual\":true}"),
                 Enabled = true
             };
             return ret;
@@ -73,13 +71,13 @@ namespace MySpector.Cons
             xTraxParams.Add(afterParam);
             xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
-
-            var ret = new WatchItem()
+            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":500, \"OrEqual\":true}");
+            var checker = CheckerFactory.Create(checkerParam);
+            var notifier = new StubNotifier();
+            var ret = new WatchItem(xtraxChain, checker, notifier)
             {
                 Name = "Hystou: F7",
                 Url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html",
-                XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":500, \"OrEqual\":true}"),
                 Enabled = true
             };
             return ret;
@@ -97,12 +95,13 @@ namespace MySpector.Cons
             xTraxParams.Add(betweenParam);
             xTraxParams.Add(textToNumberParam);
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
-            var ret = new WatchItem()
+            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":250, \"OrEqual\":true}");
+            var checker = CheckerFactory.Create(checkerParam);
+            var notifier = new StubNotifier();
+            var ret = new WatchItem(xtraxChain, checker, notifier)
             {
                 Name = "Idealo: PS4 Pro",
                 Url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html",
-                XtraxChain = xtraxChain,
-                CheckerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":250, \"OrEqual\":true}"),
                 Enabled = true
             };
             return ret;
