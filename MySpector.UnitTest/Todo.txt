@@ -23,13 +23,12 @@ TwitterNotifier  :     TODO
 
 textToNumber must be an element of Xtrax : Done
 xtrax: implement replace() : done
-xtrax: GetLen(dataTruck)    -----------------------------------------------
+xtrax: GetLen(dataTruck)    --------------------------------------------: done : LengthOfTextXtraxRule
 
 Checker must be available on text : Contains / DoNotContain
 create test to isolate Title with Between operator   : Done
 create use case to check if number Greater than reference(Allianz oblig) : Done  
 create use case to check if number is Different than reference           : Done  
-
 
 Rename "XtraxRule" to "Trox"-----------------------------------------
 ConsoleRunner    : Done
@@ -52,3 +51,4 @@ implement NumberIsDifferent
 
 console factory / db data ---------------------1
 
+Xtract Xpath of Xml doc-----------------------------------------------

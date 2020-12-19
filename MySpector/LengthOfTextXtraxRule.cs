@@ -12,7 +12,7 @@ namespace MySpector
             string content = data.GetText();
             if (string.IsNullOrEmpty(content))
             {
-                _log.Debug("Text is empty : return 0");
+                _log.Error("Text is empty : return 0");
                 return DataTruck.CreateNumber(0);
             }
             string trimmed = content.Trim();
@@ -21,5 +21,4 @@ namespace MySpector
             return ret;
         }
     }
-
 }
