@@ -23,7 +23,7 @@ namespace MySpector
 
         public bool Process()
         {
-            bool ret = false;
+            bool ret;
             try
             {
                 var data = _rule.GetOutputChained(_data);
@@ -37,10 +37,10 @@ namespace MySpector
                 if (isSignaled)
                 {
                     _notifier.Notify("Pipeline triggered alert");
-                    ret = true;
                 }
+                ret = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error($"Data extraction failed for item: '{Name}'");
                 _log.Error(ex);

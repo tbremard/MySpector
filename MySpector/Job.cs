@@ -29,9 +29,9 @@ namespace MySpector.Core
                 return false;
             }
             var sut = new SpectorPipeline(item.Name, truck, item.XtraxChain, item.Checker, item.NotifyChain);
-            bool isOk = sut.Process();
-            _log.Debug($"isOk: {isOk}");
-            return true;
+            bool isDone = sut.Process();
+            _log.Debug($"isDone: {isDone}");
+            return isDone;
         }
 
         public bool Process(IList<WatchItem> watchList)
