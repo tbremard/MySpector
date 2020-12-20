@@ -4,19 +4,22 @@ namespace MySpector.UnitTest
 {
     public class TextToNumberXtraxRuleTest
     {
-        [TestCase(1123.56, "1 1 2 3 , 5 6")]
-        [TestCase(1123.56, "1123,56")]
-        [TestCase(1123.56, "1.123,56")]
-        [TestCase(1123.56, "1,123.56")]
-        [TestCase(1123.56, "1123.56")]
-        [TestCase(123.56,  "123,56")]
-        [TestCase(1209,    "1209,-")]
-        [TestCase(1209,    "1209,–")]
-        [TestCase(1209,    "1209.-")]
-        [TestCase(1209,    "1209.–")]
-        [TestCase(null,  "")]
-        [TestCase(null,  null)]
-        [TestCase(null,  "a")]
+        [TestCase(1123.56,  "1 1 2 3 , 5 6")]
+        [TestCase(1123.56,  "1123,56")]
+        [TestCase(1123.56,  "1.123,56")]
+        [TestCase(1123.56,  "1,123.56")]
+        [TestCase(1123.56,  "1123.56")]
+        [TestCase(123.56,   "123,56")]
+        [TestCase(1209,     "1209,-")]
+        [TestCase(1209,     "1209,–")]
+        [TestCase(1209,     "1209.-")]
+        [TestCase(1209,     "1209.–")]
+        [TestCase(1325,     "1,325")]
+        [TestCase(13630.51, "13.630,51")]
+        [TestCase(13630.51, "13630,51")]
+        [TestCase(null,     "")]
+        [TestCase(null,     null)]
+        [TestCase(null,     "a")]
         public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal? expectedNumber, string textNumber)
         {
             var _sut = new TextToNumberXtraxRule();

@@ -13,7 +13,7 @@ NumberIsEqual    : Done
 + Expose result via webservice
 + Expose Result by iframe
 
-+TransformerFactory				: Done : text to number is a xtraxRule
++TransformerFactory				: Done: text to number is a xtraxRule
 
 +Notifier
 StubNotifier     : Done
@@ -49,6 +49,11 @@ todo:
 each cell (Trox/checker) must log input / output
 implement NumberIsDifferent
 
-console factory / db data ---------------------1
 
-Xtract Xpath of Xml doc-----------------------------------------------
+Xtract Xpath of Xml doc-----------------------------------------------4
+use MySql ------------------------------------------------------------5
+console factory / db data --------------------------------------------5
+
+make public/private Spectors
+make page display all public Spectors
+

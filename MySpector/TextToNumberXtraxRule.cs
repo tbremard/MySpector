@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using NLog;
 
 namespace MySpector
@@ -53,6 +54,10 @@ namespace MySpector
             {
                 if (textNumber.Contains(','))
                 {
+                    if (ThreeDigitsAfterComa(textNumber))
+                    {
+                        textNumber = textNumber.Replace(",", string.Empty);
+                    }
                     provider.NumberGroupSeparator = "";
                     provider.NumberDecimalSeparator = ",";
                     if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
@@ -79,6 +84,16 @@ namespace MySpector
             }
             dataOut = new DataTruck(textNumber, null);
             return dataOut;
+        }
+
+        private bool ThreeDigitsAfterComa(string textNumber)
+        {
+            int indexOfComa = textNumber.IndexOf(',');
+            if (indexOfComa == textNumber.Length)
+                return false;
+            string afterComa = textNumber.Substring(indexOfComa+1);
+            bool ret = afterComa.Length == 3 ? true : false;
+            return ret;
         }
     }
 }
