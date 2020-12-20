@@ -12,6 +12,7 @@ namespace MySpector.Cons
             ret.Add(CreateHystouF7());
             ret.Add(CreateAllianzOblig());
             ret.Add(CreateIdealoPs4Pro());
+            ret.Add(CreateBalticDryIndex());
             return ret;
         }
 
@@ -24,16 +25,20 @@ namespace MySpector.Cons
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
-            var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":800, \"OrEqual\":true}");
+            string name = "Galaxus: Zotac 72070";
+            string url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721";
+            bool enabled = true;
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
+            return ret;
+        }
+
+        private static WatchItem CreateSpecificItem(List<XtraxDefinition> xTraxParams, CheckerParam checkerParam, string name, string url, bool enabled)
+        {
+            var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checker = CheckerFactory.Create(checkerParam);
-            var notifier = new StubNotifier();
-            var ret = new WatchItem(xtraxChain, checker, notifier)
-            {
-                Name = "Galaxus: Zotac 72070",
-                Url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721",
-                Enabled = true
-            };
+            var notifier = NotifyFactory.CreateChain();
+            var ret = new WatchItem(name, url, enabled, xtraxChain, checker, notifier);
             return ret;
         }
 
@@ -46,16 +51,11 @@ namespace MySpector.Cons
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
-            var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checkerParam = new CheckerParam(CheckerType.IsGreater, "{\"Reference\":105, \"OrEqual\":true}");
-            var checker = CheckerFactory.Create(checkerParam);
-            var notifier = new StubNotifier();
-            var ret = new WatchItem(xtraxChain, checker, notifier)
-            {
-                Name = "AllianzOblig",
-                Url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04",
-                Enabled = true
-            };
+            string name = "AllianzOblig";
+            string url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04";
+            bool enabled = true;
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
             return ret;
         }
 
@@ -70,16 +70,11 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);
             xTraxParams.Add(textToNumberParam);
-            var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":500, \"OrEqual\":true}");
-            var checker = CheckerFactory.Create(checkerParam);
-            var notifier = new StubNotifier();
-            var ret = new WatchItem(xtraxChain, checker, notifier)
-            {
-                Name = "Hystou: F7",
-                Url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html",
-                Enabled = true
-            };
+            string name = "Hystou: F7";
+            string url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html";
+            bool enabled = true;
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
             return ret;
         }
 
@@ -94,18 +89,34 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(betweenParam);
             xTraxParams.Add(textToNumberParam);
-            var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":250, \"OrEqual\":true}");
-            var checker = CheckerFactory.Create(checkerParam);
-            var notifier = new StubNotifier();
-            var ret = new WatchItem(xtraxChain, checker, notifier)
-            {
-                Name = "Idealo: PS4 Pro",
-                Url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html",
-                Enabled = true
-            };
+            string name = "Idealo: PS4 Pro";
+            string url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html";
+            bool enabled = true;
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
             return ret;
         }
+
+        private static WatchItem CreateBalticDryIndex()
+        {
+            string rawString = "//*[@id=\"description\"]";
+            string escapedString = EscapeDoubleQuotes(rawString);
+            var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var betweenParam = new XtraxDefinition(XtraxType.Between, "{\"Prefix\":\"percent to\", \"Suffix\":\"in the\"}");
+            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
+            var xTraxParams = new List<XtraxDefinition>();
+            xTraxParams.Add(xpathParam);
+            xTraxParams.Add(betweenParam);
+            xTraxParams.Add(textToNumberParam);
+            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1100, \"OrEqual\":true}");
+            string name = "BDI";
+            string url = "https://tradingeconomics.com/commodity/baltic";
+            bool enabled = true;
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
+            return ret;
+        }
+
+
 
         private static string EscapeDoubleQuotes(string rawString)
         {
