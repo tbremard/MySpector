@@ -2,15 +2,17 @@
 
 namespace MySpector
 {
-    public class WebNotifier : INotifier
+    public class WebNotifier : Notify
     {
-        static Logger _log = LogManager.GetCurrentClassLogger();
+//        static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public bool Notify(string message)
+
+        protected override bool NotifySingle(string message)
         {
             _log.Debug("Notification: " + message);
             return false;
         }
+
     }
 
 }

@@ -23,7 +23,7 @@ TwitterNotifier  :     TODO
 
 textToNumber must be an element of Xtrax : Done
 xtrax: implement replace() : done
-xtrax: GetLen(dataTruck)    --------------------------------------------: done : LengthOfTextXtraxRule
+LengthOfTextXtraxRule        --------------------------------------------: done 
 
 Checker must be available on text : Contains / DoNotContain
 create test to isolate Title with Between operator   : Done
@@ -49,11 +49,13 @@ todo:
 each cell (Trox/checker) must log input / output
 implement NumberIsDifferent
 
-
 Xtract Xpath of Xml doc-----------------------------------------------4
 use MySql ------------------------------------------------------------5
 console factory / db data --------------------------------------------5
 
 make public/private Spectors
 make page display all public Spectors
+
+each webrequest saves the latency.
+it is possible to trigger a notification when latency is above a given limit
 

@@ -2,7 +2,7 @@
 {
     internal class NotifyFactory
     {
-        internal static INotifier CreateChain()
+        internal static Notify CreateChain()
         {
             var ret = new StubNotifier();
             return ret;

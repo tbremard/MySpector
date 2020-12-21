@@ -1,14 +1,11 @@
-﻿using NLog;
-
-namespace MySpector
+﻿namespace MySpector
 {
-    public class StubNotifier: INotifier
+    public class StubNotifier: Notify
     {
-        static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public bool Notify(string message)
+        protected override bool NotifySingle(string message)
         {
-            _log.Debug("Notification: "+message);
+            _log.Debug("Notification: " + message);
             return true;
         }
     }

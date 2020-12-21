@@ -6,10 +6,11 @@ using System;
 
 namespace MySpector
 {
-    public class MailNotifier : INotifier
+    //securesmtp.t-online.de
+    public class MailNotifier : Notify
     {
-        static Logger _log = LogManager.GetCurrentClassLogger();
-        public bool Notify(string msg)
+        //        static Logger _log = LogManager.GetCurrentClassLogger();
+        protected override bool NotifySingle(string msg)
         {
             bool ret = false;
             _log.Debug($"Preparing to mail: '{msg}'");
@@ -42,6 +43,6 @@ namespace MySpector
                 }
             }
             return ret;
-        }
+        }        
     }
 }

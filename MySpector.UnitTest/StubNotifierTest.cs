@@ -12,9 +12,9 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        public void Check_WenInputIsValid_ThenOk()
+        public void NotifyChained_WenInputIsValid_ThenOk()
         {
-            _sut.Notify("This is a test");
+            _sut.NotifyChained("This is a test");
         }
     }
 }

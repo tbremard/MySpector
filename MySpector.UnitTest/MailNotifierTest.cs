@@ -14,7 +14,7 @@ namespace MySpector.UnitTest
         [Test]
         public void Check_WenInputIsValid_ThenOk()
         {
-            var ret = _sut.Notify("This is a test");
+            var ret = _sut.NotifyChained("This is a test");
 
             Assert.IsTrue(ret, "cannot send mail");
         }

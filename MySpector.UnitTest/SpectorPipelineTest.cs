@@ -15,7 +15,7 @@ namespace MySpector.UnitTest
         [Test]
         public void Process_WhenPriceIsEqualToTarget_ThenCheckNotificationIsTriggered()
         {
-            var stubNotifier = Substitute.For<INotifier>();
+            var stubNotifier = Substitute.For<Notify>();
             var sample = TestSampleFactory.CreateSample(TestSampleId.PS4_SATURN);
             var transformer = new TextToNumberXtraxRule();
             sample.Rule.SetNext(transformer);
@@ -26,7 +26,7 @@ namespace MySpector.UnitTest
             bool isOk = sut.Process();
 
             Assert.IsTrue(isOk);
-            stubNotifier.Received().Notify(Arg.Any<string>());
+            stubNotifier.Received().NotifyChained(Arg.Any<string>());
         }
     }
 }

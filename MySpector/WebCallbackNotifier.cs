@@ -2,14 +2,15 @@
 
 namespace MySpector
 {
-    public class WebCallbackNotifier : INotifier
+    public class WebCallbackNotifier : Notify
     {
-        static Logger _log = LogManager.GetCurrentClassLogger();
+        //        static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public bool Notify(string msg)
+        protected override bool NotifySingle(string message)
         {
-            _log.Debug($"Preparing to callback with message: '{msg}'");
+            _log.Debug($"Preparing to callback with message: '{message}'");
             return false;
         }
+
     }
 }

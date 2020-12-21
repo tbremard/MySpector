@@ -10,9 +10,9 @@ namespace MySpector
         private IDataTruck _data;
         private XtraxRule _rule;
         private IChecker _checker;
-        private INotifier _notifier;
+        private Notify _notifier;
 
-        public SpectorPipeline(string name, IDataTruck data, XtraxRule rule, IChecker checker, INotifier notifier)
+        public SpectorPipeline(string name, IDataTruck data, XtraxRule rule, IChecker checker, Notify notifier)
         {
             Name = name;
             _data = data;
@@ -36,7 +36,7 @@ namespace MySpector
                 bool isSignaled = _checker.Check(data);
                 if (isSignaled)
                 {
-                    _notifier.Notify("Pipeline triggered alert");
+                    _notifier.NotifyChained("Pipeline triggered alert");
                 }
                 ret = true;
             }
