@@ -47,7 +47,7 @@ namespace MySpector
         {
             get
             {
-                const int MaxLength = 20;
+                const int MaxLength = 40;
                 int len;
                 string suffix;
                 if (_text.Length > MaxLength)
@@ -60,7 +60,10 @@ namespace MySpector
                     len = _text.Length;
                     suffix = string.Empty;
                 }
-                string ret = _text.Substring(0, len) + suffix;
+                string substring = _text.Substring(0, len);
+                substring = substring.Replace("\r\n", " ");
+                substring = substring.Replace("\n", " ");
+                string ret = substring + suffix;
                 return ret;
             }
         }

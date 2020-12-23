@@ -11,13 +11,24 @@ namespace MySpector.Core
 
         public static string DownloadToLocalFile(WatchItem item)
         {
-            var downloader = HttpDownloader.Create();// protocol to be at the control of user
-            var response = downloader.Download(item);
-            string filePath = GenerateFilePath(item);
-            File.WriteAllText(filePath, response.Content);
-            if (!response.Success)
+            string filePath;
+            try
             {
-                _log.Error("Error in download");
+                var downloader = HttpDownloader.Create();// protocol to be at the control of user
+                var response = downloader.Download(item);
+                _log.Debug("Latency: " + response.Latency.TotalMilliseconds + "ms");
+                filePath = GenerateFilePath(item);
+                File.WriteAllText(filePath, response.Content);
+                _log.Debug("File saved: " + filePath);
+                if (!response.Success)
+                {
+                    _log.Error("Error in download");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
                 return null;
             }
             return filePath;
@@ -27,8 +38,7 @@ namespace MySpector.Core
         {
             string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             int rand = random.Next(1, 1000);
-            string fileName = timeStamp + "__" + item.FileToken + "_" + rand + "_dl.html";
-            _log.Debug("File saved: " + fileName);
+            string fileName = timeStamp + "__" + item.FileToken + "_" + rand + "_.dl";
             string month = DateTime.Now.ToString("yyyy-MM");
             string day = DateTime.Now.ToString("dd");
             const string ROOT_DIR = "Downloads";

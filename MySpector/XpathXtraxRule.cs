@@ -21,6 +21,7 @@ namespace MySpector
             try
             {
                 var htmldoc = new HtmlDocument();
+                _log.Trace($"Extracting XPath from: [{data.PreviewText}]");
                 htmldoc.LoadHtml(data.GetText());
                 var node = htmldoc.DocumentNode.SelectSingleNode(_xPath);
                 if (node == null)
@@ -31,6 +32,7 @@ namespace MySpector
                 else
                 {
                     ret = DataTruck.CreateText(node.InnerText.Trim());
+                    _log.Trace($"Succesfully extracted: [{ret.PreviewText}]");
                 }
             }
             catch (Exception ex)

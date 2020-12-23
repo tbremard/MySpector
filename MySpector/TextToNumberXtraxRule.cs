@@ -45,6 +45,7 @@ namespace MySpector
                 }
                 if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
                 {
+                    _log.Trace($"Output: '{ret}'");
                     dataOut = new DataTruck(textNumber, ret);
                     return dataOut;
                 }
@@ -61,6 +62,7 @@ namespace MySpector
                     provider.NumberDecimalSeparator = ",";
                     if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
                     {
+                        _log.Trace($"Output: '{ret}'");
                         dataOut = new DataTruck(textNumber, ret);
                         return dataOut;
                     }
@@ -71,6 +73,7 @@ namespace MySpector
                     provider.NumberDecimalSeparator = ".";
                     if (decimal.TryParse(textNumber, NumberStyles.Any, provider, out ret))
                     {
+                        _log.Trace($"Output: '{ret}'");
                         dataOut = new DataTruck(textNumber, ret);
                         return dataOut;
                     }
@@ -78,10 +81,12 @@ namespace MySpector
             }
             if (decimal.TryParse(textNumber, out ret))
             {
+                _log.Trace($"Output: '{ret}'");
                 dataOut = new DataTruck(textNumber, ret);
                 return dataOut;
             }
             dataOut = new DataTruck(textNumber, null);
+            _log.Error($"Output: Cannot transform to number");
             return dataOut;
         }
 

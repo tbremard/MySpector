@@ -4,6 +4,7 @@ using System.Net.Http;
 using NLog;
 using System.Security.Authentication;
 using MySpector.Core;
+using System.Diagnostics;
 
 namespace MySpector
 {
@@ -82,14 +83,17 @@ namespace MySpector
             _log.Debug(item.Target.RequestUri);
             try
             {
+                var watch = new Stopwatch();
+                watch.Start();
                 HttpResponse response = HttpRequest(item.Target);
+                watch.Stop();
                 bool success = response.HttpResponseCode == HttpStatusCode.OK;
-                ret = new DownloadResponse(response.Content, success);
+                ret = new DownloadResponse(response.Content, success, watch.Elapsed);
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
-                ret = new DownloadResponse(string.Empty, false);
+                ret = new DownloadResponse(string.Empty, false, TimeSpan.Zero);
             }
             return ret;
         }
