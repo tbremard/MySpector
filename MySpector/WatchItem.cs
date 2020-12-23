@@ -6,7 +6,7 @@ namespace MySpector.Core
     {
         public bool Enabled { get; } = true;
         public string Name { get; }
-        public string Url { get; }
+        public HttpTarget Target { get; }
         public XtraxRule XtraxChain { get; }
         public IChecker Checker { get; }
         public Notify NotifyChain { get; }
@@ -19,8 +19,6 @@ namespace MySpector.Core
                 return ret;
             }
         }
-
-        public HttpTarget Target { get; internal set; }
 
         public WatchItem(string name, HttpTarget target, bool enabled, XtraxRule xtraxChain, IChecker checker, Notify notifyChain)
         {
