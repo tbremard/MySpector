@@ -22,7 +22,7 @@ namespace MySpector.UnitTest
         [TestCase(null,     "a")]
         public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal? expectedNumber, string textNumber)
         {
-            var _sut = new TextToNumberXtraxRule();
+            var _sut = new TextToNumberXtrax();
 
             var actual = _sut.GetOutputChained(DataTruck.CreateText(textNumber));
 
@@ -34,7 +34,7 @@ namespace MySpector.UnitTest
         [Test]
         public void TransformTextToNumber_WhenStringIsVeryLongWithLotOfComa_ThenNumberIsValid()
         {
-            var _sut = new TextToNumberXtraxRule();
+            var _sut = new TextToNumberXtrax();
             string textNumber = "111,222,333,444,123.5698";
 
             var actual = _sut.GetOutputChained(DataTruck.CreateText(textNumber));
@@ -48,7 +48,7 @@ namespace MySpector.UnitTest
         [Test]
         public void TransformStringToNumber_WhenStringIsVeryLongWithLotOfPoints_ThenNumberIsValid()
         {
-            var _sut = new TextToNumberXtraxRule();
+            var _sut = new TextToNumberXtrax();
             string textNumber = "111.222.333.444.123,5698";
 
             var actual = _sut.GetOutputChained(DataTruck.CreateText(textNumber));

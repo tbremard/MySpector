@@ -1,6 +1,6 @@
 ﻿namespace MySpector
 {
-    public class XtraxRuleConst
+    public class XtraxConst
     {
         public const string NOT_FOUND = "NOT_FOUND";
     }

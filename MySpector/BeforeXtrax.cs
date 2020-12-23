@@ -2,12 +2,12 @@
 
 namespace MySpector
 {
-    public class BeforeXtraxRule: XtraxRule
+    public class BeforeXtrax: Xtrax
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         private readonly string _suffix;
 
-        public BeforeXtraxRule(string suffix)
+        public BeforeXtrax(string suffix)
         {
             _suffix = suffix;
         }
@@ -19,7 +19,7 @@ namespace MySpector
             if (!content.Contains(_suffix))
             {
                 _log.Error($"data do not contain '{_suffix}'");
-                ret = DataTruck.CreateText(XtraxRuleConst.NOT_FOUND);
+                ret = DataTruck.CreateText(XtraxConst.NOT_FOUND);
             }
             else
             {

@@ -14,7 +14,7 @@ namespace MySpector.UnitTest
         [TestCase("", null, null, null)]
         public void TransformTextReplace_WhenStringIsValid_ThenOk(string expected, string text, string oldToken, string newToken)
         {
-            var _sut = new TextReplaceXtraxRule(oldToken, newToken);
+            var _sut = new TextReplaceXtrax(oldToken, newToken);
 
             var actual = _sut.GetOutputChained(DataTruck.CreateText(text));
 

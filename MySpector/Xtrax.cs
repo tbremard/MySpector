@@ -1,14 +1,14 @@
 ﻿namespace MySpector
 {
-    public abstract class XtraxRule
+    public abstract class Xtrax
     {
         protected abstract IDataTruck GetOutput(IDataTruck data);
-        protected XtraxRule Next; // pointer to next action to perform
+        protected Xtrax Next; // pointer to next action to perform
                                   // if null the current element is the last element of chain
         /// <summary>
         /// set new action at end of chain
         /// </summary>
-        public void SetNext(XtraxRule next)
+        public void SetNext(Xtrax next)
         {
             if (Next == null)
                 Next = next;

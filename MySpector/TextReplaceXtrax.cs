@@ -3,13 +3,13 @@ using System;
 
 namespace MySpector
 {
-    public class TextReplaceXtraxRule : XtraxRule
+    public class TextReplaceXtrax : Xtrax
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         string _oldToken; 
         string _newToken;
 
-        public TextReplaceXtraxRule(string oldToken, string newToken)
+        public TextReplaceXtrax(string oldToken, string newToken)
         {
             _oldToken = oldToken;
             _newToken = newToken;
@@ -21,8 +21,10 @@ namespace MySpector
             IDataTruck ret;
             if (string.IsNullOrEmpty(text))
             {
+                _log.Error("Input is empty: cannot replace content");
                 return DataTruck.CreateText(string.Empty);
             }
+            _log.Trace("Replacing content of '" + data.PreviewText + "'");
             if (string.IsNullOrEmpty(_oldToken))
             {
                 return DataTruck.CreateText(text);
@@ -35,7 +37,7 @@ namespace MySpector
             catch (Exception ex)
             {
                 _log.Error(ex);
-                ret = DataTruck.CreateText(XtraxRuleConst.NOT_FOUND);
+                ret = DataTruck.CreateText(XtraxConst.NOT_FOUND);
             }
             return ret;
         }

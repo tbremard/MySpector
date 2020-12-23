@@ -4,7 +4,7 @@ namespace MySpector.UnitTest
 {
     class BeforeXtraxRuleTest
     {
-        BeforeXtraxRule _sut;
+        BeforeXtrax _sut;
         [SetUp]
         public void Setup()
         {
@@ -12,10 +12,10 @@ namespace MySpector.UnitTest
 
         [TestCase("50.25", "    50.25   EUR", "EUR")]
         [TestCase("1,227.00", "1,227.00USD", "USD")]
-        [TestCase(XtraxRuleConst.NOT_FOUND, "  xxxxxxxxx   ", "EUR")]
+        [TestCase(XtraxConst.NOT_FOUND, "  xxxxxxxxx   ", "EUR")]
         public void GetOutputChained_WhenContentIsThere_ThenFound(string expectedOutput, string content, string token)
         {
-            _sut = new BeforeXtraxRule(token);
+            _sut = new BeforeXtrax(token);
             var rump = DataTruck.CreateText(content);
 
             var data = _sut.GetOutputChained(rump);

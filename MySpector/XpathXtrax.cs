@@ -4,13 +4,13 @@ using NLog;
 
 namespace MySpector
 {
-    public class XpathXtraxRule : XtraxRule
+    public class XpathXtrax : Xtrax
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         private readonly string _xPath;
         private string NOT_FOUND="NOT_FOUND";
 
-        public XpathXtraxRule(string xPath)
+        public XpathXtrax(string xPath)
         {
             _xPath = xPath;
         }

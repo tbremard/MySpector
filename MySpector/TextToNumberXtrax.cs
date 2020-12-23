@@ -3,7 +3,7 @@ using NLog;
 
 namespace MySpector
 {
-    public class TextToNumberXtraxRule : XtraxRule
+    public class TextToNumberXtrax : Xtrax
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 

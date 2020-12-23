@@ -14,7 +14,7 @@ namespace MySpector.UnitTest
         [TestCase(1 , "a")]
         public void TransformTextToNumber_WhenStringIsValid_ThenNumberIsValid(decimal? expectedNumber, string text)
         {
-            var _sut = new LengthOfTextXtraxRule();
+            var _sut = new LengthOfTextXtrax();
 
             var actual = _sut.GetOutputChained(DataTruck.CreateText(text));
 

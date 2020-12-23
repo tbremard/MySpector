@@ -3,7 +3,7 @@
     public class TestSample
     {
         public IDataTruck Data { get; }
-        public XtraxRule Rule { get; }
+        public Xtrax Rule { get; }
         public string ExpectedOutput { get; }
         public string Name { get; }
 
@@ -15,9 +15,9 @@
             Name = name;
         }
 
-        private XtraxRule CreateXpathRule(string rule)
+        private Xtrax CreateXpathRule(string rule)
         {
-            var ret = new XpathXtraxRule(rule);// do not chain other rules here because some test rely on it
+            var ret = new XpathXtrax(rule);// do not chain other rules here because some test rely on it
             return ret;
         }
 

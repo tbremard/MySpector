@@ -1,8 +1,8 @@
 ﻿namespace MySpector.Core
 {
-    public class EmptyXtraxRule : XtraxRule
+    public class EmptyXtrax : Xtrax
     {
-        public EmptyXtraxRule()
+        public EmptyXtrax()
         {
         }
 

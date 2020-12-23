@@ -8,11 +8,11 @@ namespace MySpector
         static Logger _log = LogManager.GetCurrentClassLogger();
         public string Name{ get; private set; }
         private IDataTruck _data;
-        private XtraxRule _rule;
+        private Xtrax _rule;
         private IChecker _checker;
         private Notify _notifier;
 
-        public SpectorPipeline(string name, IDataTruck data, XtraxRule rule, IChecker checker, Notify notifier)
+        public SpectorPipeline(string name, IDataTruck data, Xtrax rule, IChecker checker, Notify notifier)
         {
             Name = name;
             _data = data;
@@ -27,7 +27,7 @@ namespace MySpector
             try
             {
                 var data = _rule.GetOutputChained(_data);
-                if (data.GetText() == XtraxRuleConst.NOT_FOUND)
+                if (data.GetText() == XtraxConst.NOT_FOUND)
                 {
                     _log.Error($"Data extraction failed for item: '{Name}'");
                     return false;

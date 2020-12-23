@@ -2,7 +2,7 @@
 
 namespace MySpector
 {
-    public class LengthOfTextXtraxRule : XtraxRule
+    public class LengthOfTextXtrax : Xtrax
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -17,7 +17,7 @@ namespace MySpector
             }
             string trimmed = content.Trim();
             ret = DataTruck.CreateNumber(trimmed.Length);
-            _log.Debug("Length of [" + data.PreviewText + "] :" + trimmed.Length);
+            _log.Trace("Length of [" + data.PreviewText + "] :" + trimmed.Length);
             return ret;
         }
     }

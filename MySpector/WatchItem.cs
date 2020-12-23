@@ -7,7 +7,7 @@ namespace MySpector.Core
         public bool Enabled { get; } = true;
         public string Name { get; }
         public HttpTarget Target { get; }
-        public XtraxRule XtraxChain { get; }
+        public Xtrax XtraxChain { get; }
         public IChecker Checker { get; }
         public Notify NotifyChain { get; }
         public string FileToken
@@ -20,7 +20,7 @@ namespace MySpector.Core
             }
         }
 
-        public WatchItem(string name, HttpTarget target, bool enabled, XtraxRule xtraxChain, IChecker checker, Notify notifyChain)
+        public WatchItem(string name, HttpTarget target, bool enabled, Xtrax xtraxChain, IChecker checker, Notify notifyChain)
         {
             Name = name;
             Target = target;
