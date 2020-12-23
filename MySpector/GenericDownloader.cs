@@ -9,15 +9,15 @@ namespace MySpector.Core
         static Logger _log = LogManager.GetCurrentClassLogger();
         static Random random = new Random((int)DateTime.Now.Ticks);
 
-        public static string DownloadToLocalFile(WatchItem item)
+        public static IDataTruck DownloadToLocalFile(WatchItem item)
         {
-            string filePath;
+            IDataTruck ret;
             try
             {
                 var downloader = HttpDownloader.Create();// protocol to be at the control of user
                 var response = downloader.Download(item);
-                _log.Debug("Latency: " + response.Latency.TotalMilliseconds + "ms");
-                filePath = GenerateFilePath(item);
+                _log.Debug("Latency: " + Math.Floor( response.Latency.TotalMilliseconds) + "ms");
+                string filePath = GenerateFilePath(item);
                 File.WriteAllText(filePath, response.Content);
                 _log.Debug("File saved: " + filePath);
                 if (!response.Success)
@@ -25,13 +25,14 @@ namespace MySpector.Core
                     _log.Error("Error in download");
                     return null;
                 }
+                ret = DataTruck.CreateText(response.Content);
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
                 return null;
             }
-            return filePath;
+            return ret;
         }
 
         private static string GenerateFilePath(WatchItem item)

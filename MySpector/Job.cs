@@ -11,25 +11,8 @@ namespace MySpector.Core
         {
             _log.Debug($"--------------------");
             _log.Debug($"Process: {item.Name}");
-            if (!item.Enabled)
-            {
-                _log.Debug($"{item.Name} is disabled");
-                return false;
-            }
-            string filePath = GenericDownloader.DownloadToLocalFile(item);
-            if (filePath == null)
-            {
-                _log.Error("Error in Download: Aborting processing");
-                return false;
-            }
-            var truck = DataTruck.CreateTextFromFile(filePath);
-            if (truck == null)
-            {
-                _log.Error("Cannot load data");
-                return false;
-            }
-            var sut = new SpectorPipeline(item.Name, truck, item.XtraxChain, item.Checker, item.NotifyChain);
-            bool isDone = sut.Process();
+            var pipeline = new SpectorPipeline(item);
+            bool isDone = pipeline.Process();
             _log.Debug($"isDone: {isDone}");
             return isDone;
         }

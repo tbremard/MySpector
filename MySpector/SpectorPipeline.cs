@@ -1,24 +1,24 @@
 ﻿using NLog;
 using System;
 
-namespace MySpector
+namespace MySpector.Core
 {
     public class SpectorPipeline
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-        public string Name{ get; private set; }
-        private IDataTruck _data;
-        private Xtrax _rule;
+        public string Name => _item?.Name;
+//        private IDataTruck _data;
+        private Xtrax _xtrax;
         private IChecker _checker;
         private Notify _notifier;
+        private WatchItem _item;
 
-        public SpectorPipeline(string name, IDataTruck data, Xtrax rule, IChecker checker, Notify notifier)
+        public SpectorPipeline(WatchItem item)
         {
-            Name = name;
-            _data = data;
-            _rule = rule;
-            _checker = checker;
-            _notifier = notifier;
+            _item = item;
+            _xtrax = item.XtraxChain;
+            _checker = item.Checker;
+            _notifier = item.NotifyChain;
         }
 
         public bool Process()
@@ -26,7 +26,24 @@ namespace MySpector
             bool ret;
             try
             {
-                var data = _rule.GetOutputChained(_data);
+                if (!_item.Enabled)
+                {
+                    _log.Debug($"{_item.Name} is disabled");
+                    return false;
+                }
+                var truck = GenericDownloader.DownloadToLocalFile(_item);
+                if (truck == null)
+                {
+                    _log.Error("Error in Download: Aborting processing");
+                    return false;
+                }
+                //var truck = DataTruck.CreateTextFromFile(filePath);
+                //if (truck == null)
+                //{
+                //    _log.Error("Cannot load data");
+                //    return false;
+                //}
+                var data = _xtrax.GetOutputChained(truck);
                 if (data.GetText() == XtraxConst.NOT_FOUND)
                 {
                     _log.Error($"Data extraction failed for item: '{Name}'");

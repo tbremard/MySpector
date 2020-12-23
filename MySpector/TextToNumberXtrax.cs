@@ -18,7 +18,7 @@ namespace MySpector
                 dataOut = new DataTruck(textNumber, null);
                 return dataOut;
             }
-            _log.Trace($"Input: '{dataIn.PreviewText}'");
+            _log.Trace($"Input : '{dataIn.PreviewText}'");
             textNumber = textNumber.Replace(" ", null);
             textNumber = textNumber.Replace(",-", null);
             textNumber = textNumber.Replace(",–", null);
