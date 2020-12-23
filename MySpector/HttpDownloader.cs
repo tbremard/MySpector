@@ -34,19 +34,29 @@ namespace MySpector
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12;
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri(target.Uri),
-                Method = HttpMethod.Get,
+                RequestUri = new Uri(target.RequestUri),
+                Method = target.Method,
             };
             request.Headers.Clear();
-//            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
-            request.Headers.Add("User-Agent", "Mozilla/5.0");
-            //request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-            request.Headers.Add("Accept", "*/*");
-            request.Headers.Add("Accept-Language", "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3");
-//            request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
-            request.Headers.Add("Connection", "keep-alive");
-            request.Headers.Add("Upgrade-Insecure-Requests", "1");
-            request.Headers.Add("Cache-Control", "max-age=0 ");
+            if (target.Headers.Count != 0)
+            {
+                foreach (var x in target.Headers)
+                {
+                    request.Headers.Add(x.Key, x.Value);
+                }
+            }
+            else
+            {
+                //            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
+                request.Headers.Add("User-Agent", "Mozilla/5.0");
+                //request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                request.Headers.Add("Accept", "*/*");
+                request.Headers.Add("Accept-Language", "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3");
+                //            request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
+                request.Headers.Add("Connection", "keep-alive");
+                request.Headers.Add("Upgrade-Insecure-Requests", "1");
+                request.Headers.Add("Cache-Control", "max-age=0 ");
+            }
             request.Version = new Version(2,0);
             //            var client = new HttpClient(new LoggingHandler(new HttpClientHandler()));
             var handler = new HttpClientHandler();
@@ -73,7 +83,7 @@ namespace MySpector
             try
             {
                 HttpTarget target = HttpTarget.Create(item.Url);
-                HttpResponse response = HttpRequest(target);
+                HttpResponse response = HttpRequest(item.Target);
                 bool success = response.HttpResponseCode == HttpStatusCode.OK;
                 ret = new DownloadResponse(response.Content, success);
             }

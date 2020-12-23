@@ -29,16 +29,17 @@ namespace MySpector.Cons
             string name = "Galaxus: Zotac 72070";
             string url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721";
             bool enabled = true;
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
+            var target = new HttpTarget(url);
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
-        private static WatchItem CreateSpecificItem(List<XtraxDefinition> xTraxParams, CheckerParam checkerParam, string name, string url, bool enabled)
+        private static WatchItem CreateSpecificItem(List<XtraxDefinition> xTraxParams, CheckerParam checkerParam, string name, HttpTarget target, bool enabled)
         {
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checker = CheckerFactory.Create(checkerParam);
             var notifier = NotifyFactory.CreateChain();
-            var ret = new WatchItem(name, url, enabled, xtraxChain, checker, notifier);
+            var ret = new WatchItem(name, target, enabled, xtraxChain, checker, notifier);
             return ret;
         }
 
@@ -55,7 +56,8 @@ namespace MySpector.Cons
             string name = "AllianzOblig";
             string url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04";
             bool enabled = true;
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
+            var target = new HttpTarget(url);
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
@@ -74,7 +76,8 @@ namespace MySpector.Cons
             string name = "Hystou: F7";
             string url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html";
             bool enabled = true;
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
+            var target = new HttpTarget(url);
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
@@ -93,7 +96,8 @@ namespace MySpector.Cons
             string name = "Idealo: PS4 Pro";
             string url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html";
             bool enabled = true;
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
+            var target = new HttpTarget(url);
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
@@ -110,13 +114,14 @@ namespace MySpector.Cons
             xTraxParams.Add(textToNumberParam);
             var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1100, \"OrEqual\":true}");
             string name = "BDI";
-            string url = "https://tradingeconomics.com/commodity/baltic";
+            string url = "https://markets.tradingeconomics.com/chart?s=bdiy:ind&span=5y&securify=new&url=commoditybaltic&AUTH=tH0xFlF0V3aKjqyJD51nR45z9WSUuCX4Bal%2FBJBXp%2FY1Pe6%2BxXY9n%2F0Zer2of37E";
             bool enabled = true;
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, url, enabled);
+            var target = new HttpTarget(url);
+            target.Headers.Add(new KeyValuePair<string, string>("Referer", "https://tradingeconomics.com/commodity/baltic"));
+            target.Headers.Add(new KeyValuePair<string, string>("Origin", "https://tradingeconomics.com"));
+            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
-
-
 
         private static string EscapeDoubleQuotes(string rawString)
         {

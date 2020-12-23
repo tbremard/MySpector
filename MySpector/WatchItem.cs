@@ -20,10 +20,12 @@ namespace MySpector.Core
             }
         }
 
-        public WatchItem(string name, string url, bool enabled, XtraxRule xtraxChain, IChecker checker, Notify notifyChain)
+        public HttpTarget Target { get; internal set; }
+
+        public WatchItem(string name, HttpTarget target, bool enabled, XtraxRule xtraxChain, IChecker checker, Notify notifyChain)
         {
             Name = name;
-            Url = url;
+            Target = target;
             Enabled = enabled;
             XtraxChain = xtraxChain;
             Checker = checker;
