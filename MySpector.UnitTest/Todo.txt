@@ -49,7 +49,7 @@ todo:
 each cell (Trox/checker) must log input / output
 implement NumberIsDifferent
 
-use html headers for BDI to have succesfull return -------------------0
+user can specify its own HTTP headers   : done
 define database and tables -------------------------------------------1
 use MySql ------------------------------------------------------------2
 console factory / db data --------------------------------------------2

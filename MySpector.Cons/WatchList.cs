@@ -117,8 +117,8 @@ namespace MySpector.Cons
             string url = "https://markets.tradingeconomics.com/chart?s=bdiy:ind&span=5y&securify=new&url=commoditybaltic&AUTH=tH0xFlF0V3aKjqyJD51nR45z9WSUuCX4Bal%2FBJBXp%2FY1Pe6%2BxXY9n%2F0Zer2of37E";
             bool enabled = true;
             var target = new HttpTarget(url);
-            target.Headers.Add(new KeyValuePair<string, string>("Referer", "https://tradingeconomics.com/commodity/baltic"));
-            target.Headers.Add(new KeyValuePair<string, string>("Origin", "https://tradingeconomics.com"));
+            target.Headers.Add(new HeaderEntry("Referer", "https://tradingeconomics.com/commodity/baltic"));
+            target.Headers.Add(new HeaderEntry("Origin", "https://tradingeconomics.com"));
             WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
@@ -129,4 +129,7 @@ namespace MySpector.Cons
             return ret;
         }
     }
+
 }
+
+

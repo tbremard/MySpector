@@ -7,13 +7,13 @@ namespace MySpector
         public HttpMethod Method { get; set; }
         public string RequestUri { get; set; }
         public string Version { get; set; }
-        public List<KeyValuePair<string,string>> Headers { get; }
+        public IList<HeaderEntry> Headers { get; }
         public string Content { get; set; }
 
         public HttpTarget(string uri)
         {
             RequestUri = uri;
-            Headers = new List<KeyValuePair<string, string>>();
+            Headers = new List<HeaderEntry>();
             Version = "2.0";
             Method = HttpMethod.Get;
         }
