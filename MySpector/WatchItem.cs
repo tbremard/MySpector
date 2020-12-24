@@ -20,6 +20,8 @@ namespace MySpector.Core
             }
         }
 
+        public IDownloader Downloader { get; set; }
+
         public WatchItem(string name, HttpTarget target, bool enabled, Xtrax xtraxChain, IChecker checker, Notify notifyChain)
         {
             Name = name;
@@ -28,6 +30,7 @@ namespace MySpector.Core
             XtraxChain = xtraxChain;
             Checker = checker;
             NotifyChain = notifyChain;
+            Downloader = new HttpDownloader();
         }
     }
 }

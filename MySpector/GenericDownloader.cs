@@ -14,8 +14,7 @@ namespace MySpector.Core
             IDataTruck ret;
             try
             {
-                var downloader = HttpDownloader.Create();// protocol to be at the control of user
-                var response = downloader.Download(item);
+                var response = item.Downloader.Download(item);
                 _log.Debug("Latency: " + Math.Floor( response.Latency.TotalMilliseconds) + "ms");
                 string filePath = GenerateFilePath(item);
                 File.WriteAllText(filePath, response.Content);

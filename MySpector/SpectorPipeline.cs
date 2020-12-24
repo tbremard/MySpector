@@ -7,7 +7,6 @@ namespace MySpector.Core
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         public string Name => _item?.Name;
-//        private IDataTruck _data;
         private Xtrax _xtrax;
         private IChecker _checker;
         private Notify _notifier;
@@ -37,12 +36,6 @@ namespace MySpector.Core
                     _log.Error("Error in Download: Aborting processing");
                     return false;
                 }
-                //var truck = DataTruck.CreateTextFromFile(filePath);
-                //if (truck == null)
-                //{
-                //    _log.Error("Cannot load data");
-                //    return false;
-                //}
                 var data = _xtrax.GetOutputChained(truck);
                 if (data.GetText() == XtraxConst.NOT_FOUND)
                 {

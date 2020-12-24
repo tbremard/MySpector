@@ -6,7 +6,6 @@ namespace MySpector.UnitTest
 {
     public class SpectorPipelineTest
     {
-
         [SetUp]
         public void Setup()
         {
@@ -22,8 +21,9 @@ namespace MySpector.UnitTest
             sample.Rule.SetNext(transformer);
             const decimal TARGET_PRICE = 329.52m;
             var checker = new NumberIsEqualChecker(TARGET_PRICE);
-            HttpTarget target = null;
+            HttpTarget target = new HttpTarget("FAKE URI");
             var item = new WatchItem(sample.Name, target, true, sample.Rule, checker, stubNotifier);
+            item.Downloader = new StubDownloader(sample.Data);
             var sut = new SpectorPipeline(item);
 
             bool isOk = sut.Process();

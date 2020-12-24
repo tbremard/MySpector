@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using System.Net;
 using NLog;
+using MySpector.Core;
 
 namespace MySpector.UnitTest
 {
-    public class DownloaderTest
+    public class HttpDownloaderTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -19,10 +19,11 @@ namespace MySpector.UnitTest
         public void HttpRequest_WenInputIsValid_ThenOk()
         {
             var httpTarget = new HttpTarget(TestSampleFactory.ZOTAC_EN72070V_GALAXUS_FULL_PAGE.Url);
+            WatchItem item = new WatchItem("test", httpTarget, true, null, null, null);
 
-            var data = _sut.HttpRequest(httpTarget);
+            var data = _sut.Download(item);
 
-            Assert.AreEqual(HttpStatusCode.OK, data.HttpResponseCode);
+            Assert.IsTrue(data.Success);
         }
 
         [Test]
@@ -31,10 +32,11 @@ namespace MySpector.UnitTest
         {
             _log.Debug("xxxxxxxxxxxxx");
             var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url);
+            WatchItem item = new WatchItem("test", httpTarget, true, null, null, null);
 
-            var data = _sut.HttpRequest(httpTarget);
+            var data = _sut.Download(item);
 
-            Assert.AreEqual(HttpStatusCode.OK, data.HttpResponseCode);
+            Assert.IsTrue(data.Success);
         }
     }
 }

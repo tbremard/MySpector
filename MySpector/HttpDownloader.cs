@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace MySpector
 {
-    public class HttpDownloader
+    public class HttpDownloader : IDownloader
     {
         const string SWITCH_HTTP2_SUPPORT = "System.Net.Http.SocketsHttpHandler.Http2Support";
         const string SWITCH_USE_SOCKET_HTTP_HANDLER = "System.Net.Http.UseSocketsHttpHandler";
@@ -24,7 +24,32 @@ namespace MySpector
             return new HttpDownloader();
         }
 
-        public HttpResponse HttpRequest(HttpTarget target)
+        public DownloadResponse Download(WatchItem item)
+        {
+            DownloadResponse ret;
+            if (item.Target == null)
+            {
+                _log.Error($"no target is set for item {item.Name}");
+            }
+            try
+            {
+                _log.Debug(item.Target.RequestUri);
+                var watch = new Stopwatch();
+                watch.Start();
+                HttpResponse response = HttpRequest(item.Target);
+                watch.Stop();
+                bool success = response.HttpResponseCode == HttpStatusCode.OK;
+                ret = new DownloadResponse(response.Content, success, watch.Elapsed);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+                ret = new DownloadResponse(string.Empty, false, TimeSpan.Zero);
+            }
+            return ret;
+        }
+
+        private HttpResponse HttpRequest(HttpTarget target)
         {
             SetSwitch(SWITCH_HTTP2_SUPPORT, true);
             SetSwitch(SWITCH_USE_SOCKET_HTTP_HANDLER, true);
@@ -58,13 +83,13 @@ namespace MySpector
                 request.Headers.Add("Upgrade-Insecure-Requests", "1");
                 request.Headers.Add("Cache-Control", "max-age=0 ");
             }
-            request.Version = new Version(2,0);
+            request.Version = new Version(2, 0);
             //            var client = new HttpClient(new LoggingHandler(new HttpClientHandler()));
             var handler = new HttpClientHandler();
             //X509Certificate2 certificate = GetMyX509Certificate();
             //handler.ClientCertificates.Add(certificate);
             handler.UseDefaultCredentials = true;
-            handler.SslProtocols = SslProtocols.Tls13| SslProtocols.Tls12;
+            handler.SslProtocols = SslProtocols.Tls13 | SslProtocols.Tls12;
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             var client = new HttpClient(handler);
             var myGetTask = client.SendAsync(request);
@@ -74,27 +99,6 @@ namespace MySpector
             ret.Content = response.Content.ReadAsStringAsync().Result;
             handler.Dispose();
             client.Dispose();
-            return ret;
-        }
-
-        public DownloadResponse Download(WatchItem item)
-        {
-            DownloadResponse ret;
-            _log.Debug(item.Target.RequestUri);
-            try
-            {
-                var watch = new Stopwatch();
-                watch.Start();
-                HttpResponse response = HttpRequest(item.Target);
-                watch.Stop();
-                bool success = response.HttpResponseCode == HttpStatusCode.OK;
-                ret = new DownloadResponse(response.Content, success, watch.Elapsed);
-            }
-            catch (Exception ex)
-            {
-                _log.Error(ex);
-                ret = new DownloadResponse(string.Empty, false, TimeSpan.Zero);
-            }
             return ret;
         }
 
