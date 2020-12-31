@@ -18,7 +18,7 @@ namespace MySpector.Cons
 
         private static WatchItem CreateZotacMagnus()
         {
-            string rawString = "/html/body/div/div/div[2]/div/main/div/div[1]/div/div[2]/div/div[1]/strong";
+            string rawString = "/html/body/div/div/div[2]/div/main/div/div[2]/div/div[2]/div/div[1]/strong";
             string escapedString = EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
             var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);

@@ -14,10 +14,11 @@ namespace MySpector.Cons
             var watchList = WatchList.Create();
             var job = new Job();
             bool isSuccess = job.Process(watchList);
-            if(isSuccess)
-                _log.Debug($"isSuccess: {isSuccess}");
-            else
-                _log.Error($"isSuccess: {isSuccess}");
+            if (!isSuccess)
+            {
+                _log.Error($"isSuccess: {isSuccess}: at least one error occured");
+            }
+            _log.Debug("Press a key...");
             Console.ReadKey();
         }
     }

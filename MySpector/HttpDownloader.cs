@@ -33,7 +33,7 @@ namespace MySpector
             }
             try
             {
-                _log.Debug(item.Target.RequestUri);
+                _log.Debug(item.Target.Uri);
                 var watch = new Stopwatch();
                 watch.Start();
                 HttpResponse response = HttpRequest(item.Target);
@@ -60,7 +60,7 @@ namespace MySpector
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12;
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri(target.RequestUri),
+                RequestUri = new Uri(target.Uri),
                 Method = target.Method,
             };
             request.Headers.Clear();
