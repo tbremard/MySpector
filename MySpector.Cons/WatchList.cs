@@ -20,8 +20,8 @@ namespace MySpector.Cons
         {
             string rawString = "/html/body/div/div/div[2]/div/main/div/div[2]/div/div[2]/div/div[1]/strong";
             string escapedString = EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
@@ -47,8 +47,8 @@ namespace MySpector.Cons
         {
             string rawString = "/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]";
             string escapedString = EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
@@ -65,9 +65,9 @@ namespace MySpector.Cons
         {
             string rawString = "//*[@id=\"goods_price\"]";
             string escapedString = EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var afterParam = new XtraxDefinition(XtraxType.After, "{\"Prefix\":\"$\"}");
-            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var afterParam = new XtraxDefinition(1, XtraxType.After, "{\"Prefix\":\"$\"}");
+            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);
@@ -85,9 +85,9 @@ namespace MySpector.Cons
         {
             string rawString = "/html/head/title";
             string escapedString = EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var betweenParam = new XtraxDefinition(XtraxType.Between, "{\"Prefix\":\"ab\", \"Suffix\":\"€\"}");
-            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"ab\", \"Suffix\":\"€\"}");
+            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(betweenParam);
@@ -105,9 +105,9 @@ namespace MySpector.Cons
         {
             string rawString = "//*[@id=\"description\"]";
             string escapedString = EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var betweenParam = new XtraxDefinition(XtraxType.Between, "{\"Prefix\":\"percent to\", \"Suffix\":\"in the\"}");
-            var textToNumberParam = new XtraxDefinition(XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
+            var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"percent to\", \"Suffix\":\"in the\"}");
+            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(betweenParam);

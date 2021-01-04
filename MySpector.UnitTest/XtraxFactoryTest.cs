@@ -13,7 +13,7 @@ namespace MySpector.UnitTest
         public void Create_WenSingleRule_ThenOk()
         {
             string arg="{\"Prefix\":\"is:\"}";
-            var param = new XtraxDefinition(XtraxType.After, arg);
+            var param = new XtraxDefinition(0, XtraxType.After, arg);
 
             var root = XtraxFactory.Create(param);
 
@@ -26,8 +26,8 @@ namespace MySpector.UnitTest
         [Test]
         public void Create_WenTwoRules_ThenOk()
         {
-            var xpathParam = new XtraxDefinition(XtraxType.Xpath, "{\"Path\":\"/html/body\"}");
-            var afterParam = new XtraxDefinition(XtraxType.After, "{\"Prefix\":\"is:\"}");
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"/html/body\"}");
+            var afterParam = new XtraxDefinition(1, XtraxType.After, "{\"Prefix\":\"is:\"}");
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);

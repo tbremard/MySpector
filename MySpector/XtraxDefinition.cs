@@ -4,11 +4,13 @@ namespace MySpector
 {
     public class XtraxDefinition
     {
-        public XtraxType XtraxType { get; set; }
-        public string Arg { get; set; }
+        public int Order { get; }
+        public XtraxType XtraxType { get;}
+        public string Arg { get;}
 
-        public XtraxDefinition(XtraxType xtraxType, string arg)
+        public XtraxDefinition(int order, XtraxType xtraxType, string arg)
         {
+            this.Order = order;
             this.XtraxType = xtraxType;
             this.Arg = arg;
         }
