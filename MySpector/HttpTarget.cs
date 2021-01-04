@@ -2,13 +2,22 @@
 using System.Net.Http;
 namespace MySpector
 {
-    public class HttpTarget
+    public enum WebTargetType { HTTP,SQL}
+
+    public interface IWebTarget
+    {
+        public WebTargetType WebTargetType { get;}
+    }
+
+    public class HttpTarget: IWebTarget
     {
         public HttpMethod Method { get; set; }
         public string Uri { get; set; }
         public string Version { get; set; }
         public IList<HeaderEntry> Headers { get; }
         public string Content { get; set; }
+
+        public WebTargetType WebTargetType => WebTargetType.HTTP;
 
         public HttpTarget(string uri)
         {

@@ -3,10 +3,9 @@ using System.Net;
 using System.Net.Http;
 using NLog;
 using System.Security.Authentication;
-using MySpector.Core;
 using System.Diagnostics;
 
-namespace MySpector
+namespace MySpector.Core
 {
     public class HttpDownloader : IDownloader
     {
@@ -33,7 +32,6 @@ namespace MySpector
             }
             try
             {
-                _log.Debug(item.Target.Uri);
                 var watch = new Stopwatch();
                 watch.Start();
                 HttpResponse response = HttpRequest(item.Target);
@@ -49,8 +47,15 @@ namespace MySpector
             return ret;
         }
 
-        private HttpResponse HttpRequest(HttpTarget target)
+        private HttpResponse HttpRequest(IWebTarget target)
         {
+            if(target.WebTargetType != WebTargetType.HTTP)
+            {
+                return null;
+            }
+            var httpTarget = target as HttpTarget;
+            _log.Debug(httpTarget.Uri);
+
             SetSwitch(SWITCH_HTTP2_SUPPORT, true);
             SetSwitch(SWITCH_USE_SOCKET_HTTP_HANDLER, true);
 #if HTTP_DEBUG
@@ -60,13 +65,13 @@ namespace MySpector
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls13 | SecurityProtocolType.Tls12;
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri(target.Uri),
-                Method = target.Method,
+                RequestUri = new Uri(httpTarget.Uri),
+                Method = httpTarget.Method,
             };
             request.Headers.Clear();
-            if (target.Headers.Count != 0)
+            if (httpTarget.Headers.Count != 0)
             {
-                foreach (var x in target.Headers)
+                foreach (var x in httpTarget.Headers)
                 {
                     request.Headers.Add(x.Key, x.Value);
                 }

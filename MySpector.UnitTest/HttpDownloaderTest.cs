@@ -16,7 +16,7 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        public void HttpRequest_WenInputIsValid_ThenOk()
+        public void Download_WenInputIsValid_ThenOk()
         {
             var httpTarget = new HttpTarget(TestSampleFactory.ZOTAC_EN72070V_GALAXUS_FULL_PAGE.Url);
             WatchItem item = new WatchItem("test", httpTarget, true, null, null, null);
@@ -28,7 +28,7 @@ namespace MySpector.UnitTest
 
         [Test]
         [Ignore("SSL certificate by WebClient is an issue")]
-        public void HttpRequest_WenServerSpotRobot_ThenOk()
+        public void Download_WenServerSpotRobot_ThenOk()
         {
             _log.Debug("xxxxxxxxxxxxx");
             var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url);
