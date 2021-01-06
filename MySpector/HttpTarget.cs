@@ -1,13 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
-namespace MySpector
-{
-    public enum WebTargetType { HTTP,SQL}
 
-    public interface IWebTarget
-    {
-        public WebTargetType WebTargetType { get;}
-    }
+namespace MySpector.Core
+{
 
     public class HttpTarget: IWebTarget
     {
@@ -16,7 +11,6 @@ namespace MySpector
         public string Version { get; set; }
         public IList<HeaderEntry> Headers { get; }
         public string Content { get; set; }
-
         public WebTargetType WebTargetType => WebTargetType.HTTP;
 
         public HttpTarget(string uri)
