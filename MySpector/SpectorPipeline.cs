@@ -10,9 +10,9 @@ namespace MySpector.Core
         private Xtrax _xtrax;
         private IChecker _checker;
         private Notify _notifier;
-        private WatchItem _item;
+        private Trox _item;
 
-        public SpectorPipeline(WatchItem item)
+        public SpectorPipeline(Trox item)
         {
             _item = item;
             _xtrax = item.XtraxChain;

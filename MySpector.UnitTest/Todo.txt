@@ -30,7 +30,7 @@ create test to isolate Title with Between operator   : Done
 create use case to check if number Greater than reference(Allianz oblig) : Done  
 create use case to check if number is Different than reference           : Done  
 
-Rename "XtraxRule" to "Trox"-----------------------------------------
+Rename "XtraxRule" to "Trox"-----------------------------------------: Done
 ConsoleRunner    : Done
 
 Database : each Ressource can be linked to a set of pipelines

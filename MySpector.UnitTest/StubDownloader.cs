@@ -12,7 +12,7 @@ namespace MySpector.UnitTest
 
         public IDataTruck Data { get; }
 
-        public DownloadResponse Download(WatchItem item)
+        public DownloadResponse Download(Trox item)
         {
             var ret = new DownloadResponse(Data.GetText(), true, TimeSpan.Zero);
             return ret;

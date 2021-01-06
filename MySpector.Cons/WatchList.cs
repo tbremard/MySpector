@@ -5,9 +5,9 @@ namespace MySpector.Cons
 {
     class WatchList
     {
-        public static IList<WatchItem> Create()
+        public static IList<Trox> Create()
         {
-            var ret = new List<WatchItem>();
+            var ret = new List<Trox>();
             ret.Add(CreateZotacMagnus());
             ret.Add(CreateHystouF7());
             ret.Add(CreateAllianzOblig());
@@ -16,7 +16,7 @@ namespace MySpector.Cons
             return ret;
         }
 
-        private static WatchItem CreateZotacMagnus()
+        private static Trox CreateZotacMagnus()
         {
             string rawString = "/html/body/div/div/div[2]/div/main/div/div[2]/div/div[2]/div/div[1]/strong";
             string escapedString = EscapeDoubleQuotes(rawString);
@@ -30,20 +30,20 @@ namespace MySpector.Cons
             string url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721";
             bool enabled = true;
             var target = new HttpTarget(url);
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
+            Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
-        private static WatchItem CreateSpecificItem(List<XtraxDefinition> xTraxParams, CheckerParam checkerParam, string name, HttpTarget target, bool enabled)
+        private static Trox CreateSpecificItem(List<XtraxDefinition> xTraxParams, CheckerParam checkerParam, string name, HttpTarget target, bool enabled)
         {
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checker = CheckerFactory.Create(checkerParam);
             var notifier = NotifyFactory.CreateChain();
-            var ret = new WatchItem(name, target, enabled, xtraxChain, checker, notifier);
+            var ret = new Trox(name, target, enabled, xtraxChain, checker, notifier);
             return ret;
         }
 
-        private static WatchItem CreateAllianzOblig()
+        private static Trox CreateAllianzOblig()
         {
             string rawString = "/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]";
             string escapedString = EscapeDoubleQuotes(rawString);
@@ -57,11 +57,11 @@ namespace MySpector.Cons
             string url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04";
             bool enabled = true;
             var target = new HttpTarget(url);
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
+            Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
-        private static WatchItem CreateHystouF7()
+        private static Trox CreateHystouF7()
         {
             string rawString = "//*[@id=\"goods_price\"]";
             string escapedString = EscapeDoubleQuotes(rawString);
@@ -77,11 +77,11 @@ namespace MySpector.Cons
             string url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html";
             bool enabled = true;
             var target = new HttpTarget(url);
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
+            Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
-        private static WatchItem CreateIdealoPs4Pro()
+        private static Trox CreateIdealoPs4Pro()
         {
             string rawString = "/html/head/title";
             string escapedString = EscapeDoubleQuotes(rawString);
@@ -97,11 +97,11 @@ namespace MySpector.Cons
             string url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html";
             bool enabled = true;
             var target = new HttpTarget(url);
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
+            Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 
-        private static WatchItem CreateBalticDryIndex()
+        private static Trox CreateBalticDryIndex()
         {
             string rawString = "//*[@id=\"description\"]";
             string escapedString = EscapeDoubleQuotes(rawString);
@@ -119,7 +119,7 @@ namespace MySpector.Cons
             var target = new HttpTarget(url);
             target.Headers.Add(new HeaderEntry("Referer", "https://tradingeconomics.com/commodity/baltic"));
             target.Headers.Add(new HeaderEntry("Origin", "https://tradingeconomics.com"));
-            WatchItem ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
+            Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
 

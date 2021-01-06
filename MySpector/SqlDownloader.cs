@@ -8,7 +8,7 @@ namespace MySpector.Core
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public DownloadResponse Download(WatchItem item)
+        public DownloadResponse Download(Trox item)
         {
             DownloadResponse ret;
             if (item.Target == null)
@@ -31,7 +31,7 @@ namespace MySpector.Core
             return ret;
         }
 
-        private SqlResponse SqlRequest(WatchItem item)
+        private SqlResponse SqlRequest(Trox item)
         {
             if (item.Target.WebTargetType != WebTargetType.SQL)
                 return null;

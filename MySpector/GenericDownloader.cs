@@ -9,7 +9,7 @@ namespace MySpector.Core
         static Logger _log = LogManager.GetCurrentClassLogger();
         static Random random = new Random((int)DateTime.Now.Ticks);
 
-        public static IDataTruck DownloadToLocalFile(WatchItem item)
+        public static IDataTruck DownloadToLocalFile(Trox item)
         {
             IDataTruck ret;
             try
@@ -34,7 +34,7 @@ namespace MySpector.Core
             return ret;
         }
 
-        private static string GenerateFilePath(WatchItem item)
+        private static string GenerateFilePath(Trox item)
         {
             string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             int rand = random.Next(1, 1000);

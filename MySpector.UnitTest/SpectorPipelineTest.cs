@@ -22,7 +22,7 @@ namespace MySpector.UnitTest
             const decimal TARGET_PRICE = 329.52m;
             var checker = new NumberIsEqualChecker(TARGET_PRICE);
             HttpTarget target = new HttpTarget("FAKE URI");
-            var item = new WatchItem(sample.Name, target, true, sample.Rule, checker, stubNotifier);
+            var item = new Trox(sample.Name, target, true, sample.Rule, checker, stubNotifier);
             item.Downloader = new StubDownloader(sample.Data);
             var sut = new SpectorPipeline(item);
 

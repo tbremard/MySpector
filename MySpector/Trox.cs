@@ -2,8 +2,9 @@
 
 namespace MySpector.Core
 {
-    public class WatchItem
+    public class Trox
     {
+        public IDownloader Downloader { get; set; }
         public bool Enabled { get; } = true;
         public string Name { get; }
         public IWebTarget Target { get; }
@@ -20,9 +21,7 @@ namespace MySpector.Core
             }
         }
 
-        public IDownloader Downloader { get; set; }
-
-        public WatchItem(string name, IWebTarget target, bool enabled, Xtrax xtraxChain, IChecker checker, Notify notifyChain)
+        public Trox(string name, IWebTarget target, bool enabled, Xtrax xtraxChain, IChecker checker, Notify notifyChain)
         {
             Name = name;
             Target = target;

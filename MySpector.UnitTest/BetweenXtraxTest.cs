@@ -2,7 +2,7 @@
 
 namespace MySpector.UnitTest
 {
-    class BetweenTroxRuleTest
+    class BetweenXtraxTest
     {
         BetweenXtrax _sut;
         [SetUp]

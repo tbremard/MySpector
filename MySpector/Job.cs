@@ -7,7 +7,7 @@ namespace MySpector.Core
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public bool Process(WatchItem item)
+        public bool Process(Trox item)
         {
             _log.Debug($"--------------------");
             _log.Debug($"Process: {item.Name}");
@@ -17,7 +17,7 @@ namespace MySpector.Core
             return isDone;
         }
 
-        public bool Process(IList<WatchItem> watchList)
+        public bool Process(IList<Trox> watchList)
         {
             bool ret = true;
             _log.Debug("############################");

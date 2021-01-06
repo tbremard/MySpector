@@ -23,7 +23,7 @@ namespace MySpector.Core
             return new HttpDownloader();
         }
 
-        public DownloadResponse Download(WatchItem item)
+        public DownloadResponse Download(Trox item)
         {
             DownloadResponse ret;
             if (item.Target == null)
