@@ -2,6 +2,7 @@
 using NLog;
 using MySpector.Core;
 using System.Collections.Generic;
+using MySpector.Models;
 
 namespace MySpector.UnitTest
 {

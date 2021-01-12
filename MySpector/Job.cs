@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MySpector.Models;
 using NLog;
 
 namespace MySpector.Core

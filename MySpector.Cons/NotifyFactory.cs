@@ -1,4 +1,6 @@
-﻿namespace MySpector.Cons
+﻿using MySpector.Models;
+
+namespace MySpector.Cons
 {
     internal class NotifyFactory
     {

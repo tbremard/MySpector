@@ -1,4 +1,6 @@
-﻿namespace MySpector.UnitTest
+﻿using MySpector.Models;
+
+namespace MySpector.UnitTest
 {
     public class TestSample
     {

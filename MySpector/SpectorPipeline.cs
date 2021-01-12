@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using MySpector.Models;
+using NLog;
 using System;
 
 namespace MySpector.Core
