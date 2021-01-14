@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpector.Core.UnitTest", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpector.Cons", "MySpector.Cons\MySpector.Cons.csproj", "{258E058C-503B-4181-9CFD-D5AFC7AE5002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpector.Repository", "MySpector.Repository\MySpector.Repository.csproj", "{11821120-BE4A-420B-81B4-28399E0D1FB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpector.Repo", "MySpector.Repository\MySpector.Repo.csproj", "{11821120-BE4A-420B-81B4-28399E0D1FB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpector.Models", "MySpector.Models\MySpector.Models.csproj", "{8170C3C1-CD07-4652-A896-4CA0F1C69685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpector.Models", "MySpector.Models\MySpector.Models.csproj", "{8170C3C1-CD07-4652-A896-4CA0F1C69685}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpector.Repo.IntTest", "MySpector.Repo.IntTest\MySpector.Repo.IntTest.csproj", "{5CC3DADD-638A-4B4A-B4C9-64DA32EC399F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8170C3C1-CD07-4652-A896-4CA0F1C69685}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8170C3C1-CD07-4652-A896-4CA0F1C69685}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8170C3C1-CD07-4652-A896-4CA0F1C69685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC3DADD-638A-4B4A-B4C9-64DA32EC399F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC3DADD-638A-4B4A-B4C9-64DA32EC399F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC3DADD-638A-4B4A-B4C9-64DA32EC399F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC3DADD-638A-4B4A-B4C9-64DA32EC399F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
