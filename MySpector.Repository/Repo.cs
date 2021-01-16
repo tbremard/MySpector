@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using System;
 using NLog;
+using MySpector.Models;
 
 namespace MySpector.Repo
 {
@@ -30,6 +31,12 @@ namespace MySpector.Repo
             {
                 _log.Error(ex);
             }
+            return ret;
+        }
+
+        public IList<Trox> GetAllTroxes()
+        {
+            var ret = _connection.Query<Trox>("select * from TROX ").ToList();
             return ret;
         }
 
