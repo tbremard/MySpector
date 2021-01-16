@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using System;
 using NLog;
-using MySpector.Models;
+using MySpector.Objects;
 
 namespace MySpector.Repo
 {

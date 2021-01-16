@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MySpector.Models\MySpector.Models.csproj" />
+    <ProjectReference Include="..\MySpector.Objects\MySpector.Objects.csproj" />
   </ItemGroup>
 
 </Project>

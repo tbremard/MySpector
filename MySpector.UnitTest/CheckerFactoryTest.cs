@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using NLog;
 using MySpector.Core;
-using MySpector.Models;
+using MySpector.Objects;
 
 namespace MySpector.UnitTest
 {

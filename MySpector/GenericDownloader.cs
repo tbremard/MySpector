@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using MySpector.Models;
+using MySpector.Objects;
 using NLog;
 
 namespace MySpector.Core

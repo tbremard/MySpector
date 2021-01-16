@@ -1,4 +1,4 @@
-﻿using MySpector.Models;
+﻿using MySpector.Objects;
 using NUnit.Framework;
 
 namespace MySpector.UnitTest

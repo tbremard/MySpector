@@ -1,7 +1,7 @@
 ﻿using System;
 using NLog;
 using System.Diagnostics;
-using MySpector.Models;
+using MySpector.Objects;
 
 namespace MySpector.Core
 {

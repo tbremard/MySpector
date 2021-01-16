@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using MySpector.Core;
-using MySpector.Models;
+using MySpector.Objects;
 
 namespace MySpector.Cons
 {
