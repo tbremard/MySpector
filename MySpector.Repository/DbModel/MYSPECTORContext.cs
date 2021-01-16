@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace MySpector.Repo.Model
+namespace MySpector.Repo.DbModel
 {
     public partial class MYSPECTORContext : DbContext
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MySpector.Repo.Model
+namespace MySpector.Repo.DbModel
 {
     public partial class TroxClosure
     {

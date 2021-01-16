@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MySpector.Repo.Model
+namespace MySpector.Repo.DbModel
 {
-    public partial class XtraxDef
+    public partial class NotifyDef
     {
-        public int IdXtraxDef { get; set; }
+        public int IdNotifyDef { get; set; }
         public int? IdTrox { get; set; }
         public int? Order { get; set; }
-        public int? IdXtraxType { get; set; }
+        public int? IdNotifyType { get; set; }
         public string Arg { get; set; }
 
+        public virtual NotifyType IdNotifyTypeNavigation { get; set; }
         public virtual Trox IdTroxNavigation { get; set; }
-        public virtual XtraxType IdXtraxTypeNavigation { get; set; }
     }
 }
