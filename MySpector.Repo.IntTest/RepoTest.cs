@@ -6,6 +6,7 @@ namespace MySpector.Repo.IntTest
     public class RepoTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
+        const int TROX_ID = 4;
 
         Repo _sut;
         [SetUp]
@@ -46,7 +47,7 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void GetAllXtrax()
         {
-            var ret = _sut.GetAllXtrax(troxId:4);
+            var ret = _sut.GetAllXtrax(TROX_ID);
 
             Assert.IsNotNull(ret);
             Assert.Greater(ret.Count, 0, "no items in this simple query");
@@ -55,7 +56,7 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void GetAllChecker()
         {
-            var ret = _sut.GetAllChecker(troxId: 4);
+            var ret = _sut.GetAllChecker(TROX_ID);
 
             Assert.IsNotNull(ret);
             Assert.Greater(ret.Count, 0, "no items in this simple query");
