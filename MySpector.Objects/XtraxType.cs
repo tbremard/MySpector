@@ -1,4 +1,4 @@
-﻿namespace MySpector.Core
+﻿namespace MySpector.Objects
 {
     public enum XtraxType
     {

@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using NLog;
-using MySpector.Core;
 using System.Collections.Generic;
 using MySpector.Objects;
 

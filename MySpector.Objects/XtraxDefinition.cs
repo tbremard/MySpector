@@ -1,4 +1,4 @@
-﻿using MySpector.Core;
+﻿using MySpector.Objects;
 
 namespace MySpector
 {

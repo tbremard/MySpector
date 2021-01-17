@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace MySpector.Repo.IntTest
 {
-    public class Tests
+    public class RepoTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -43,5 +43,13 @@ namespace MySpector.Repo.IntTest
             }
         }
 
+        [Test]
+        public void GetAllXtrax()
+        {
+            var ret = _sut.GetAllXtrax(troxId:4);
+
+            Assert.IsNotNull(ret);
+            Assert.Greater(ret.Count, 0, "no items in this simple query");
+        }
     }
 }
