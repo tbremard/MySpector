@@ -5,7 +5,6 @@ namespace MySpector.Objects
     public class NumberIsEqualChecker : IChecker
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-        decimal Sample;
         decimal Reference;
 
         public NumberIsEqualChecker(decimal reference)
@@ -27,7 +26,7 @@ namespace MySpector.Objects
                 _log.Error("Invalid number (did you miss TextToNumber?)");
                 return false;
             }
-            Sample = number.Value;
+            decimal Sample = number.Value;
             ret = Sample == Reference;
             _log.Debug($"{Sample} == {Reference}: {ret}");
             return ret;

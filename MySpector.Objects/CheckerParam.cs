@@ -1,4 +1,4 @@
-﻿namespace MySpector.Core
+﻿namespace MySpector.Objects
 {
     public class CheckerParam
     {
@@ -7,8 +7,8 @@
 
         public CheckerParam(CheckerType checkerType, string arg)
         {
-            this.CheckerType = checkerType;
-            this.Arg = arg;
+            CheckerType = checkerType;
+            Arg = arg;
         }
     }
 }

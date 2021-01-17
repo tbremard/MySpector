@@ -5,7 +5,6 @@ namespace MySpector.Objects
     public class NumberIsGreaterChecker : IChecker
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-        decimal Sample;
         decimal Reference;
         bool OrEqual;
 
@@ -26,7 +25,7 @@ namespace MySpector.Objects
                 _log.Error("Invalid number (did you miss TextToNumber?)");
                 return false;
             }
-            Sample = number.Value;
+            decimal Sample = number.Value;
             if (OrEqual)
             {
                 ret = Sample >= Reference;

@@ -37,27 +37,75 @@ namespace MySpector.Repo
 
         public IList<Objects.Trox> GetAllTroxes()
         {
-            string query = @"select * FROM TROX 
+            List<Objects.Trox> ret;
+            try
+            {
+                string query = @"select * FROM TROX 
                             inner join web_target web on trox.ID_TROX = web.ID_TROX
                             inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
                             inner join web_target_http http on http.ID_WEB_TARGET = web.ID_WEB_TARGET; ";
-            var ret = _connection.Query<DbModel.Trox, DbModel.WebTarget, DbModel.WebTargetType, DbModel.WebTargetHttp, Objects.Trox>(query, mapperTrox, splitOn: "ID_WEB_TARGET,ID_WEB_TARGET_TYPE,ID_WEB_TARGET").ToList();
+                ret = _connection.Query<DbModel.Trox, DbModel.WebTarget, DbModel.WebTargetType, DbModel.WebTargetHttp, Objects.Trox>(query, mapperTrox, splitOn: "ID_WEB_TARGET,ID_WEB_TARGET_TYPE,ID_WEB_TARGET").ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                ret = new List<Objects.Trox>();
+            }
             return ret;
         }
 
         public IList<Objects.Xtrax> GetAllXtrax(int troxId)
         {
-            string query = @"select * from xtrax_def def 
+            List<Objects.Xtrax> ret;
+            try
+            {
+                string query = @"select * from xtrax_def def 
 	                        INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
-                            WHERE def.ID_TROX = 4;";//@ID_TROX
-            var ret = _connection.Query<DbModel.XtraxDef, DbModel.XtraxType, Objects.Xtrax>(query, mapperXtrax, splitOn: "ID_XTRAX_TYPE").ToList();
+                            WHERE def.ID_TROX = @ID_TROX;";
+                object param = new { ID_TROX = 4 };
+                ret = _connection.Query<DbModel.XtraxDef, DbModel.XtraxType, Objects.Xtrax>(query, mapperXtrax, param: param, splitOn: "ID_XTRAX_TYPE").ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                ret = new List<Objects.Xtrax>();
+            }
             return ret;
         }
 
-        private Objects.Xtrax mapperXtrax(XtraxDef xtraxDef, DbModel.XtraxType xtraxType)
+        public IList<Objects.IChecker> GetAllChecker(int troxId)
         {
-            var xType = (Objects.XtraxType) Enum.Parse(typeof(Objects.XtraxType), xtraxType.Name, true);
-            var def = new XtraxDefinition(DbInt(xtraxDef.Order), xType, xtraxDef.Arg);
+            List<Objects.IChecker> ret;
+            try
+            {
+               // string query = @"select def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
+                string query = @"select * 
+                                    from checker_def def 
+                                	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_CHECKER_TYPE    
+                                    WHERE def.ID_TROX = @ID_TROX;";
+                object param = new { ID_TROX = 4 };
+                ret = _connection.Query<DbModel.CheckerDef, DbModel.CheckerType, Objects.IChecker>(query, mapperChecker, param: param, splitOn: "ID_CHECKER_TYPE").ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                ret = new List<Objects.IChecker>();
+            }
+            return ret;
+        }
+
+        private IChecker mapperChecker(DbModel.CheckerDef myDef, DbModel.CheckerType myType)
+        {
+            var xType = (Objects.CheckerType)Enum.Parse(typeof(Objects.CheckerType), myType.Name, true);
+            var def = new CheckerParam( xType, myDef.Arg);
+            var ret = CheckerFactory.Create(def);
+            return ret;
+        }
+
+        private Objects.Xtrax mapperXtrax(DbModel.XtraxDef myDef, DbModel.XtraxType myType)
+        {
+            var xType = (Objects.XtraxType) Enum.Parse(typeof(Objects.XtraxType), myType.Name, true);
+            var def = new XtraxDefinition(DbInt(myDef.Order), xType, myDef.Arg);
             var ret = XtraxFactory.Create(def);
             return ret;
         }
