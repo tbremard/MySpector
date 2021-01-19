@@ -2,7 +2,7 @@
 
 namespace MySpector.Objects
 {
-    public class WebNotifier : Notify
+    public class WebNotifier : Notifier
     {
         //        static Logger _log = LogManager.GetCurrentClassLogger();
 

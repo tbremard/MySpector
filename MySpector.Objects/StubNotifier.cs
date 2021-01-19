@@ -1,6 +1,6 @@
 ﻿namespace MySpector.Objects
 {
-    public class StubNotifier : Notify
+    public class StubNotifier : Notifier
     {
         protected override bool NotifySingle(string message)
         {

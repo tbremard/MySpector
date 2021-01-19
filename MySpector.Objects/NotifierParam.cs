@@ -1,11 +1,11 @@
 ﻿namespace MySpector.Objects
 {
-    public class CheckerParam
+    public class NotifierParam
     {
-        public CheckerType Type { get; }
+        public NotifierType Type { get; }
         public string Arg { get; }
 
-        public CheckerParam(CheckerType type, string arg)
+        public NotifierParam(NotifierType type, string arg)
         {
             Type = type;
             Arg = arg;

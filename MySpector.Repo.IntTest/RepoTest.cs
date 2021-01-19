@@ -61,5 +61,14 @@ namespace MySpector.Repo.IntTest
             Assert.IsNotNull(ret);
             Assert.Greater(ret.Count, 0, "no items in this simple query");
         }
+
+        [Test]
+        public void GetAllNotifier()
+        {
+            var ret = _sut.GetAllNotifier(TROX_ID);
+
+            Assert.IsNotNull(ret);
+            Assert.Greater(ret.Count, 0, "no items in this simple query");
+        }
     }
 }

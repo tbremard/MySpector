@@ -9,7 +9,7 @@ namespace MySpector.Objects
         public static IChecker Create(CheckerParam param)
         {
             IChecker ret;
-            switch (param.CheckerType)
+            switch (param.Type)
             {
                 case CheckerType.IsLess:
                     var arg = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);

@@ -10,7 +10,7 @@ namespace MySpector.Core
         public string Name => _item?.Name;
         private Xtrax _xtrax;
         private IChecker _checker;
-        private Notify _notifier;
+        private Notifier _notifier;
         private Trox _item;
 
         public SpectorPipeline(Trox item)

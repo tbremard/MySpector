@@ -1,16 +1,16 @@
 ﻿using NLog;
 namespace MySpector.Objects
 {
-    public abstract class Notify
+    public abstract class Notifier
     {
         protected Logger _log = LogManager.GetCurrentClassLogger();
         protected abstract bool NotifySingle(string message);
-        protected Notify Next;    // pointer to next action to perform
+        protected Notifier Next;    // pointer to next action to perform
                                   // if null the current element is the last element of chain
         /// <summary>
         /// set new action at end of chain
         /// </summary>
-        public void SetNext(Notify next)
+        public void SetNext(Notifier next)
         {
             if (Next == null)
             {

@@ -94,6 +94,35 @@ namespace MySpector.Repo
             return ret;
         }
 
+        public IList<Objects.Notifier> GetAllNotifier(int troxId)
+        {
+            List<Objects.Notifier> ret;
+            try
+            {
+                // string query = @"select def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
+                string query = @"select * 
+                                    from NOTIFY_DEF def 
+                                	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_NOTIFY_TYPE    
+                                    WHERE def.ID_TROX = @ID_TROX;";
+                object param = new { ID_TROX = 4 };
+                ret = _connection.Query<DbModel.NotifyDef, DbModel.NotifyType, Objects.Notifier>(query, mapperNotifier, param: param, splitOn: "ID_NOTIFY_TYPE").ToList();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                ret = new List<Objects.Notifier>();
+            }
+            return ret;
+        }
+
+        private Notifier mapperNotifier(NotifyDef myDef, NotifyType myType)
+        {
+            var xType = (Objects.NotifierType)Enum.Parse(typeof(Objects.NotifierType), myType.Name, true);
+            var def = new NotifierParam(xType, myDef.Arg);
+            var ret = NotifyFactory.Create(def);
+            return ret;
+        }
+
         private IChecker mapperChecker(DbModel.CheckerDef myDef, DbModel.CheckerType myType)
         {
             var xType = (Objects.CheckerType)Enum.Parse(typeof(Objects.CheckerType), myType.Name, true);

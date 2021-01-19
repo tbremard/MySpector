@@ -7,7 +7,7 @@ using System;
 namespace MySpector.Objects
 {
     //securesmtp.t-online.de
-    public class MailNotifier : Notify
+    public class MailNotifier : Notifier
     {
         //        static Logger _log = LogManager.GetCurrentClassLogger();
         protected override bool NotifySingle(string msg)

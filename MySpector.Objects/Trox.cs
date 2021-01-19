@@ -10,7 +10,7 @@ namespace MySpector.Objects
         public IWebTarget Target { get; }
         public Xtrax XtraxChain { get; }
         public IChecker Checker { get; }
-        public Notify NotifyChain { get; }
+        public Notifier NotifyChain { get; }
         public string FileToken
         {
             get
@@ -21,7 +21,7 @@ namespace MySpector.Objects
             }
         }
 
-        public Trox(string name, IWebTarget target, bool enabled, Xtrax xtraxChain, IChecker checker, Notify notifyChain)
+        public Trox(string name, IWebTarget target, bool enabled, Xtrax xtraxChain, IChecker checker, Notifier notifyChain)
         {
             Name = name;
             Target = target;
