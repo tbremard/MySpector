@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace MySpector.Repo.DbModel
 {
-    public partial class Tjson
+    public partial class tjson
     {
-        public string Param { get; set; }
+        public string param { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace MySpector.Repo
                             inner join web_target web on trox.ID_TROX = web.ID_TROX
                             inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
                             inner join web_target_http http on http.ID_WEB_TARGET = web.ID_WEB_TARGET; ";
-                ret = _connection.Query<DbModel.Trox, DbModel.WebTarget, DbModel.WebTargetType, DbModel.WebTargetHttp, Objects.Trox>(query, mapperTrox, splitOn: "ID_WEB_TARGET,ID_WEB_TARGET_TYPE,ID_WEB_TARGET").ToList();
+                ret = _connection.Query<DbModel.trox, DbModel.web_target, DbModel.web_target_type, DbModel.web_target_http, Objects.Trox>(query, mapperTrox, splitOn: "ID_WEB_TARGET,ID_WEB_TARGET_TYPE,ID_WEB_TARGET").ToList();
             }
             catch (Exception e)
             {
@@ -65,7 +65,7 @@ namespace MySpector.Repo
                                 inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
                                 where web.ID_TROX =  @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                var target = _connection.Query<DbModel.WebTarget, DbModel.WebTargetType, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_WEB_TARGET_TYPE").FirstOrDefault();
+                var target = _connection.Query<DbModel.web_target, DbModel.web_target_type, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_WEB_TARGET_TYPE").FirstOrDefault();
                 switch (target.Type)
                 {
                     case Objects.WebTargetType.HTTP:
@@ -95,13 +95,13 @@ namespace MySpector.Repo
             {
                 string query = @"select * from web_target_http http where http.ID_WEB_TARGET = @ID_WEB_TARGET;";
                 object param = new { ID_WEB_TARGET = idWebTarget };
-                var target = _connection.Query<DbModel.WebTargetHttp>(query, param: param).FirstOrDefault();
-                ret = new HttpTarget(target.Uri);
-                ret.Method = new HttpMethod(target.Method);
-                ret.Version = target.Version;
-                if(!string.IsNullOrEmpty(target.Headers))
+                var target = _connection.Query<DbModel.web_target_http>(query, param: param).FirstOrDefault();
+                ret = new HttpTarget(target.URI);
+                ret.Method = new HttpMethod(target.METHOD);
+                ret.Version = target.VERSION;
+                if(!string.IsNullOrEmpty(target.HEADERS))
                 {
-                    var lines = target.Headers.Split('\n').ToList();
+                    var lines = target.HEADERS.Split('\n').ToList();
                     foreach (var item in lines)
                     {
                         var entry = new HeaderEntry("key", "value");
@@ -121,16 +121,16 @@ namespace MySpector.Repo
         {
             string query = @"select * from web_target_sql sq where sq.ID_WEB_TARGET = @ID_WEB_TARGET;";
             object param = new { ID_WEB_TARGET = idWebTarget };
-            var target = _connection.Query<DbModel.WebTargetSql>(query, param: param).FirstOrDefault();
-            var ret = new SqlTarget(target.ConnectionString, target.Query);
+            var target = _connection.Query<DbModel.web_target_sql>(query, param: param).FirstOrDefault();
+            var ret = new SqlTarget(target.CONNECTION_STRING, target.QUERY);
             return ret;
         }
 
-        private WebTargetReference mapperWebTarget(DbModel.WebTarget target, DbModel.WebTargetType myType)
+        private WebTargetReference mapperWebTarget(DbModel.web_target target, DbModel.web_target_type myType)
         {
             var ret = new WebTargetReference();
-            ret.Type = MyEnumParser<Objects.WebTargetType>(myType.Name);
-            ret.IdWebTarget = target.IdWebTarget;
+            ret.Type = MyEnumParser<Objects.WebTargetType>(myType.NAME);
+            ret.IdWebTarget = target.ID_WEB_TARGET;
             return ret;
         }
 
@@ -143,7 +143,7 @@ namespace MySpector.Repo
 	                        INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
                             WHERE def.ID_TROX = @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                ret = _connection.Query<DbModel.XtraxDef, DbModel.XtraxType, Objects.Xtrax>(query, mapperXtrax, param: param, splitOn: "ID_XTRAX_TYPE").ToList();
+                ret = _connection.Query<DbModel.xtrax_def, DbModel.xtrax_type, Objects.Xtrax>(query, mapperXtrax, param: param, splitOn: "ID_XTRAX_TYPE").ToList();
             }
             catch (Exception e)
             {
@@ -164,7 +164,7 @@ namespace MySpector.Repo
                                 	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_CHECKER_TYPE    
                                     WHERE def.ID_TROX = @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                ret = _connection.Query<DbModel.CheckerDef, DbModel.CheckerType, Objects.IChecker>(query, mapperChecker, param: param, splitOn: "ID_CHECKER_TYPE").ToList();
+                ret = _connection.Query<DbModel.checker_def, DbModel.checker_type, Objects.IChecker>(query, mapperChecker, param: param, splitOn: "ID_CHECKER_TYPE").ToList();
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace MySpector.Repo
                                 	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_NOTIFY_TYPE    
                                     WHERE def.ID_TROX = @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                ret = _connection.Query<DbModel.NotifyDef, DbModel.NotifyType, Objects.Notifier>(query, mapperNotifier, param: param, splitOn: "ID_NOTIFY_TYPE").ToList();
+                ret = _connection.Query<DbModel.notify_def, DbModel.notify_type, Objects.Notifier>(query, mapperNotifier, param: param, splitOn: "ID_NOTIFY_TYPE").ToList();
             }
             catch (Exception e)
             {
@@ -195,10 +195,10 @@ namespace MySpector.Repo
             return ret;
         }
 
-        private Notifier mapperNotifier(NotifyDef myDef, NotifyType myType)
+        private Notifier mapperNotifier(DbModel.notify_def myDef, DbModel.notify_type myType)
         {
-            var xType = MyEnumParser<Objects.NotifierType>(myType.Name);
-            var def = new NotifierParam(xType, myDef.Arg);
+            var xType = MyEnumParser<Objects.NotifierType>(myType.NAME);
+            var def = new NotifierParam(xType, myDef.ARG);
             var ret = NotifyFactory.Create(def);
             return ret;
         }
@@ -209,25 +209,25 @@ namespace MySpector.Repo
             return ret;
         }
 
-        private IChecker mapperChecker(DbModel.CheckerDef myDef, DbModel.CheckerType myType)
+        private IChecker mapperChecker(DbModel.checker_def myDef, DbModel.checker_type myType)
         {
-            var xType = MyEnumParser<Objects.CheckerType>(myType.Name);
-            var def = new CheckerParam( xType, myDef.Arg);
+            var xType = MyEnumParser<Objects.CheckerType>(myType.NAME);
+            var def = new CheckerParam( xType, myDef.ARG);
             var ret = CheckerFactory.Create(def);
             return ret;
         }
 
-        private Objects.Xtrax mapperXtrax(DbModel.XtraxDef myDef, DbModel.XtraxType myType)
+        private Objects.Xtrax mapperXtrax(DbModel.xtrax_def myDef, DbModel.xtrax_type myType)
         {
-            var xType = MyEnumParser<Objects.XtraxType>(myType.Name);
-            var def = new XtraxDefinition(DbInt(myDef.Order), xType, myDef.Arg);
+            var xType = MyEnumParser<Objects.XtraxType>(myType.NAME);
+            var def = new XtraxDefinition(DbInt(myDef.ORDER), xType, myDef.ARG);
             var ret = XtraxFactory.Create(def);
             return ret;
         }
 
-        private Objects.Trox mapperTrox(DbModel.Trox trox, DbModel.WebTarget webTarget, DbModel.WebTargetType webTargetType, DbModel.WebTargetHttp webTargetHttp)
+        private Objects.Trox mapperTrox(DbModel.trox trox, DbModel.web_target webTarget, DbModel.web_target_type webTargetType, DbModel.web_target_http webTargetHttp)
         {
-            var ret = new Objects.Trox(trox.Name, null, DbBool(trox.Enabled), null, null, null);
+            var ret = new Objects.Trox(trox.NAME, null, DbBool(trox.ENABLED), null, null, null);
             return ret;
         }
 
