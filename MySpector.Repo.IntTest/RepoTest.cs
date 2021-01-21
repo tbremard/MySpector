@@ -48,7 +48,7 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void GetTargetHttp()
         {
-            int idWebTarget = 1;
+            int idWebTarget = 1;// must be http id
 
             var ret = _sut.GetTargetHttp(idWebTarget);
 
@@ -60,7 +60,7 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void GetTargetSql()
         {
-            int idWebTarget = 1;
+            int idWebTarget = 2;// must be sql id
 
             var ret = _sut.GetTargetSql(idWebTarget);
 

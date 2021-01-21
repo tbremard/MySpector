@@ -119,10 +119,19 @@ namespace MySpector.Repo
 
         public IWebTarget GetTargetSql(int idWebTarget)
         {
-            string query = @"select * from web_target_sql sq where sq.ID_WEB_TARGET = @ID_WEB_TARGET;";
-            object param = new { ID_WEB_TARGET = idWebTarget };
-            var target = _connection.Query<DbModel.web_target_sql>(query, param: param).FirstOrDefault();
-            var ret = new SqlTarget(target.CONNECTION_STRING, target.QUERY);
+            IWebTarget ret = null;
+            try
+            {
+                string query = @"select * from web_target_sql sq where sq.ID_WEB_TARGET = @ID_WEB_TARGET;";
+                object param = new { ID_WEB_TARGET = idWebTarget };
+                var target = _connection.Query<DbModel.web_target_sql>(query, param: param).FirstOrDefault();
+                ret = new SqlTarget(target.CONNECTION_STRING, target.QUERY);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                ret = null;
+            }
             return ret;
         }
 
