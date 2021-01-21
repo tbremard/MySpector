@@ -3,7 +3,6 @@ using System.Net.Http;
 
 namespace MySpector.Objects
 {
-
     public class HttpTarget : IWebTarget
     {
         public HttpMethod Method { get; set; }
@@ -25,5 +24,16 @@ namespace MySpector.Objects
         {
             return new HttpTarget(uri);
         }
+
+        public override string ToString()
+        {
+            return "HttpTarget->"+ Uri;
+        }
+    }
+
+    public class InvalidTarget : IWebTarget
+    {
+        public WebTargetType WebTargetType => throw new System.NotImplementedException();
     }
 }
+

@@ -23,15 +23,6 @@ namespace MySpector.Repo.IntTest
         }
 
         [Test]
-        public void Test1()
-        {
-            var ret = _sut.GetNames();
-
-            Assert.IsNotNull(ret);
-            Assert.Greater(ret.Count, 0, "no items in this simple query");
-        }
-
-        [Test]
         public void GetAllTroxes()
         {
             var ret = _sut.GetAllTroxes();
@@ -42,6 +33,39 @@ namespace MySpector.Repo.IntTest
             {
                 _log.Debug(item.Name);
             }
+        }
+
+        [Test]
+        public void GetWebTarget()
+        {
+            var ret = _sut.GetWebTarget(TROX_ID);
+
+            Assert.IsNotNull(ret);
+            _log.Debug(ret);
+        }
+
+
+        [Test]
+        public void GetTargetHttp()
+        {
+            int idWebTarget = 1;
+
+            var ret = _sut.GetTargetHttp(idWebTarget);
+
+            Assert.IsNotNull(ret);
+            _log.Debug(ret);
+        }
+
+
+        [Test]
+        public void GetTargetSql()
+        {
+            int idWebTarget = 1;
+
+            var ret = _sut.GetTargetSql(idWebTarget);
+
+            Assert.IsNotNull(ret);
+            _log.Debug(ret);
         }
 
         [Test]

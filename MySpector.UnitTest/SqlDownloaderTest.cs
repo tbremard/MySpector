@@ -20,8 +20,10 @@ namespace MySpector.UnitTest
         [Test]
         public void Download_WenInputIsValid_ThenOk()
         {
-            var httpTarget = new SqlTarget();
-            Trox item = new Trox("test", httpTarget, true, null, null, null);
+            string connectionString = "";
+            string sqlQuery = "";
+            var target = new SqlTarget(connectionString, sqlQuery);
+            Trox item = new Trox("test", target, true, null, null, null);
 
             var data = _sut.Download(item);
 
