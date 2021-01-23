@@ -39,7 +39,7 @@ namespace MySpector.Cons
             var xtraxChain = XtraxFactory.CreateChain(xTraxParams);
             var checker = CheckerFactory.Create(checkerParam);
             var notifier = NotifyFactory.CreateChain();
-            var ret = new Trox(name, target, enabled, xtraxChain, checker, notifier);
+            var ret = new Trox(name, enabled, target, xtraxChain, checker, notifier);
             return ret;
         }
 

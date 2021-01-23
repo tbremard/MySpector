@@ -39,14 +39,24 @@ namespace MySpector.Repo
 
         public IList<Objects.Trox> GetAllTroxes()
         {
-            List<Objects.Trox> ret;
+            _log.Debug("GetAllTroxes()");
+            var ret = new List<Objects.Trox>();
             try
             {
-                string query = @"select * FROM TROX 
-                            inner join web_target web on trox.ID_TROX = web.ID_TROX
-                            inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
-                            inner join web_target_http http on http.ID_WEB_TARGET = web.ID_WEB_TARGET; ";
-                ret = _connection.Query<DbModel.trox, DbModel.web_target, DbModel.web_target_type, DbModel.web_target_http, Objects.Trox>(query, mapperTrox, splitOn: "ID_WEB_TARGET,ID_WEB_TARGET_TYPE,ID_WEB_TARGET").ToList();
+                string query = @"select * FROM TROX";
+                var troxes = _connection.Query<DbModel.trox>(query).ToList();
+                foreach (var x in troxes)
+                {
+                    if (DbBool(x.IS_DIRECTORY))
+                        continue;
+                    var target = GetWebTarget(x.ID_TROX);
+                    var xtrax = GetAllXtrax(x.ID_TROX);
+                    var check = GetAllChecker(x.ID_TROX);
+                    var notifier = GetAllNotifier(x.ID_TROX);
+                    var trox = new Trox(x.NAME, DbBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault());
+                    ret.Add(trox);
+                    _log.Debug("Loaded Trox: "+trox.ToString());
+                }
             }
             catch (Exception e)
             {
@@ -143,21 +153,21 @@ namespace MySpector.Repo
             return ret;
         }
 
-        public IList<Objects.Xtrax> GetAllXtrax(int troxId)
+        public IList<Objects.XtraxDefinition> GetAllXtrax(int troxId)
         {
-            List<Objects.Xtrax> ret;
+            List<Objects.XtraxDefinition> ret;
             try
             {
                 string query = @"select * from xtrax_def def 
 	                        INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
                             WHERE def.ID_TROX = @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                ret = _connection.Query<DbModel.xtrax_def, DbModel.xtrax_type, Objects.Xtrax>(query, mapperXtrax, param: param, splitOn: "ID_XTRAX_TYPE").ToList();
+                ret = _connection.Query<DbModel.xtrax_def, DbModel.xtrax_type, Objects.XtraxDefinition>(query, mapperXtrax, param: param, splitOn: "ID_XTRAX_TYPE").ToList();
             }
             catch (Exception e)
             {
                 _log.Error(e);
-                ret = new List<Objects.Xtrax>();
+                ret = new List<Objects.XtraxDefinition>();
             }
             return ret;
         }
@@ -226,17 +236,16 @@ namespace MySpector.Repo
             return ret;
         }
 
-        private Objects.Xtrax mapperXtrax(DbModel.xtrax_def myDef, DbModel.xtrax_type myType)
+        private Objects.XtraxDefinition mapperXtrax(DbModel.xtrax_def myDef, DbModel.xtrax_type myType)
         {
             var xType = MyEnumParser<Objects.XtraxType>(myType.NAME);
-            var def = new XtraxDefinition(DbInt(myDef.ORDER), xType, myDef.ARG);
-            var ret = XtraxFactory.Create(def);
+            var ret = new XtraxDefinition(DbInt(myDef.ORDER), xType, myDef.ARG);
             return ret;
         }
 
         private Objects.Trox mapperTrox(DbModel.trox trox, DbModel.web_target webTarget, DbModel.web_target_type webTargetType, DbModel.web_target_http webTargetHttp)
         {
-            var ret = new Objects.Trox(trox.NAME, null, DbBool(trox.ENABLED), null, null, null);
+            var ret = new Objects.Trox(trox.NAME, DbBool(trox.ENABLED), null, null, null, null);
             return ret;
         }
 

@@ -59,7 +59,7 @@ namespace MySpector.Objects
             return ret;
         }
 
-        public static Xtrax CreateChain(List<XtraxDefinition> xTraxParams)
+        public static Xtrax CreateChain(IList<XtraxDefinition> xTraxParams)
         {
             if (xTraxParams.Count == 0)
                 return new EmptyXtrax();

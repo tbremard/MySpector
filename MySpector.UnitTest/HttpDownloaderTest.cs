@@ -19,7 +19,7 @@ namespace MySpector.UnitTest
         public void Download_WenInputIsValid_ThenOk()
         {
             var httpTarget = new HttpTarget(TestSampleFactory.ZOTAC_EN72070V_GALAXUS_FULL_PAGE.Url);
-            Trox item = new Trox("test", httpTarget, true, null, null, null);
+            Trox item = new Trox("test", true, httpTarget, null, null, null);
 
             var data = _sut.Download(item);
 
@@ -32,7 +32,7 @@ namespace MySpector.UnitTest
         {
             _log.Debug("xxxxxxxxxxxxx");
             var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url);
-            Trox item = new Trox("test", httpTarget, true, null, null, null);
+            Trox item = new Trox("test", true, httpTarget, null, null, null);
 
             var data = _sut.Download(item);
 

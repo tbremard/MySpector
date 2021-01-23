@@ -21,7 +21,12 @@ namespace MySpector.Objects
             }
         }
 
-        public Trox(string name, IWebTarget target, bool enabled, Xtrax xtraxChain, IChecker checker, Notifier notifyChain)
+        public override string ToString()
+        {
+            return $"Trox: Name: {Name}, enabled:{Enabled}";
+        }
+
+        public Trox(string name, bool enabled, IWebTarget target, Xtrax xtraxChain, IChecker checker, Notifier notifyChain)
         {
             Name = name;
             Target = target;
