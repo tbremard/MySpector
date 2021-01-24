@@ -54,6 +54,12 @@ VALUES(4, 0, 1, '{"Message":"This message comes from DB"}');
 select * from web_target web 
 inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
 where web.ID_TROX = 4;
+--
+select ID_WEB_TARGET, ID_TROX, web.ID_WEB_TARGET_TYPE, NAME  from web_target web 
+                                inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
+                                where web.ID_TROX =  4;
+                                --
+
 
 select * from web_target_http http where http.ID_WEB_TARGET = 1;
 
@@ -65,7 +71,10 @@ select * from xtrax_def def
 	INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
     INNER JOIN  trox on trox.ID_TROX = def.ID_TROX
     WHERE def.ID_TROX = 4;
-    
+
+select * from xtrax_def def 
+	                        INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
+                            WHERE def.ID_TROX = 4;    
 --
 select def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
 from checker_def def 

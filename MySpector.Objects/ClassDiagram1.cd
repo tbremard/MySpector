@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="MySpector.Objects.Trox">
-    <Position X="3.25" Y="2" Width="1.5" />
+    <Position X="5.25" Y="3" Width="1.5" />
+    <Members>
+      <Property Name="FileToken" Hidden="true" />
+    </Members>
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <AssociationLine Name="Target" Type="MySpector.Objects.IWebTarget" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="3.625" Y="2" />
-        <Point X="3.625" Y="0.781" />
-        <Point X="8" Y="0.781" />
+        <Point X="5.5" Y="3" />
+        <Point X="5.5" Y="0.934" />
+        <Point X="10.25" Y="0.934" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -25,37 +28,35 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="MySpector.Objects.Notifier" Collapsed="true">
-    <Position X="8" Y="4" Width="1.5" />
+    <Position X="8" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CgAAAAAAAAAAAEAAAAAAAAAAAAAgAAAAAAAAAAQAAAA=</HashCode>
       <FileName>INotifier.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MySpector.Objects.Xtrax" Collapsed="true">
-    <Position X="8" Y="2.25" Width="1.5" />
+    <Position X="8" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAIAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Xtrax.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MySpector.Objects.HttpTarget" Collapsed="true">
-    <Position X="10" Y="0.75" Width="1.5" />
+  <Class Name="MySpector.Objects.HttpTarget">
+    <Position X="10" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>IAAAAAAAAgAAAAAEAAAgAAAACIAAAEAACAAAAAAAAAA=</HashCode>
       <FileName>HttpTarget.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.367" />
   </Class>
-  <Class Name="MySpector.Objects.InvalidTarget" Collapsed="true">
-    <Position X="11.75" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>HttpTarget.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MySpector.Objects.SqlTarget" Collapsed="true">
-    <Position X="10.75" Y="2" Width="1.5" />
+  <Class Name="MySpector.Objects.SqlTarget">
+    <Position X="12" Y="2.25" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>SqlTarget.cs</FileName>
@@ -63,25 +64,35 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="MySpector.Objects.IChecker" Collapsed="true">
-    <Position X="8" Y="3.25" Width="1.5" />
+    <Position X="8" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IChecker.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MySpector.Objects.IDownloader" Collapsed="true">
-    <Position X="8" Y="1.25" Width="1.5" />
+    <Position X="8" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>IDownloader.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="MySpector.Objects.IWebTarget" Collapsed="true">
-    <Position X="8" Y="0.5" Width="1.5" />
+  <Interface Name="MySpector.Objects.IWebTarget">
+    <Position X="10.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IWebTarget.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="WebTargetType" />
+    </ShowAsAssociation>
   </Interface>
+  <Enum Name="MySpector.Objects.WebTargetType">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>WebTargetType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
