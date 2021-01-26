@@ -19,7 +19,6 @@ namespace MySpector.Repo.DbModel
         public virtual DbSet<checker_type> checker_type { get; set; }
         public virtual DbSet<notify_def> notify_def { get; set; }
         public virtual DbSet<notify_type> notify_type { get; set; }
-        public virtual DbSet<tjson> tjson { get; set; }
         public virtual DbSet<trox> trox { get; set; }
         public virtual DbSet<trox_closure> trox_closure { get; set; }
         public virtual DbSet<web_target> web_target { get; set; }
@@ -53,21 +52,21 @@ namespace MySpector.Repo.DbModel
 
                 entity.Property(e => e.ARG).HasMaxLength(100);
 
-                entity.HasOne(d => d.ID_CHECKER_TYPENavigation)
-                    .WithMany(p => p.checker_def)
-                    .HasForeignKey(d => d.ID_CHECKER_TYPE)
-                    .HasConstraintName("FK_ID_CHECKER_TYPE");
+                entity.Property(e => e.ID_TROX).HasColumnType("int unsigned");
 
                 entity.HasOne(d => d.ID_TROXNavigation)
                     .WithMany(p => p.checker_def)
                     .HasForeignKey(d => d.ID_TROX)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ID_TROX3");
             });
 
             modelBuilder.Entity<checker_type>(entity =>
             {
-                entity.HasKey(e => e.ID_CHECKER_TYPE)
+                entity.HasKey(e => new { e.ID_CHECKER_TYPE, e.NAME })
                     .HasName("PRIMARY");
+
+                entity.Property(e => e.ID_CHECKER_TYPE).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.NAME).HasMaxLength(50);
             });
@@ -85,30 +84,23 @@ namespace MySpector.Repo.DbModel
 
                 entity.Property(e => e.ARG).HasMaxLength(100);
 
-                entity.HasOne(d => d.ID_NOTIFY_TYPENavigation)
-                    .WithMany(p => p.notify_def)
-                    .HasForeignKey(d => d.ID_NOTIFY_TYPE)
-                    .HasConstraintName("FK_ID_NOTIFY_TYPE");
+                entity.Property(e => e.ID_TROX).HasColumnType("int unsigned");
 
                 entity.HasOne(d => d.ID_TROXNavigation)
                     .WithMany(p => p.notify_def)
                     .HasForeignKey(d => d.ID_TROX)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ID_TROX4");
             });
 
             modelBuilder.Entity<notify_type>(entity =>
             {
-                entity.HasKey(e => e.ID_NOTIFY_TYPE)
+                entity.HasKey(e => new { e.ID_NOTIFY_TYPE, e.NAME })
                     .HasName("PRIMARY");
 
+                entity.Property(e => e.ID_NOTIFY_TYPE).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.NAME).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<tjson>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.Property(e => e.param).HasColumnType("json");
             });
 
             modelBuilder.Entity<trox>(entity =>
@@ -116,7 +108,23 @@ namespace MySpector.Repo.DbModel
                 entity.HasKey(e => e.ID_TROX)
                     .HasName("PRIMARY");
 
-                entity.Property(e => e.NAME).HasMaxLength(100);
+                entity.HasIndex(e => e.ID_WEB_TARGET)
+                    .HasName("FK_ID_WEB_TARGET_idx");
+
+                entity.Property(e => e.ID_TROX).HasColumnType("int unsigned");
+
+                entity.Property(e => e.ENABLED).HasDefaultValueSql("'1'");
+
+                entity.Property(e => e.IS_DIRECTORY).HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.NAME)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.HasOne(d => d.ID_WEB_TARGETNavigation)
+                    .WithMany(p => p.trox)
+                    .HasForeignKey(d => d.ID_WEB_TARGET)
+                    .HasConstraintName("FK_ID_WEB_TARGET");
             });
 
             modelBuilder.Entity<trox_closure>(entity =>
@@ -129,14 +137,20 @@ namespace MySpector.Repo.DbModel
                 entity.HasIndex(e => e.ID_PARENT)
                     .HasName("FK_ID_PARENT_idx");
 
+                entity.Property(e => e.ID_CHILD).HasColumnType("int unsigned");
+
+                entity.Property(e => e.ID_PARENT).HasColumnType("int unsigned");
+
                 entity.HasOne(d => d.ID_CHILDNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.ID_CHILD)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ID_CHILD");
 
                 entity.HasOne(d => d.ID_PARENTNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.ID_PARENT)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ID_PARENT");
             });
 
@@ -145,21 +159,8 @@ namespace MySpector.Repo.DbModel
                 entity.HasKey(e => e.ID_WEB_TARGET)
                     .HasName("PRIMARY");
 
-                entity.HasIndex(e => e.ID_TROX)
-                    .HasName("FK_ID_TROX_idx");
-
                 entity.HasIndex(e => e.ID_WEB_TARGET_TYPE)
                     .HasName("FK_ID_WEB_TARGET_TYPE_idx");
-
-                entity.HasOne(d => d.ID_TROXNavigation)
-                    .WithMany(p => p.web_target)
-                    .HasForeignKey(d => d.ID_TROX)
-                    .HasConstraintName("FK_ID_TROX1");
-
-                entity.HasOne(d => d.ID_WEB_TARGET_TYPENavigation)
-                    .WithMany(p => p.web_target)
-                    .HasForeignKey(d => d.ID_WEB_TARGET_TYPE)
-                    .HasConstraintName("FK_ID_WEB_TARGET_TYPE");
             });
 
             modelBuilder.Entity<web_target_http>(entity =>
@@ -174,11 +175,19 @@ namespace MySpector.Repo.DbModel
 
                 entity.Property(e => e.HEADERS).HasMaxLength(1000);
 
-                entity.Property(e => e.METHOD).HasColumnType("enum('GET','POST','PUT','DELETE')");
+                entity.Property(e => e.METHOD)
+                    .IsRequired()
+                    .HasColumnType("enum('GET','POST','PUT','DELETE')")
+                    .HasDefaultValueSql("'GET'");
 
-                entity.Property(e => e.URI).HasMaxLength(200);
+                entity.Property(e => e.URI)
+                    .IsRequired()
+                    .HasMaxLength(200);
 
-                entity.Property(e => e.VERSION).HasMaxLength(5);
+                entity.Property(e => e.VERSION)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDefaultValueSql("'1.1'");
 
                 entity.HasOne(d => d.ID_WEB_TARGETNavigation)
                     .WithOne(p => p.web_target_http)
@@ -195,9 +204,17 @@ namespace MySpector.Repo.DbModel
                 entity.HasIndex(e => e.ID_WEB_TARGET)
                     .HasName("FK_ID_WEB_TARGET_idx");
 
-                entity.Property(e => e.CONNECTION_STRING).HasMaxLength(1000);
+                entity.Property(e => e.CONNECTION_STRING)
+                    .IsRequired()
+                    .HasMaxLength(1000);
 
-                entity.Property(e => e.QUERY).HasMaxLength(1000);
+                entity.Property(e => e.PROVIDER)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.QUERY)
+                    .IsRequired()
+                    .HasMaxLength(1000);
 
                 entity.HasOne(d => d.ID_WEB_TARGETNavigation)
                     .WithOne(p => p.web_target_sql)
@@ -208,8 +225,10 @@ namespace MySpector.Repo.DbModel
 
             modelBuilder.Entity<web_target_type>(entity =>
             {
-                entity.HasKey(e => e.ID_WEB_TARGET_TYPE)
+                entity.HasKey(e => new { e.ID_WEB_TARGET_TYPE, e.NAME })
                     .HasName("PRIMARY");
+
+                entity.Property(e => e.ID_WEB_TARGET_TYPE).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.NAME).HasMaxLength(50);
             });
@@ -227,21 +246,21 @@ namespace MySpector.Repo.DbModel
 
                 entity.Property(e => e.ARG).HasMaxLength(100);
 
+                entity.Property(e => e.ID_TROX).HasColumnType("int unsigned");
+
                 entity.HasOne(d => d.ID_TROXNavigation)
                     .WithMany(p => p.xtrax_def)
                     .HasForeignKey(d => d.ID_TROX)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ID_TROX2");
-
-                entity.HasOne(d => d.ID_XTRAX_TYPENavigation)
-                    .WithMany(p => p.xtrax_def)
-                    .HasForeignKey(d => d.ID_XTRAX_TYPE)
-                    .HasConstraintName("FK_ID_XTRAX_TYPE");
             });
 
             modelBuilder.Entity<xtrax_type>(entity =>
             {
-                entity.HasKey(e => e.ID_XTRAX_TYPE)
+                entity.HasKey(e => new { e.ID_XTRAX_TYPE, e.NAME })
                     .HasName("PRIMARY");
+
+                entity.Property(e => e.ID_XTRAX_TYPE).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.NAME).HasMaxLength(50);
             });

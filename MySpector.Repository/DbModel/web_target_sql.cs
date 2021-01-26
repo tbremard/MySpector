@@ -8,6 +8,7 @@ namespace MySpector.Repo.DbModel
         public int ID_WEB_TARGET { get; set; }
         public string CONNECTION_STRING { get; set; }
         public string QUERY { get; set; }
+        public string PROVIDER { get; set; }
 
         public virtual web_target ID_WEB_TARGETNavigation { get; set; }
     }

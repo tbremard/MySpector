@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text;
 
 namespace MySpector.Objects
 {
@@ -23,7 +24,13 @@ namespace MySpector.Objects
 
         public override string ToString()
         {
-            return $"Trox: Name: {Name}, enabled:{Enabled}";
+            var sb = new StringBuilder();
+            sb.AppendLine( $"Trox: Name: {Name}, enabled:{Enabled}");
+            sb.AppendLine("WebTarget: " + Target.ToString());
+            sb.AppendLine("Xtrax:" + XtraxChain.ToString());
+            sb.AppendLine("Checker:" + Checker.ToString());
+            sb.AppendLine("Notify:" + NotifyChain.ToString());
+            return sb.ToString();
         }
 
         public Trox(string name, bool enabled, IWebTarget target, Xtrax xtraxChain, IChecker checker, Notifier notifyChain)

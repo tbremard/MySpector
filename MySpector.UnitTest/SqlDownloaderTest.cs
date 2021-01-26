@@ -22,7 +22,8 @@ namespace MySpector.UnitTest
         {
             string connectionString = "";
             string sqlQuery = "";
-            var target = new SqlTarget(connectionString, sqlQuery);
+            string provider = "";
+            var target = new SqlTarget(connectionString, sqlQuery, provider);
             Trox item = new Trox("test", true, target, null, null, null);
 
             var data = _sut.Download(item);

@@ -8,6 +8,8 @@ namespace MySpector.Repo.IntTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         const int TROX_ID = 2;
+        const int HTTP_TARGET_ID = 1;
+        const int SQL_TARGET_ID = 2;
 
         Repo _sut;
         [SetUp]
@@ -36,7 +38,6 @@ namespace MySpector.Repo.IntTest
             }
         }
 
-
         [Test]
         public void GetAllTroxes_WhenIdsAreProvided_ThenOk()
         {
@@ -49,24 +50,23 @@ namespace MySpector.Repo.IntTest
             Assert.Greater(ret.Count, 0, "no items in this simple query");
             foreach (var item in ret)
             {
-                _log.Debug(item.Name);
+                _log.Debug(item);
             }
         }
 
         [Test]
         public void GetWebTarget()
         {
-            var ret = _sut.GetWebTarget(TROX_ID);
+            var ret = _sut.GetWebTarget(HTTP_TARGET_ID);
 
             Assert.IsNotNull(ret);
             _log.Debug(ret);
         }
 
-
         [Test]
         public void GetTargetHttp()
         {
-            int idWebTarget = 1;// must be http id
+            int idWebTarget = HTTP_TARGET_ID;// must be http id
 
             var ret = _sut.GetTargetHttp(idWebTarget);
 
@@ -74,11 +74,10 @@ namespace MySpector.Repo.IntTest
             _log.Debug(ret);
         }
 
-
         [Test]
         public void GetTargetSql()
         {
-            int idWebTarget = 2;// must be sql id
+            int idWebTarget = SQL_TARGET_ID;// must be sql id
 
             var ret = _sut.GetTargetSql(idWebTarget);
 

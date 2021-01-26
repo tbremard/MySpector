@@ -92,15 +92,15 @@ namespace MySpector.Repo
             return ret;
         }
 
-        public IWebTarget GetWebTarget(int troxId)
+        public IWebTarget GetWebTarget(int webTargetId)
         {
             IWebTarget ret;
             try
             {
-                string query = @"select ID_WEB_TARGET, ID_TROX, web.ID_WEB_TARGET_TYPE, NAME  from web_target web 
+                string query = @"select ID_WEB_TARGET, web.ID_WEB_TARGET_TYPE, NAME  from web_target web 
                                 inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
-                                where web.ID_TROX =  @ID_TROX;";
-                object param = new { ID_TROX = troxId };
+                                where web.ID_WEB_TARGET =  @ID_WEB_TARGET;";
+                object param = new { ID_WEB_TARGET = webTargetId };
                 var target = _connection.Query<DbModel.web_target, DbModel.web_target_type, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_WEB_TARGET_TYPE").FirstOrDefault();
                 switch (target.Type)
                 {
@@ -155,13 +155,13 @@ namespace MySpector.Repo
 
         public IWebTarget GetTargetSql(int idWebTarget)
         {
-            IWebTarget ret = null;
+            IWebTarget ret;
             try
             {
                 string query = @"select * from web_target_sql sq where sq.ID_WEB_TARGET = @ID_WEB_TARGET;";
                 object param = new { ID_WEB_TARGET = idWebTarget };
                 var target = _connection.Query<DbModel.web_target_sql>(query, param: param).FirstOrDefault();
-                ret = new SqlTarget(target.CONNECTION_STRING, target.QUERY);
+                ret = new SqlTarget(target.CONNECTION_STRING, target.QUERY, target.PROVIDER);
             }
             catch (Exception e)
             {
