@@ -37,26 +37,16 @@ namespace MySpector.Repo
             return ret;
         }
 
-        public IList<Objects.Trox> GetAllTroxes()
+        public IList<Objects.Trox> GetAllTroxes(List<int> troxIds)
         {
             _log.Debug("GetAllTroxes()");
-            var ret = new List<Objects.Trox>();
+            IList<Objects.Trox> ret;
             try
             {
-                string query = @"select * FROM TROX";
-                var troxes = _connection.Query<DbModel.trox>(query).ToList();
-                foreach (var x in troxes)
-                {
-                    if (DbBool(x.IS_DIRECTORY))
-                        continue;
-                    var target = GetWebTarget(x.ID_TROX);
-                    var xtrax = GetAllXtrax(x.ID_TROX);
-                    var check = GetAllChecker(x.ID_TROX);
-                    var notifier = GetAllNotifier(x.ID_TROX);
-                    var trox = new Trox(x.NAME, DbBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault());
-                    ret.Add(trox);
-                    _log.Debug("Loaded Trox: "+trox.ToString());
-                }
+                object param = new { IDS = troxIds };
+                string query = @"select * FROM TROX WHERE ID_TROX IN @IDS";
+                var troxes = _connection.Query<DbModel.trox>(query, param).ToList();
+                ret = CreateTroxesFromDb(troxes);
             }
             catch (Exception e)
             {
@@ -65,7 +55,43 @@ namespace MySpector.Repo
             }
             return ret;
         }
-        
+
+        public IList<Objects.Trox> GetAllTroxes()
+        {
+            _log.Debug("GetAllTroxes()");
+            IList<Objects.Trox> ret;
+            try
+            {
+                string query = @"select * FROM TROX";
+                var troxes = _connection.Query<DbModel.trox>(query).ToList();
+                ret = CreateTroxesFromDb(troxes);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                ret = new List<Objects.Trox>();
+            }
+            return ret;
+        }
+
+        private IList<Objects.Trox> CreateTroxesFromDb(List<trox> troxes)
+        {
+            var ret = new List<Objects.Trox>();
+            foreach (var x in troxes)
+            {
+                if (DbBool(x.IS_DIRECTORY))
+                    continue;
+                var target = GetWebTarget(x.ID_TROX);
+                var xtrax = GetAllXtrax(x.ID_TROX);
+                var check = GetAllChecker(x.ID_TROX);
+                var notifier = GetAllNotifier(x.ID_TROX);
+                var trox = new Trox(x.NAME, DbBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault());
+                ret.Add(trox);
+                _log.Debug("Loaded Trox: " + trox.ToString());
+            }
+            return ret;
+        }
+
         public IWebTarget GetWebTarget(int troxId)
         {
             IWebTarget ret;

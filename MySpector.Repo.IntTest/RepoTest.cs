@@ -1,12 +1,13 @@
 using NLog;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace MySpector.Repo.IntTest
 {
     public class RepoTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-        const int TROX_ID = 4;
+        const int TROX_ID = 2;
 
         Repo _sut;
         [SetUp]
@@ -26,6 +27,23 @@ namespace MySpector.Repo.IntTest
         public void GetAllTroxes()
         {
             var ret = _sut.GetAllTroxes();
+
+            Assert.IsNotNull(ret);
+            Assert.Greater(ret.Count, 0, "no items in this simple query");
+            foreach (var item in ret)
+            {
+                _log.Debug(item.Name);
+            }
+        }
+
+
+        [Test]
+        public void GetAllTroxes_WhenIdsAreProvided_ThenOk()
+        {
+            var troxIds = new List<int>();
+            troxIds.Add(TROX_ID);
+
+            var ret = _sut.GetAllTroxes(troxIds);
 
             Assert.IsNotNull(ret);
             Assert.Greater(ret.Count, 0, "no items in this simple query");
