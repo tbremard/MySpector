@@ -29,15 +29,15 @@ SELECT * FROM TROX_closure;
 
 INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(1);-- http
 INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(2);-- sql
-select * from WEB_TARGET tar
-inner join WEB_TARGET_TYPE typ on tar.ID_WEB_TARGET_TYPE = typ.ID_WEB_TARGET_TYPE;
 
 INSERT into WEB_TARGET_HTTP(ID_WEB_TARGET, METHOD, URI) 
 			values(1, 'GET', 'https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04');
 INSERT INTO WEB_TARGET_SQL(ID_WEB_TARGET, CONNECTION_STRING, QUERY, PROVIDER)
 			values(2, 'demo connectionstring', 'demo sql query', 'SQL');
 
-            
+SELECT  LAST_INSERT_ID();
+select * from WEB_TARGET tar
+    inner join WEB_TARGET_TYPE typ on tar.ID_WEB_TARGET_TYPE = typ.ID_WEB_TARGET_TYPE;           
 select * from WEB_TARGET_HTTP;
 select * from WEB_TARGET_SQL;
 

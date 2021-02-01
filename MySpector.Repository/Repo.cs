@@ -28,6 +28,7 @@ namespace MySpector.Repo
                 _log.Debug($"Connecting to: {connectionString}");
                 //IDbConnection connection = new SqlConnection(connectionString);
                 _connection = new MySqlConnection(connectionString);
+                _connection.Open();
                 ret = true;
             }
             catch (Exception ex)
@@ -35,6 +36,13 @@ namespace MySpector.Repo
                 _log.Error(ex);
             }
             return ret;
+        }
+
+        public bool Disconnect()
+        {
+            _connection.Close();
+            _connection.Dispose();
+            return true;
         }
 
         public IList<Objects.Trox> GetAllTroxes(List<int> troxIds)
@@ -79,21 +87,131 @@ namespace MySpector.Repo
             var ret = new List<Objects.Trox>();
             foreach (var x in troxes)
             {
-                if (DbBool(x.IS_DIRECTORY))
+                if (DbToBool(x.IS_DIRECTORY))
                     continue;
-                var target = GetWebTarget(x.ID_TROX);
+                var target = GetWebTarget(x.ID_WEB_TARGET);
                 var xtrax = GetAllXtrax(x.ID_TROX);
                 var check = GetAllChecker(x.ID_TROX);
                 var notifier = GetAllNotifier(x.ID_TROX);
-                var trox = new Trox(x.NAME, DbBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault());
+                var trox = new Trox(x.NAME, DbToBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault());
                 ret.Add(trox);
                 _log.Debug("Loaded Trox: " + trox.ToString());
             }
             return ret;
         }
 
-        public IWebTarget GetWebTarget(int webTargetId)
+        public int? SaveTrox(Trox trox)
         {
+            if (_currentTransaction == null)
+            {
+                _log.Error("You must first create a transaction");
+                return 0;
+            }
+            int? targetDbId = SaveWebTarget(trox.Target);
+            int? troxDbId = SaveTroxCore(trox);
+            AttachWebTargetToTrox(targetDbId, troxDbId);
+            return troxDbId;
+        }
+
+        private bool AttachWebTargetToTrox(int? targetDbId, int? troxDbId)
+        {
+            int nbRows;
+            string query = $"UPDATE TROX SET ID_WEB_TARGET={targetDbId} WHERE ID_TROX={troxDbId};";
+            if (_currentTransaction == null)
+            {
+                _log.Error("You must first create a transaction");
+                return false;
+            }
+            try
+            {
+                nbRows = _currentTransaction.Connection.Execute(query);
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                return false;
+            }
+            if (nbRows == 0)
+                return false;
+            return true;
+        }
+
+        private int? SaveTroxCore(Trox trox)
+        {
+            int? troxDbId;
+            if (_currentTransaction == null)
+            {
+                _log.Error("You must first create a transaction");
+                return 0;
+            }
+            var dbTrox = new trox() { ENABLED = BoolToDb(trox.Enabled), NAME = trox.Name, IS_DIRECTORY = BoolToDb(false) };
+            string q = @"INSERT INTO TROX(NAME, ENABLED, IS_DIRECTORY) values(@NAME, @ENABLED, @IS_DIRECTORY);
+                         SELECT LAST_INSERT_ID();";
+            try
+            {
+                troxDbId = _currentTransaction.Connection.Query<int>(q, dbTrox).Single();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                troxDbId = null;
+            }
+            return troxDbId;
+        }
+
+        public int SaveWebTarget(IWebTarget target)
+        {
+            if (_currentTransaction == null)
+            {
+                _log.Error("You must first create a transaction");
+                return 0;
+            }
+            int ret = 0;
+            switch (target.WebTargetType)
+            {
+                case WebTargetType.HTTP:
+                    string q = @"INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(1);
+                                 SELECT LAST_INSERT_ID();";
+                    int webTargetId = _currentTransaction.Connection.Query<int>(q).Single();
+                    var http = target as HttpTarget;
+                    http.DbId = webTargetId;
+                    var dbHttp = new web_target_http() { ID_WEB_TARGET = http.DbId.Value, METHOD = http.Method.ToString(), URI = http.Uri };
+                    string query = @"INSERT into WEB_TARGET_HTTP(ID_WEB_TARGET, METHOD, URI) values(@ID_WEB_TARGET, @Method, @Uri);";
+                    _currentTransaction.Connection.Execute(query, dbHttp);
+                    ret = webTargetId;
+                    break;
+                case WebTargetType.SQL:
+                    break;
+                default:
+                    break;
+            }
+            return ret;
+        }
+
+        IDbTransaction _currentTransaction;
+        public void BeginTransaction()
+        {
+            _currentTransaction = _connection.BeginTransaction();
+        }
+
+        public void RollBack()
+        {
+            _currentTransaction.Rollback();
+            _currentTransaction.Dispose();
+            _currentTransaction = null;
+        }
+
+        public void Commit()
+        {
+            _currentTransaction.Commit();
+            _currentTransaction.Dispose();
+            _currentTransaction = null;
+        }
+
+        public IWebTarget GetWebTarget(int? webTargetId)
+        {
+            if (webTargetId == null)
+                return null;
             IWebTarget ret;
             try
             {
@@ -265,21 +383,14 @@ namespace MySpector.Repo
         private Objects.XtraxDefinition mapperXtrax(DbModel.xtrax_def myDef, DbModel.xtrax_type myType)
         {
             var xType = MyEnumParser<Objects.XtraxType>(myType.NAME);
-            var ret = new XtraxDefinition(DbInt(myDef.ORDER), xType, myDef.ARG);
+            var ret = new XtraxDefinition(DbToInt(myDef.ORDER), xType, myDef.ARG);
             return ret;
         }
 
         private Objects.Trox mapperTrox(DbModel.trox trox, DbModel.web_target webTarget, DbModel.web_target_type webTargetType, DbModel.web_target_http webTargetHttp)
         {
-            var ret = new Objects.Trox(trox.NAME, DbBool(trox.ENABLED), null, null, null, null);
+            var ret = new Objects.Trox(trox.NAME, DbToBool(trox.ENABLED), null, null, null, null);
             return ret;
-        }
-
-        public bool Disconnect()
-        {
-            _connection.Close();
-            _connection.Dispose();
-            return true;
         }
 
         public List<string> GetNames()
@@ -289,7 +400,7 @@ namespace MySpector.Repo
         }
 
 
-        private bool DbBool(byte? b)
+        private bool DbToBool(byte? b)
         {
             if (!b.HasValue)
                 return false;
@@ -297,7 +408,14 @@ namespace MySpector.Repo
             return ret;
         }
 
-        private int DbInt(int? b)
+        private byte? BoolToDb(bool b)
+        {
+            byte ret;
+            ret = (byte) (b ? 1 : 0);
+            return ret;
+        }
+
+        private int DbToInt(int? b)
         {
             if (!b.HasValue)
                 return 0;

@@ -5,7 +5,14 @@ namespace MySpector.Cons
 {
     class WatchList
     {
-        public static IList<Trox> Create()
+        public static IList<Trox> CreateFromDB()
+        {
+            var ret = new List<Trox>();
+            return ret;
+        }
+
+
+        public static IList<Trox> CreateLocal()
         {
             var ret = new List<Trox>();
             ret.Add(CreateZotacMagnus());

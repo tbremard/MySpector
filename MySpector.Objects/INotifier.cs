@@ -31,5 +31,12 @@ namespace MySpector.Objects
             }
             return ret;
         }
+
+        public override string ToString()
+        {
+            string ret = GetType().Name;
+            return ret;
+        }
+
     }
 }

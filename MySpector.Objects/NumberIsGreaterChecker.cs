@@ -37,5 +37,12 @@ namespace MySpector.Objects
             _log.Debug($"{Sample} > {Reference}: {ret}");
             return ret;
         }
+
+        public override string ToString()
+        {
+            string ret = GetType().Name + " " + Reference;
+            return ret;
+        }
+
     }
 }

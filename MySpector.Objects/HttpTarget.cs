@@ -5,6 +5,7 @@ namespace MySpector.Objects
 {
     public class HttpTarget : IWebTarget
     {
+        public int? DbId { get; set; }
         public HttpMethod Method { get; set; }
         public string Uri { get; set; }
         public string Version { get; set; }

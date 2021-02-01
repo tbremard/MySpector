@@ -51,9 +51,12 @@ implement NumberIsDifferent
 
 user can specify its own HTTP headers   : done
 define scenario with TARGET SQL --------------------------------------: Done
-define database and tables -------------------------------------------1
-use MySql ------------------------------------------------------------2
+define database and tables ------------------------------------------ : Done
+use MySql ----------------------------------------------------------- : Done
             Downloader = new HttpDownloader();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
+
+Create Repo/test Repo ------------------------------------------------1 : DOING
+Load all data from DB ------------------------------------------------1 : DOING
 console factory / db data --------------------------------------------2
 Xtract Xpath of Xml doc-----------------------------------------------2
 parse generic json ---------------------------------------------------3

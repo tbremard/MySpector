@@ -1,3 +1,4 @@
+using MySpector.Objects;
 using NLog;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -110,6 +111,32 @@ namespace MySpector.Repo.IntTest
 
             Assert.IsNotNull(ret);
             Assert.Greater(ret.Count, 0, "no items in this simple query");
+        }
+
+        [Test]
+        public void SaveTrox()
+        {
+            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax("test"), new TextDoContainChecker("test", true), new StubNotifier());
+
+            _sut.BeginTransaction();
+            int? id = _sut.SaveTrox(trox);
+            _sut.Commit();
+
+            Assert.IsNotNull(id);
+            Assert.AreNotEqual(0, id);
+        }
+        
+        [Test]
+        public void SaveWebTarget()
+        {
+            var target = new HttpTarget("test");
+
+            _sut.BeginTransaction();
+            int id = _sut.SaveWebTarget(target);
+            _sut.RollBack();
+
+            Assert.AreNotEqual(0, id);
+            _log.Debug("ID: " + id);
         }
     }
 }

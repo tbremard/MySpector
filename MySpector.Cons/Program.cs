@@ -11,7 +11,7 @@ namespace MySpector.Cons
         static void Main()
         {
             _log.Debug("Starting MySpector...");
-            var watchList = WatchList.Create();
+            var watchList = WatchList.CreateLocal();
             var job = new Job();
             bool isSuccess = job.Process(watchList);
             if (!isSuccess)
