@@ -110,7 +110,77 @@ namespace MySpector.Repo
             int? targetDbId = SaveWebTarget(trox.Target);
             int? troxDbId = SaveTroxCore(trox);
             AttachWebTargetToTrox(targetDbId, troxDbId);
+            SaveXtraxChain(troxDbId, trox.XtraxChain);
+            SaveChecker(troxDbId, trox.Checker);
+            SaveNotifyChain(troxDbId, trox.NotifyChain);
             return troxDbId;
+        }
+
+        private void SaveNotifyChain(int? troxDbId, Notifier notifyChain)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool SaveChecker(int? troxDbId, IChecker checker)
+        {
+            var def = new checker_def();
+            if (!troxDbId.HasValue)
+            {
+                _log.Error("cannot save checker without troxDbId");
+                return false;
+            }
+            def.ID_CHECKER_TYPE = (int)checker.Type;
+            def.ARG = checker.JsonArg;
+            def.ID_TROX = troxDbId.Value;
+            def.ORDER = 1;
+            string q = @"INSERT INTO checker_def(ID_TROX, `ORDER`, ID_XTRAX_TYPE, ARG)
+			                         values(@ID_TROX, @ORDER, @ID_XTRAX_TYPE, @ARG);";
+            int? id = InsertData(q, def);
+            checker.DbId = id;
+            return true;
+        }
+
+        private void SaveXtraxChain(int? troxDbId, Xtrax x)
+        {
+            do
+            {
+                SaveXtraxSingle(troxDbId, x);
+                x = x.GetNext();
+            } while (x != null);
+        }
+
+        private void SaveXtraxSingle(int? troxDbId, Xtrax x)
+        {
+            var def = new xtrax_def();
+            if (x.DbId.HasValue)
+            {
+                def.ID_XTRAX_DEF = x.DbId.Value;
+            }
+            def.ID_XTRAX_TYPE = (int)x.Type;
+            def.ARG = x.JsonArg;
+            def.ID_TROX = troxDbId.Value;
+            def.ORDER = 1;
+            string q = @"INSERT INTO xtrax_def(ID_TROX, `ORDER`, ID_XTRAX_TYPE, ARG)
+			                         values(@ID_TROX, @ORDER, @ID_XTRAX_TYPE, @ARG);";
+            int? id = InsertData(q, def);
+            x.DbId = id;
+        }
+
+        private int? InsertData(string sql, object param)
+        {
+            int? dbId;
+            string q = @"SELECT LAST_INSERT_ID();";
+            try
+            {
+                _currentTransaction.Connection.Execute(sql, param);
+                dbId = _currentTransaction.Connection.Query<int>(q).Single();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                dbId = null;
+            }
+            return dbId;
         }
 
         private bool AttachWebTargetToTrox(int? targetDbId, int? troxDbId)

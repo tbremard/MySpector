@@ -120,7 +120,7 @@ namespace MySpector.Repo.IntTest
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);
-            _sut.Commit();
+            _sut.RollBack();
 
             Assert.IsNotNull(id);
             Assert.AreNotEqual(0, id);

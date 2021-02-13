@@ -35,8 +35,7 @@ namespace MySpector.Objects
             switch (def.XtraxType)
             {
                 case XtraxType.Xpath:
-                    var xpathArg = JsonSerializer.Deserialize<XpathArg>(def.Arg);
-                    ret = new XpathXtrax(xpathArg.Path);
+                    ret = new XpathXtrax(def.Arg);
                     break;
                 case XtraxType.After:
                     var argAfter = JsonSerializer.Deserialize<AfterArg>(def.Arg);

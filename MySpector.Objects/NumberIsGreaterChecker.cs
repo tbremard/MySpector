@@ -2,13 +2,16 @@
 
 namespace MySpector.Objects
 {
-    public class NumberIsGreaterChecker : IChecker
+    public class NumberIsGreaterChecker : IChecker// << need JsonArg for DB insertion
     {
+        public int? DbId { get; set; }
+        public CheckerType Type => CheckerType.NumberIsGreater;
+        public string JsonArg { get; }
         static Logger _log = LogManager.GetCurrentClassLogger();
         decimal Reference;
         bool OrEqual;
 
-        public NumberIsGreaterChecker(decimal reference, bool orEqual)
+        public NumberIsGreaterChecker(decimal reference, bool orEqual)// <<<<<  Need 2 parameters
         {
             Reference = reference;
             OrEqual = orEqual;

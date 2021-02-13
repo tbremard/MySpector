@@ -3,16 +3,17 @@ using System;
 
 namespace MySpector
 {
-    public class TextDoContainChecker : IChecker
+    public class TextDoNotContainChecker : IChecker
     {
+        public int? DbId { get; set; }
+        public CheckerType Type => CheckerType.TextDoNotContain;
+        public string JsonArg { get; }
+
         string Text;
         string Token;
         bool IgnoreCase;
-        public int? DbId { get; set; }
-        public CheckerType Type => CheckerType.NumberIsDifferent;
-        public string JsonArg { get; }
 
-        public TextDoContainChecker(string token, bool ignoreCase)
+        public TextDoNotContainChecker(string token, bool ignoreCase)
         {
             Token = token;
             IgnoreCase = ignoreCase;
@@ -22,7 +23,8 @@ namespace MySpector
         {
             Text = input?.GetText();
             StringComparison comparisonType = IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-            bool ret = Text.Contains(Token, comparisonType);
+            bool doContain = Text.Contains(Token, comparisonType);
+            bool ret = !doContain;
             return ret;
         }
     }

@@ -4,6 +4,8 @@ namespace MySpector.Objects
 {
     public class BeforeXtrax : Xtrax
     {
+        public override XtraxType Type => XtraxType.Before;
+
         static Logger _log = LogManager.GetCurrentClassLogger();
         private readonly string _suffix;
 

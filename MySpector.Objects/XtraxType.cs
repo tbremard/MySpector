@@ -7,5 +7,8 @@
         Before,
         TextToNumber,
         Between,
+        Empty,
+        TextReplace,
+        LengthOfText
     }
 }

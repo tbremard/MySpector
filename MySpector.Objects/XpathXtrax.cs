@@ -1,18 +1,22 @@
 ﻿using HtmlAgilityPack;
 using System;
 using NLog;
+using System.Text.Json;
 
 namespace MySpector.Objects
 {
     public class XpathXtrax : Xtrax
     {
+        public override XtraxType Type => XtraxType.Xpath;
         static Logger _log = LogManager.GetCurrentClassLogger();
         private readonly string _xPath;
         private string NOT_FOUND = "NOT_FOUND";
 
-        public XpathXtrax(string xPath)
+        public XpathXtrax(string jsonArg)
         {
-            _xPath = xPath;
+            JsonArg = jsonArg;
+            var xpathArg = JsonSerializer.Deserialize<XpathArg>(jsonArg);
+            _xPath = xpathArg.Path;
         }
 
         protected override IDataTruck GetOutput(IDataTruck data)

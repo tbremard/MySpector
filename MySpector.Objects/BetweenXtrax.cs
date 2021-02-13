@@ -6,6 +6,7 @@ namespace MySpector
     {
         private readonly Xtrax _before;
         private readonly Xtrax _after;
+        public override XtraxType Type => XtraxType.Between;
 
         public BetweenXtrax(string prefix, string suffix)
         {

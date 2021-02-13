@@ -3,6 +3,11 @@
     public enum CheckerType
     {
         IsLess,
-        IsGreater
+        IsGreater,
+        NumberIsDifferent,
+        NumberIsEqual,
+        NumberIsGreater,
+        NumberIsLess,
+        TextDoNotContain
     }
 }

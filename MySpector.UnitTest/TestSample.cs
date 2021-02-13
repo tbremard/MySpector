@@ -19,7 +19,9 @@ namespace MySpector.UnitTest
 
         private Xtrax CreateXpathRule(string rule)
         {
-            var ret = new XpathXtrax(rule);// do not chain other rules here because some test rely on it
+            string escapedString = Escaper.EscapeDoubleQuotes(rule);
+            string jsonArg =  "{\"Path\":\"" + escapedString + "\"}";
+            var ret = new XpathXtrax(jsonArg);// do not chain other rules here because some test rely on it
             return ret;
         }
 

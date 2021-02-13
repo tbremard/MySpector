@@ -5,6 +5,7 @@ namespace MySpector.Objects
 {
     public class TextReplaceXtrax : Xtrax
     {
+        public override XtraxType Type => XtraxType.TextReplace;
         static Logger _log = LogManager.GetCurrentClassLogger();
         string _oldToken;
         string _newToken;

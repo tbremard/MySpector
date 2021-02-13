@@ -26,10 +26,10 @@ namespace MySpector.Objects
         {
             var sb = new StringBuilder();
             sb.AppendLine( $"Trox: Name: {Name}, enabled:{Enabled}");
-            sb.AppendLine("WebTarget: " + Target.ToString());
-            sb.AppendLine("Xtrax:" + XtraxChain.ToString());
-            sb.AppendLine("Checker:" + Checker.ToString());
-            sb.AppendLine("Notify:" + NotifyChain.ToString());
+            sb.AppendLine("WebTarget: " + Target?.ToString());
+            sb.AppendLine("Xtrax:" + XtraxChain?.ToString());
+            sb.AppendLine("Checker:" + Checker?.ToString());
+            sb.AppendLine("Notify:" + NotifyChain?.ToString());
             return sb.ToString();
         }
 

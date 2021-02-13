@@ -32,8 +32,9 @@ namespace MySpector.UnitTest
         {
             string Html = "<html><head></head><body><div class=\"Z2\"><strong class=\"Z9v\">The price of the item is: 1189,99 EUR</strong></div></body></html>";
             string Xpath = "/html/body/div/strong";
+            string jsonArg = "{\"Path\":\"" + Xpath + "\"}";
             var rump = DataTruck.CreateText(Html);
-            var rootRule = new XpathXtrax(Xpath);
+            var rootRule = new XpathXtrax(jsonArg);
             var nextRule = new BetweenXtrax("is:", "EUR");
             rootRule.SetNext(nextRule);
 

@@ -4,6 +4,8 @@ namespace MySpector.Objects
 {
     public class LengthOfTextXtrax : Xtrax
     {
+        public override XtraxType Type => XtraxType.LengthOfText;
+
         static Logger _log = LogManager.GetCurrentClassLogger();
 
         protected override IDataTruck GetOutput(IDataTruck data)

@@ -11,7 +11,6 @@ namespace MySpector.Cons
             return ret;
         }
 
-
         public static IList<Trox> CreateLocal()
         {
             var ret = new List<Trox>();
@@ -26,7 +25,7 @@ namespace MySpector.Cons
         private static Trox CreateZotacMagnus()
         {
             string rawString = "/html/body/div/div/div[2]/div/main/div/div[2]/div/div[2]/div/div[1]/strong";
-            string escapedString = EscapeDoubleQuotes(rawString);
+            string escapedString = Escaper.EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
             var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
@@ -53,7 +52,7 @@ namespace MySpector.Cons
         private static Trox CreateAllianzOblig()
         {
             string rawString = "/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]";
-            string escapedString = EscapeDoubleQuotes(rawString);
+            string escapedString = Escaper.EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
             var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null);
             var xTraxParams = new List<XtraxDefinition>();
@@ -71,7 +70,7 @@ namespace MySpector.Cons
         private static Trox CreateHystouF7()
         {
             string rawString = "//*[@id=\"goods_price\"]";
-            string escapedString = EscapeDoubleQuotes(rawString);
+            string escapedString = Escaper.EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
             var afterParam = new XtraxDefinition(1, XtraxType.After, "{\"Prefix\":\"$\"}");
             var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
@@ -91,7 +90,7 @@ namespace MySpector.Cons
         private static Trox CreateIdealoPs4Pro()
         {
             string rawString = "/html/head/title";
-            string escapedString = EscapeDoubleQuotes(rawString);
+            string escapedString = Escaper.EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
             var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"ab\", \"Suffix\":\"€\"}");
             var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
@@ -111,7 +110,7 @@ namespace MySpector.Cons
         private static Trox CreateBalticDryIndex()
         {
             string rawString = "//*[@id=\"description\"]";
-            string escapedString = EscapeDoubleQuotes(rawString);
+            string escapedString = Escaper.EscapeDoubleQuotes(rawString);
             var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
             var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"percent to\", \"Suffix\":\"in the\"}");
             var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
@@ -129,14 +128,7 @@ namespace MySpector.Cons
             Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }
-
-        private static string EscapeDoubleQuotes(string rawString)
-        {
-            string ret = rawString.Replace("\"", "\\\"");
-            return ret;
-        }
     }
-
 }
 
 

@@ -5,6 +5,10 @@ namespace MySpector.Objects
     public class NumberIsDifferentChecker : IChecker
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
+        public int? DbId { get; set; }
+        public CheckerType Type => CheckerType.NumberIsDifferent;
+        public string JsonArg { get; }
+
         decimal Reference;
 
         public NumberIsDifferentChecker(decimal reference)

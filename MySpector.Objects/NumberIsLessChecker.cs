@@ -4,6 +4,9 @@ namespace MySpector.Objects
 {
     public class NumberIsLessChecker : IChecker
     {
+        public int? DbId { get; set; }
+        public CheckerType Type => CheckerType.NumberIsLess;
+        public string JsonArg { get; }
         static Logger _log = LogManager.GetCurrentClassLogger();
         decimal Reference;
         bool OrEqual;

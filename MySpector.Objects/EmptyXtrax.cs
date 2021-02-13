@@ -2,6 +2,8 @@
 {
     public class EmptyXtrax : Xtrax
     {
+        public override XtraxType Type => XtraxType.Empty;
+
         public EmptyXtrax()
         {
         }
