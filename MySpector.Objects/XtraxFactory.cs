@@ -17,15 +17,14 @@ namespace MySpector.Objects
     public class XpathArg
     {
         public string Path { get; set; }
-    }
 
+    }
 
     public class BetweenArg
     {
         public string Prefix { get; set; }
         public string Suffix { get; set; }
     }
-
 
     public class XtraxFactory
     {
@@ -35,7 +34,8 @@ namespace MySpector.Objects
             switch (def.XtraxType)
             {
                 case XtraxType.Xpath:
-                    ret = new XpathXtrax(def.Arg);
+                    var xpathArg = Jsoner.FromJson<XpathArg>(def.Arg);
+                    ret = new XpathXtrax(xpathArg);
                     break;
                 case XtraxType.After:
                     var argAfter = JsonSerializer.Deserialize<AfterArg>(def.Arg);

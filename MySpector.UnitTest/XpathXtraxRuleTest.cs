@@ -1,5 +1,6 @@
 ﻿using MySpector.Objects;
 using NUnit.Framework;
+using System.Text.Json;
 
 namespace MySpector.UnitTest
 {
@@ -32,9 +33,10 @@ namespace MySpector.UnitTest
         {
             string Html = "<html><head></head><body><div class=\"Z2\"><strong class=\"Z9v\">The price of the item is: 1189,99 EUR</strong></div></body></html>";
             string Xpath = "/html/body/div/strong";
-            string jsonArg = "{\"Path\":\"" + Xpath + "\"}";
+//            string jsonArg = "{\"Path\":\"" + Xpath + "\"}";
+            var arg = new XpathArg() { Path = Xpath };
             var rump = DataTruck.CreateText(Html);
-            var rootRule = new XpathXtrax(jsonArg);
+            var rootRule = new XpathXtrax(arg);
             var nextRule = new BetweenXtrax("is:", "EUR");
             rootRule.SetNext(nextRule);
 
@@ -43,6 +45,39 @@ namespace MySpector.UnitTest
             string ExpectedOutput = "1189,99";
             string actual = data.GetText();
             Assert.AreEqual(ExpectedOutput, actual);
+        }
+
+        [Test]
+        public void Deserialize_WhenValid_ThenOk()
+        {
+            string jsonArg = "{\"Path\":\"xxx\"}";
+
+            var xpathArg = JsonSerializer.Deserialize<XpathArg>(jsonArg);
+            
+            var expected = new XpathArg() { Path = "xxx" };
+            Assert.AreEqual(expected.Path, xpathArg.Path);
+        }
+
+        [Test]
+        public void FromJson_WhenValid_ThenOk()
+        {
+            string jsonArg = "{\"Path\":\"xxx\"}";
+
+            var xpathArg = Jsoner.FromJson<XpathArg>(jsonArg);
+
+            var expected = new XpathArg() { Path = "xxx" };
+            Assert.AreEqual(expected.Path, xpathArg.Path);
+        }
+
+        [Test]
+        public void ToJson_WhenValid_ThenOk()
+        {
+            var arg = new XpathArg() { Path = "xxx" };
+
+            var json = Jsoner.ToJson(arg);
+            
+            string expected = "{\"Path\":\"xxx\"}";
+            Assert.AreEqual(expected, json);
         }
     }
 }

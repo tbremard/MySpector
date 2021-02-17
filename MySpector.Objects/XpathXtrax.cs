@@ -1,7 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System;
 using NLog;
-using System.Text.Json;
 
 namespace MySpector.Objects
 {
@@ -9,14 +8,12 @@ namespace MySpector.Objects
     {
         public override XtraxType Type => XtraxType.Xpath;
         static Logger _log = LogManager.GetCurrentClassLogger();
-        private readonly string _xPath;
         private string NOT_FOUND = "NOT_FOUND";
+        private readonly XpathArg _arg;
 
-        public XpathXtrax(string jsonArg)
+        public XpathXtrax(XpathArg arg)
         {
-            JsonArg = jsonArg;
-            var xpathArg = JsonSerializer.Deserialize<XpathArg>(jsonArg);
-            _xPath = xpathArg.Path;
+            _arg = arg;
         }
 
         protected override IDataTruck GetOutput(IDataTruck data)
@@ -27,10 +24,10 @@ namespace MySpector.Objects
                 var htmldoc = new HtmlDocument();
                 _log.Trace($"Extracting XPath from: [{data.PreviewText}]");
                 htmldoc.LoadHtml(data.GetText());
-                var node = htmldoc.DocumentNode.SelectSingleNode(_xPath);
+                var node = htmldoc.DocumentNode.SelectSingleNode(_arg.Path);
                 if (node == null)
                 {
-                    _log.Error($"Node not found '{_xPath}'");
+                    _log.Error($"Node not found '{_arg.Path}'");
                     ret = DataTruck.CreateText(NOT_FOUND);
                 }
                 else
@@ -49,7 +46,7 @@ namespace MySpector.Objects
 
         public override string ToString()
         {
-            string ret = GetType().Name+ " " + _xPath;
+            string ret = GetType().Name+ " " + _arg.Path;
             return ret;
         }
     }
