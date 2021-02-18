@@ -7,6 +7,8 @@ namespace MySpector.Objects
     public class XpathXtrax : Xtrax
     {
         public override XtraxType Type => XtraxType.Xpath;
+        public override string JsonArg { get { return Jsoner.ToJson(_arg); } }
+
         static Logger _log = LogManager.GetCurrentClassLogger();
         private string NOT_FOUND = "NOT_FOUND";
         private readonly XpathArg _arg;

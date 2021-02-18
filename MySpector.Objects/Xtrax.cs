@@ -4,7 +4,7 @@
     {
         public int? DbId { get; set; }
         public abstract XtraxType Type { get; }
-        public string JsonArg { get; protected set; }
+        public abstract string JsonArg { get; }
         protected abstract IDataTruck GetOutput(IDataTruck data);
         protected Xtrax Next; // pointer to next action to perform
                               // if null the current element is the last element of chain

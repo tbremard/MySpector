@@ -6,6 +6,8 @@ namespace MySpector.Objects
     public class TextToNumberXtrax : Xtrax
     {
         public override XtraxType Type => XtraxType.TextToNumber;
+        public override string JsonArg { get { return string.Empty; } }
+
         static Logger _log = LogManager.GetCurrentClassLogger();
 
         protected override IDataTruck GetOutput(IDataTruck dataIn)

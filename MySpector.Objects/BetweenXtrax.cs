@@ -4,14 +4,18 @@ namespace MySpector
 {
     public class BetweenXtrax : Xtrax
     {
+        public override XtraxType Type => XtraxType.Between;
+        public override string JsonArg { get { return Jsoner.ToJson(_arg); } }
+
         private readonly Xtrax _before;
         private readonly Xtrax _after;
-        public override XtraxType Type => XtraxType.Between;
+        private readonly BetweenArg _arg;
 
-        public BetweenXtrax(string prefix, string suffix)
+        public BetweenXtrax(BetweenArg arg)
         {
-            _after = new AfterXtrax(prefix);
-            _before = new BeforeXtrax(suffix);
+            this._arg = arg;
+            _before = new BeforeXtrax(new BeforeArg() { Suffix = arg.Suffix });
+            _after = new AfterXtrax(new AfterArg() { Prefix= arg.Prefix});
         }
 
         protected override IDataTruck GetOutput(IDataTruck data)

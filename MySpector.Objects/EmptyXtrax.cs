@@ -3,6 +3,7 @@
     public class EmptyXtrax : Xtrax
     {
         public override XtraxType Type => XtraxType.Empty;
+        public override string JsonArg { get { return string.Empty; } }
 
         public EmptyXtrax()
         {

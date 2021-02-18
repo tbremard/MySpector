@@ -9,7 +9,7 @@ namespace MySpector.UnitTest
         [SetUp]
         public void Setup()
         {
-            _sut = new AfterXtrax("The Price of the item is:");
+            _sut = new AfterXtrax(new AfterArg() { Prefix = "The Price of the item is:" });
         }
 
         [TestCase("50.25", "The Price of the item is:    50.25   ")]

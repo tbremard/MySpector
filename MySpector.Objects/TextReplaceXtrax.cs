@@ -6,14 +6,14 @@ namespace MySpector.Objects
     public class TextReplaceXtrax : Xtrax
     {
         public override XtraxType Type => XtraxType.TextReplace;
-        static Logger _log = LogManager.GetCurrentClassLogger();
-        string _oldToken;
-        string _newToken;
+        public override string JsonArg { get { return Jsoner.ToJson(_arg); } }
 
-        public TextReplaceXtrax(string oldToken, string newToken)
+        static Logger _log = LogManager.GetCurrentClassLogger();
+        private readonly TextReplaceArg _arg;
+
+        public TextReplaceXtrax(TextReplaceArg arg)
         {
-            _oldToken = oldToken;
-            _newToken = newToken;
+            this._arg = arg;
         }
 
         protected override IDataTruck GetOutput(IDataTruck data)
@@ -26,13 +26,13 @@ namespace MySpector.Objects
                 return DataTruck.CreateText(string.Empty);
             }
             _log.Trace("Replacing content of '" + data.PreviewText + "'");
-            if (string.IsNullOrEmpty(_oldToken))
+            if (string.IsNullOrEmpty(_arg.OldToken))
             {
                 return DataTruck.CreateText(text);
             }
             try
             {
-                string replaced = text.Replace(_oldToken, _newToken);
+                string replaced = text.Replace(_arg.OldToken, _arg.NewToken);
                 ret = DataTruck.CreateText(replaced);
             }
             catch (Exception ex)

@@ -5,6 +5,7 @@ namespace MySpector.Objects
     public class LengthOfTextXtrax : Xtrax
     {
         public override XtraxType Type => XtraxType.LengthOfText;
+        public override string JsonArg { get { return Jsoner.Empty; } }
 
         static Logger _log = LogManager.GetCurrentClassLogger();
 

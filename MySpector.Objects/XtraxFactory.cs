@@ -25,6 +25,12 @@ namespace MySpector.Objects
         public string Prefix { get; set; }
         public string Suffix { get; set; }
     }
+    
+    public class TextReplaceArg
+    {
+        public string OldToken { get; set; }
+        public string NewToken { get; set; }
+    }
 
     public class XtraxFactory
     {
@@ -39,15 +45,15 @@ namespace MySpector.Objects
                     break;
                 case XtraxType.After:
                     var argAfter = JsonSerializer.Deserialize<AfterArg>(def.Arg);
-                    ret = new AfterXtrax(argAfter.Prefix);
+                    ret = new AfterXtrax(argAfter);
                     break;
                 case XtraxType.Before:
                     var argBefore = JsonSerializer.Deserialize<BeforeArg>(def.Arg);
-                    ret = new BeforeXtrax(argBefore.Suffix);
+                    ret = new BeforeXtrax(argBefore);
                     break;
                 case XtraxType.Between:
                     var argBetween = JsonSerializer.Deserialize<BetweenArg>(def.Arg);
-                    ret = new BetweenXtrax(argBetween.Prefix, argBetween.Suffix);
+                    ret = new BetweenXtrax(argBetween);
                     break;
                 case XtraxType.TextToNumber:
                     ret = new TextToNumberXtrax();

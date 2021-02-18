@@ -116,7 +116,7 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void SaveTrox()
         {
-            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax("test"), new TextDoContainChecker("test", true), new StubNotifier());
+            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax( new AfterArg() { Prefix = "test" }), new TextDoContainChecker("test", true), new StubNotifier());
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);

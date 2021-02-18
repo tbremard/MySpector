@@ -16,7 +16,7 @@ namespace MySpector.UnitTest
         [TestCase(XtraxConst.NOT_FOUND, "  xxxxxxxxx   ", "EUR")]
         public void GetOutputChained_WhenContentIsThere_ThenFound(string expectedOutput, string content, string token)
         {
-            _sut = new BeforeXtrax(token);
+            _sut = new BeforeXtrax(new BeforeArg() { Suffix = token });
             var rump = DataTruck.CreateText(content);
 
             var data = _sut.GetOutputChained(rump);

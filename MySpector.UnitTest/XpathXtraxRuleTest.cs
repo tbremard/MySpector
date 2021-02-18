@@ -37,7 +37,7 @@ namespace MySpector.UnitTest
             var arg = new XpathArg() { Path = Xpath };
             var rump = DataTruck.CreateText(Html);
             var rootRule = new XpathXtrax(arg);
-            var nextRule = new BetweenXtrax("is:", "EUR");
+            var nextRule = new BetweenXtrax(new BetweenArg() { Prefix = "is:", Suffix = "EUR" });
             rootRule.SetNext(nextRule);
 
             var data = rootRule.GetOutputChained(rump);
