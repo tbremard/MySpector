@@ -1,4 +1,5 @@
 using MySpector.Objects;
+using MySpector.Objects.Args;
 using NLog;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -120,6 +121,7 @@ namespace MySpector.Repo.IntTest
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);
+            //_sut.Commit();
             _sut.RollBack();
 
             Assert.IsNotNull(id);

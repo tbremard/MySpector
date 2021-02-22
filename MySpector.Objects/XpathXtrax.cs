@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using NLog;
+using MySpector.Objects.Args;
 
 namespace MySpector.Objects
 {

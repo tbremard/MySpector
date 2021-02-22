@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using MySpector.Objects.Args;
+using NLog;
 
 namespace MySpector.Objects
 {

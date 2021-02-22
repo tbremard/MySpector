@@ -1,5 +1,7 @@
 ﻿using MySpector.Objects;
 using NUnit.Framework;
+using MySpector.Objects.Args;
+
 
 namespace MySpector.UnitTest
 {

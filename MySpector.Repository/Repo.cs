@@ -116,9 +116,33 @@ namespace MySpector.Repo
             return troxDbId;
         }
 
-        private void SaveNotifyChain(int? troxDbId, Notifier notifyChain)
+        private void SaveNotifyChain(int? troxDbId, Notifier item)
         {
-            throw new NotImplementedException();
+            do
+            {
+                SaveSingleNotify(troxDbId, item);
+                item = item.GetNext();
+            } while (item != null);
+        }
+
+        private bool SaveSingleNotify(int? troxDbId, Notifier item)
+        {
+
+            var def = new notify_def();
+            if (!troxDbId.HasValue)
+            {
+                _log.Error("cannot save Notifier without troxDbId");
+                return false;
+            }
+            def.ID_NOTIFY_TYPE = (int)item.Type;
+            def.ARG = item.JsonArg;
+            def.ID_TROX = troxDbId.Value;
+            def.ORDER = 1;
+            string q = @"INSERT INTO NOTIFY_DEF(ID_TROX, `ORDER`, ID_NOTIFY_TYPE, ARG) 
+                                     values(@ID_TROX, @ORDER, @ID_NOTIFY_TYPE, @ARG);";
+            int? id = InsertData(q, def);
+            item.DbId = id;
+            return true;
         }
 
         private bool SaveChecker(int? troxDbId, IChecker checker)
@@ -133,8 +157,8 @@ namespace MySpector.Repo
             def.ARG = checker.JsonArg;
             def.ID_TROX = troxDbId.Value;
             def.ORDER = 1;
-            string q = @"INSERT INTO checker_def(ID_TROX, `ORDER`, ID_XTRAX_TYPE, ARG)
-			                         values(@ID_TROX, @ORDER, @ID_XTRAX_TYPE, @ARG);";
+            string q = @"INSERT INTO checker_def(ID_TROX, `ORDER`, ID_CHECKER_TYPE, ARG)
+			                         values(@ID_TROX, @ORDER, @ID_CHECKER_TYPE, @ARG);";
             int? id = InsertData(q, def);
             checker.DbId = id;
             return true;

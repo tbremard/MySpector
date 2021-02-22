@@ -67,18 +67,21 @@ select * from web_target_http http where http.ID_WEB_TARGET = 1;
 select * from web_target_sql sq where sq.ID_WEB_TARGET = 2;
 
 -- display Xtrax Components of trox 
+SET @ID_TROX = 19;
 select * from xtrax_def def 
 INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
-WHERE def.ID_TROX = 2;    
+WHERE def.ID_TROX = @ID_TROX;    
 --
 select def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
 from checker_def def 
 	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_CHECKER_TYPE 
-    INNER JOIN  trox on trox.ID_TROX = def.ID_TROX;
+--    INNER JOIN  trox on trox.ID_TROX = def.ID_TROX
+    WHERE def.ID_TROX = @ID_TROX;  
 --
 select * from NOTIFY_DEF def 
 	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_NOTIFY_TYPE
-    INNER JOIN  trox on trox.ID_TROX = def.ID_TROX;
+--    INNER JOIN  trox on trox.ID_TROX = def.ID_TROX
+    WHERE def.ID_TROX = @ID_TROX;  
 
 ---------------------
 

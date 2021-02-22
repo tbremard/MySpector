@@ -1,6 +1,5 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
-using NLog;
 using MailKit.Security;
 using System;
 
@@ -9,7 +8,8 @@ namespace MySpector.Objects
     //securesmtp.t-online.de
     public class MailNotifier : Notifier
     {
-        //        static Logger _log = LogManager.GetCurrentClassLogger();
+        public override NotifyType Type => NotifyType.Mail;
+
         protected override bool NotifySingle(string msg)
         {
             bool ret = false;
