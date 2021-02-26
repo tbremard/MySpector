@@ -2,13 +2,13 @@
 {
     public enum CheckerType
     {
-        IsLess,
-        IsGreater,
-        NumberIsDifferent,
-        NumberIsEqual,
-        NumberIsGreater,
-        NumberIsLess,
-        TextDoNotContain,
-        TextDoContain
+        IsLess=1,
+        IsGreater=2,
+        NumberIsDifferent=3,
+        NumberIsEqual=4,
+        NumberIsGreater=5,
+        NumberIsLess=6,
+        TextDoNotContain=7,
+        TextDoContain=8
     }
 }

@@ -129,6 +129,16 @@ namespace MySpector.Repo.IntTest
             Assert.AreNotEqual(0, id);
         }
 
+
+        [Test]
+        public void CheckEnum_CheckerType()
+        {
+            bool ret = _sut.CheckEnum_CheckerType();
+
+            Assert.IsTrue(ret, "Enum integrity failed");
+        }
+
+
         [Test]
         public void RoundTrip_WhenTroxIsSaved_ThenLoadedTroxIsSame()
         {

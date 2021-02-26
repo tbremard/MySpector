@@ -116,6 +116,33 @@ namespace MySpector.Repo
             return troxDbId;
         }
 
+        public bool CheckEnum_CheckerType()
+        {
+            bool ret = true;
+            try
+            { 
+                string query = "select * from CHECKER_TYPE";
+                var items = _connection.Query<checker_type>(query).ToList();
+                foreach (var x in items)
+                {
+                    var type = MyEnumParser<CheckerType>(x.NAME);
+                    int clientCode = (int)type;
+                    int dbCode = x.ID_CHECKER_TYPE;
+                    if (clientCode != dbCode)
+                    {
+                        _log.Error($"Enum integrity failed: CheckerType.{x.NAME}: different code between client({clientCode}) and DB({dbCode})");
+                        ret = false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                _log.Error(ex);
+                ret = false;
+            }
+            return ret;
+        }
+
         private void SaveNotifyChain(int? troxDbId, Notifier item)
         {
             do
