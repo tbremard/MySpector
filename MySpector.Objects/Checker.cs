@@ -9,7 +9,7 @@ namespace MySpector
         string Token;
         bool IgnoreCase;
         public int? DbId { get; set; }
-        public CheckerType Type => CheckerType.NumberIsDifferent;
+        public CheckerType Type => CheckerType.TextDoContain;
         public string JsonArg { get; }
 
         public TextDoContainChecker(string token, bool ignoreCase)

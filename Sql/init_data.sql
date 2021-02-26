@@ -8,8 +8,18 @@ INSERT INTO XTRAX_TYPE(NAME) VALUES ('Xpath'),
 									('Before'),
 									('TextToNumber'),
 									('Between');
-INSERT INTO CHECKER_TYPE(NAME) VALUES ('IsLess'),
-									  ('IsGreater');
+
+select * FROM CHECKER_TYPE; 
+TRUNCATE TABLE CHECKER_TYPE; -- deletes the data inside a table, but not the table itself.                                   
+INSERT INTO CHECKER_TYPE(NAME) VALUES   ('IsLess'),
+									    ('IsGreater'),
+										('NumberIsDifferent'),
+										('NumberIsEqual'),
+										('NumberIsGreater'),
+										('NumberIsLess'),
+										('TextDoNotContain'),
+										('TextDoContain');
+                                        
 INSERT INTO NOTIFY_TYPE(NAME) VALUES ('Stub'),
 									  ('Mail'),
                                       ('WebCallBack'),
@@ -66,16 +76,22 @@ where trox.ID_TROX = 2;
 select * from web_target_http http where http.ID_WEB_TARGET = 1;
 select * from web_target_sql sq where sq.ID_WEB_TARGET = 2;
 
+-- Display all checkers
+select * from checker_type;
+select *
+from checker_def def 
+	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_CHECKER_TYPE ;
+
+
 -- display Xtrax Components of trox 
 SET @ID_TROX = 19;
 select * from xtrax_def def 
 INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
 WHERE def.ID_TROX = @ID_TROX;    
 --
-select def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
+select * -- def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
 from checker_def def 
 	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_CHECKER_TYPE 
---    INNER JOIN  trox on trox.ID_TROX = def.ID_TROX
     WHERE def.ID_TROX = @ID_TROX;  
 --
 select * from NOTIFY_DEF def 

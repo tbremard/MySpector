@@ -3,6 +3,7 @@ using MySpector.Objects.Args;
 using NLog;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MySpector.Repo.IntTest
 {
@@ -115,7 +116,7 @@ namespace MySpector.Repo.IntTest
         }
 
         [Test]
-        public void SaveTrox()
+        public void SaveTrox_WhenInputIsValid_ThenDbIdIsSet()
         {
             var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax( new AfterArg() { Prefix = "test" }), new TextDoContainChecker("test", true), new StubNotifier());
 
@@ -127,7 +128,26 @@ namespace MySpector.Repo.IntTest
             Assert.IsNotNull(id);
             Assert.AreNotEqual(0, id);
         }
-        
+
+        [Test]
+        public void RoundTrip_WhenTroxIsSaved_ThenLoadedTroxIsSame()
+        {
+            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax(new AfterArg() { Prefix = "test" }), new TextDoContainChecker("test", true), new StubNotifier());
+
+            _sut.BeginTransaction();
+            int? id = _sut.SaveTrox(trox);
+            var troxIds = new List<int>() { id.Value};
+            var loadedTroxes = _sut.GetAllTroxes(troxIds);
+            //_sut.Commit();
+            _sut.RollBack();
+
+            Assert.IsNotNull(id);
+            Assert.AreNotEqual(0, id);
+            Assert.AreEqual(1, loadedTroxes.Count);
+            var loadedTrox = loadedTroxes.First();
+            Assert.AreEqual(CheckerType.TextDoContain ,loadedTrox.Checker.Type);
+        }
+
         [Test]
         public void SaveWebTarget()
         {

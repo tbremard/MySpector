@@ -8,6 +8,7 @@
         NumberIsEqual,
         NumberIsGreater,
         NumberIsLess,
-        TextDoNotContain
+        TextDoNotContain,
+        TextDoContain
     }
 }
