@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using System;
 using NLog;
 using MySpector.Objects;
 using MySpector.Repo.DbModel;
-using System.Net.Http.Headers;
 using System.Net.Http;
+using System.Globalization;
 
 namespace MySpector.Repo
 {
@@ -26,7 +25,6 @@ namespace MySpector.Repo
             {
                 string connectionString = "Server=localhost;Database=MYSPECTOR;Uid=root; Pwd=123456789;";
                 _log.Debug($"Connecting to: {connectionString}");
-                //IDbConnection connection = new SqlConnection(connectionString);
                 _connection = new MySqlConnection(connectionString);
                 _connection.Open();
                 ret = true;
@@ -47,7 +45,7 @@ namespace MySpector.Repo
 
         public IList<Objects.Trox> GetAllTroxes(List<int> troxIds)
         {
-            _log.Debug("GetAllTroxes()");
+            _log.Debug("GetAllTroxes: "+string.Join(',', troxIds));
             IList<Objects.Trox> ret;
             try
             {
@@ -118,16 +116,26 @@ namespace MySpector.Repo
 
         public bool CheckEnum_CheckerType()
         {
+            bool ret = CheckEnumGeneric<CheckerType, checker_type>("CHECKER_TYPE");
+            return ret;
+        }
+
+        public bool CheckEnumGeneric<TClient,TDb>(string table) 
+            where TClient : struct, IConvertible 
+            where TDb : IEnumDef
+        {
             bool ret = true;
+            if (!typeof(TClient).IsEnum) throw new System.ArgumentException("T must be an enumerated type");
+
             try
-            { 
-                string query = "select * from CHECKER_TYPE";
-                var items = _connection.Query<checker_type>(query).ToList();
+            {
+                string query = "select * from "+ table;
+                var items = _connection.Query<TDb>(query).ToList();
                 foreach (var x in items)
                 {
-                    var type = MyEnumParser<CheckerType>(x.NAME);
-                    int clientCode = (int)type;
-                    int dbCode = x.ID_CHECKER_TYPE;
+                    var type = MyEnumParser<TClient>(x.NAME);
+                    int clientCode = (int)type.ToInt32(CultureInfo.InvariantCulture);
+                    int dbCode = x.ID_TYPE;
                     if (clientCode != dbCode)
                     {
                         _log.Error($"Enum integrity failed: CheckerType.{x.NAME}: different code between client({clientCode}) and DB({dbCode})");
