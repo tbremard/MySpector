@@ -2,8 +2,9 @@
 {
     public enum NotifyType
     {
-        WebCallBack,
-        Mail,
-        Stub
+        Stub = 1,
+        Mail = 2,
+        WebCallBack = 3,
+        Twitter = 4
     }
 }

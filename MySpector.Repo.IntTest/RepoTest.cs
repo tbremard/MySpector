@@ -133,11 +133,34 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void CheckEnum_CheckerType()
         {
-            bool ret = _sut.CheckEnum_CheckerType();
+            bool ret = _sut.EnumIntegrity.CheckerType();
 
             Assert.IsTrue(ret, "Enum integrity failed");
         }
 
+        [Test]
+        public void CheckEnum_NotifyType()
+        {
+            bool ret = _sut.EnumIntegrity.NotifyType();
+
+            Assert.IsTrue(ret, "Enum integrity failed");
+        }
+
+        [Test]
+        public void CheckEnum_WebTargetType()
+        {
+            bool ret = _sut.EnumIntegrity.WebTargetType();
+
+            Assert.IsTrue(ret, "Enum integrity failed");
+        }
+
+        [Test]
+        public void CheckEnum_XtraxType()
+        {
+            bool ret = _sut.EnumIntegrity.XtraxType();
+
+            Assert.IsTrue(ret, "Enum integrity failed");
+        }
 
         [Test]
         public void RoundTrip_WhenTroxIsSaved_ThenLoadedTroxIsSame()

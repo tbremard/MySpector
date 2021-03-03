@@ -12,12 +12,81 @@ using System.Globalization;
 
 namespace MySpector.Repo
 {
+
+    public class EnumIntegrity
+    {
+        static Logger _log = LogManager.GetCurrentClassLogger();
+        IDbConnection _connection;
+
+        public EnumIntegrity(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
+        public bool CheckerType()
+        {
+            bool ret = CheckEnumGeneric<CheckerType, checker_type>("CHECKER_TYPE");
+            return ret;
+        }
+
+        public bool XtraxType()
+        {
+            bool ret = CheckEnumGeneric<XtraxType, xtrax_type>("XTRAX_TYPE");
+            return ret;
+        }
+
+        public bool NotifyType()
+        {
+            bool ret = CheckEnumGeneric<NotifyType, notify_type>("NOTIFY_TYPE");
+            return ret;
+        }
+
+        public bool WebTargetType()
+        {
+            bool ret = CheckEnumGeneric<WebTargetType, web_target_type>("WEB_TARGET_TYPE");
+            return ret;
+        }
+
+
+        public bool CheckEnumGeneric<TClient, TDb>(string table)
+            where TClient : struct, IConvertible
+            where TDb : IEnumDef
+        {
+            bool ret = true;
+            if (!typeof(TClient).IsEnum) throw new System.ArgumentException("T must be an enumerated type");
+
+            try
+            {
+                string query = "select * from " + table;
+                var items = _connection.Query<TDb>(query).ToList();
+                foreach (var x in items)
+                {
+                    var type = MyEnum.Parse<TClient>(x.NAME);
+                    int clientCode = (int)type.ToInt32(CultureInfo.InvariantCulture);
+                    int dbCode = x.ID_TYPE;
+                    if (clientCode != dbCode)
+                    {
+                        _log.Error($"Enum integrity failed: CheckerType.{x.NAME}: different code between client({clientCode}) and DB({dbCode})");
+                        ret = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex);
+                ret = false;
+            }
+            return ret;
+        }
+
+    }
+
     //https://www.youtube.com/watch?v=Et2khGnrIqc&feature=youtu.be
     public class Repo
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         IDbConnection _connection;
-
+        public EnumIntegrity EnumIntegrity { get; private set; }
         public bool Connect()
         {
             bool ret = false;
@@ -27,6 +96,7 @@ namespace MySpector.Repo
                 _log.Debug($"Connecting to: {connectionString}");
                 _connection = new MySqlConnection(connectionString);
                 _connection.Open();
+                EnumIntegrity = new EnumIntegrity(_connection);
                 ret = true;
             }
             catch (Exception ex)
@@ -114,42 +184,6 @@ namespace MySpector.Repo
             return troxDbId;
         }
 
-        public bool CheckEnum_CheckerType()
-        {
-            bool ret = CheckEnumGeneric<CheckerType, checker_type>("CHECKER_TYPE");
-            return ret;
-        }
-
-        public bool CheckEnumGeneric<TClient,TDb>(string table) 
-            where TClient : struct, IConvertible 
-            where TDb : IEnumDef
-        {
-            bool ret = true;
-            if (!typeof(TClient).IsEnum) throw new System.ArgumentException("T must be an enumerated type");
-
-            try
-            {
-                string query = "select * from "+ table;
-                var items = _connection.Query<TDb>(query).ToList();
-                foreach (var x in items)
-                {
-                    var type = MyEnumParser<TClient>(x.NAME);
-                    int clientCode = (int)type.ToInt32(CultureInfo.InvariantCulture);
-                    int dbCode = x.ID_TYPE;
-                    if (clientCode != dbCode)
-                    {
-                        _log.Error($"Enum integrity failed: CheckerType.{x.NAME}: different code between client({clientCode}) and DB({dbCode})");
-                        ret = false;
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                _log.Error(ex);
-                ret = false;
-            }
-            return ret;
-        }
 
         private void SaveNotifyChain(int? troxDbId, Notifier item)
         {
@@ -421,7 +455,7 @@ namespace MySpector.Repo
         private WebTargetReference mapperWebTarget(DbModel.web_target target, DbModel.web_target_type myType)
         {
             var ret = new WebTargetReference();
-            ret.Type = MyEnumParser<Objects.WebTargetType>(myType.NAME);
+            ret.Type = MyEnum.Parse<Objects.WebTargetType>(myType.NAME);
             ret.IdWebTarget = target.ID_WEB_TARGET;
             return ret;
         }
@@ -432,10 +466,10 @@ namespace MySpector.Repo
             try
             {
                 string query = @"select * from xtrax_def def 
-	                        INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_XTRAX_TYPE
+	                        INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_TYPE
                             WHERE def.ID_TROX = @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                ret = _connection.Query<DbModel.xtrax_def, DbModel.xtrax_type, Objects.XtraxDefinition>(query, mapperXtrax, param: param, splitOn: "ID_XTRAX_TYPE").ToList();
+                ret = _connection.Query<DbModel.xtrax_def, DbModel.xtrax_type, Objects.XtraxDefinition>(query, mapperXtrax, param: param, splitOn: "ID_TYPE").ToList();
             }
             catch (Exception e)
             {
@@ -453,10 +487,10 @@ namespace MySpector.Repo
                 // string query = @"select def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
                 string query = @"select * 
                                     from checker_def def 
-                                	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_CHECKER_TYPE    
+                                	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_TYPE    
                                     WHERE def.ID_TROX = @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                ret = _connection.Query<DbModel.checker_def, DbModel.checker_type, Objects.IChecker>(query, mapperChecker, param: param, splitOn: "ID_CHECKER_TYPE").ToList();
+                ret = _connection.Query<DbModel.checker_def, DbModel.checker_type, Objects.IChecker>(query, mapperChecker, param: param, splitOn: "ID_TYPE").ToList();
             }
             catch (Exception e)
             {
@@ -474,10 +508,10 @@ namespace MySpector.Repo
                 // string query = @"select def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
                 string query = @"select * 
                                     from NOTIFY_DEF def 
-                                	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_NOTIFY_TYPE    
+                                	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_TYPE    
                                     WHERE def.ID_TROX = @ID_TROX;";
                 object param = new { ID_TROX = troxId };
-                ret = _connection.Query<DbModel.notify_def, DbModel.notify_type, Objects.Notifier>(query, mapperNotifier, param: param, splitOn: "ID_NOTIFY_TYPE").ToList();
+                ret = _connection.Query<DbModel.notify_def, DbModel.notify_type, Objects.Notifier>(query, mapperNotifier, param: param, splitOn: "ID_TYPE").ToList();
             }
             catch (Exception e)
             {
@@ -489,21 +523,15 @@ namespace MySpector.Repo
 
         private Notifier mapperNotifier(DbModel.notify_def myDef, DbModel.notify_type myType)
         {
-            var xType = MyEnumParser<Objects.NotifierType>(myType.NAME);
+            var xType = MyEnum.Parse<Objects.NotifierType>(myType.NAME);
             var def = new NotifierParam(xType, myDef.ARG);
             var ret = NotifyFactory.Create(def);
             return ret;
         }
 
-        private T MyEnumParser<T>(string value)
-        {
-            var ret = (T)Enum.Parse(typeof(T), value, true);
-            return ret;
-        }
-
         private IChecker mapperChecker(DbModel.checker_def myDef, DbModel.checker_type myType)
         {
-            var xType = MyEnumParser<Objects.CheckerType>(myType.NAME);
+            var xType = MyEnum.Parse<Objects.CheckerType>(myType.NAME);
             var def = new CheckerParam( xType, myDef.ARG);
             var ret = CheckerFactory.Create(def);
             return ret;
@@ -511,7 +539,7 @@ namespace MySpector.Repo
 
         private Objects.XtraxDefinition mapperXtrax(DbModel.xtrax_def myDef, DbModel.xtrax_type myType)
         {
-            var xType = MyEnumParser<Objects.XtraxType>(myType.NAME);
+            var xType = MyEnum.Parse<Objects.XtraxType>(myType.NAME);
             var ret = new XtraxDefinition(DbToInt(myDef.ORDER), xType, myDef.ARG);
             return ret;
         }
@@ -549,6 +577,16 @@ namespace MySpector.Repo
             if (!b.HasValue)
                 return 0;
             int ret = b.Value;
+            return ret;
+        }
+
+    }
+
+    public static class MyEnum
+    {
+        public static T Parse<T>(string value)
+        {
+            var ret = (T)Enum.Parse(typeof(T), value, true);
             return ret;
         }
 
