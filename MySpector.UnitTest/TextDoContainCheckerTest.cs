@@ -18,7 +18,8 @@ namespace MySpector.UnitTest
         [TestCase(false, "zzzzzzzzzzzYYY", "yyy", false)]
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, string text, string token, bool ignoreCase)
         {
-            _sut = new TextDoContainChecker(token, ignoreCase);
+            var arg = new TextDoContainArg() { IgnoreCase = ignoreCase, Token = token };
+            _sut = new TextDoContainChecker(arg);
             var inputText = DataTruck.CreateText(text);
 
             var data = _sut.Check(inputText);

@@ -118,7 +118,7 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void SaveTrox_WhenInputIsValid_ThenDbIdIsSet()
         {
-            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax( new AfterArg() { Prefix = "test" }), new TextDoContainChecker("test", true), new StubNotifier());
+            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax( new AfterArg() { Prefix = "test" }), new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }), new StubNotifier());
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);
@@ -165,7 +165,7 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void RoundTrip_WhenTroxIsSaved_ThenLoadedTroxIsSame()
         {
-            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax(new AfterArg() { Prefix = "test" }), new TextDoContainChecker("test", true), new StubNotifier());
+            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax(new AfterArg() { Prefix = "test" }), new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }), new StubNotifier());
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);

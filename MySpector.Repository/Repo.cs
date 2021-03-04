@@ -378,11 +378,11 @@ namespace MySpector.Repo
             IWebTarget ret;
             try
             {
-                string query = @"select ID_WEB_TARGET, web.ID_WEB_TARGET_TYPE, NAME  from web_target web 
-                                inner join WEB_TARGET_TYPE web_type on web_type.ID_WEB_TARGET_TYPE = web.ID_WEB_TARGET_TYPE
+                string query = @"select ID_WEB_TARGET, web_type.ID_TYPE, NAME  from web_target web 
+                                inner join WEB_TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_WEB_TARGET_TYPE
                                 where web.ID_WEB_TARGET =  @ID_WEB_TARGET;";
                 object param = new { ID_WEB_TARGET = webTargetId };
-                var target = _connection.Query<DbModel.web_target, DbModel.web_target_type, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_WEB_TARGET_TYPE").FirstOrDefault();
+                var target = _connection.Query<DbModel.web_target, DbModel.web_target_type, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_TYPE").FirstOrDefault();
                 switch (target.Type)
                 {
                     case Objects.WebTargetType.HTTP:

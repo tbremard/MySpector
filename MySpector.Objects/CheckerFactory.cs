@@ -1,5 +1,4 @@
-﻿using MySpector.Core;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Text.Json;
 
 namespace MySpector.Objects
@@ -19,8 +18,12 @@ namespace MySpector.Objects
                     var argGreater = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);
                     ret = new NumberIsGreaterChecker(argGreater.Reference, argGreater.OrEqual);
                     break;
+                case CheckerType.TextDoContain:
+                    var argText = JsonSerializer.Deserialize<TextDoContainArg>(param.Arg);
+                    ret = new TextDoContainChecker(argText);
+                    break;
                 default:
-                    throw new InvalidEnumArgumentException("checker type is not handled");
+                    throw new InvalidEnumArgumentException($"CheckerType.{param.Type} is not handled by CheckerFactory");
             }
             return ret;
         }

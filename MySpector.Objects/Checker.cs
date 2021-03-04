@@ -5,24 +5,21 @@ namespace MySpector
 {
     public class TextDoContainChecker : IChecker
     {
-        string Text;
-        string Token;
-        bool IgnoreCase;
         public int? DbId { get; set; }
         public CheckerType Type => CheckerType.TextDoContain;
-        public string JsonArg { get; }
+        public string JsonArg { get { return Jsoner.ToJson(_arg); } }
+        TextDoContainArg _arg;
 
-        public TextDoContainChecker(string token, bool ignoreCase)
+        public TextDoContainChecker(TextDoContainArg arg)
         {
-            Token = token;
-            IgnoreCase = ignoreCase;
+            _arg = arg;
         }
 
         public bool Check(IDataTruck input)
         {
-            Text = input?.GetText();
-            StringComparison comparisonType = IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-            bool ret = Text.Contains(Token, comparisonType);
+            string Text = input?.GetText();
+            StringComparison comparisonType = _arg.IgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+            bool ret = Text.Contains(_arg.Token, comparisonType);
             return ret;
         }
     }

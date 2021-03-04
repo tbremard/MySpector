@@ -1,8 +1,14 @@
-﻿namespace MySpector.Core
+﻿namespace MySpector.Objects
 {
-    internal class ComparaisonArg
+    public class ComparaisonArg
     {
         public decimal Reference { get; set; }
-        public bool OrEqual{ get; set; }
-}
+        public bool OrEqual { get; set; }
+    }
+
+    public class TextDoContainArg
+    {
+        public string Token { get; set; }
+        public bool IgnoreCase { get; set; }
+    }
 }
