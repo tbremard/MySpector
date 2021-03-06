@@ -165,11 +165,17 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void RoundTrip_WhenTroxIsSaved_ThenLoadedTroxIsSame()
         {
-            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax(new AfterArg() { Prefix = "test" }), new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }), new StubNotifier());
+            const string Uri = "test";
+            var trox = new Trox("test", true,
+                                new HttpTarget(Uri),
+                                new AfterXtrax(new AfterArg() { Prefix = "test" }),
+                                new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }),
+                                new StubNotifier());
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);
-            var troxIds = new List<int>() { id.Value};
+            _log.Debug("TroxDbid: " + id);
+            var troxIds = new List<int>() { id.Value };
             var loadedTroxes = _sut.GetAllTroxes(troxIds);
             //_sut.Commit();
             _sut.RollBack();
@@ -178,7 +184,10 @@ namespace MySpector.Repo.IntTest
             Assert.AreNotEqual(0, id);
             Assert.AreEqual(1, loadedTroxes.Count);
             var loadedTrox = loadedTroxes.First();
-            Assert.AreEqual(CheckerType.TextDoContain ,loadedTrox.Checker.Type);
+            Assert.AreEqual(CheckerType.TextDoContain, loadedTrox.Checker.Type);
+            Assert.AreEqual(WebTargetType.HTTP, loadedTrox.Target.WebTargetType);
+            var httpTarget = loadedTrox.Target as HttpTarget;
+            Assert.AreEqual(Uri, httpTarget.Uri);
         }
 
         [Test]

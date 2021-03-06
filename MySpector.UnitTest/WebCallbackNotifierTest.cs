@@ -13,6 +13,7 @@ namespace MySpector.UnitTest
         }
 
         [Test]
+        [Ignore("No webservice")]
         public void Check_WenInputIsValid_ThenOk()
         {
             var ret = _sut.NotifyChained("This is a test");

@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace MySpector.UnitTest
 {
+    [Ignore("no mail provider available")]
     public class MailNotifierTest
     {
         MailNotifier _sut;

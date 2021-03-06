@@ -89,7 +89,14 @@ select * from checker_def def
 	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_TYPE;
 
 -- display DEPENDENCIES of trox 
-SET @ID_TROX = 2;
+SET @ID_TROX = 31;
+select * from web_target web 
+inner join WEB_TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_WEB_TARGET_TYPE
+INNER JOIN TROX trox on trox.ID_WEB_TARGET = web.ID_WEB_TARGET
+where trox.ID_TROX = @ID_TROX;
+
+select * from web_target_http http where http.ID_WEB_TARGET = 41;
+
 select * from xtrax_def def 
 INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_TYPE
 WHERE def.ID_TROX = @ID_TROX;    
@@ -111,3 +118,5 @@ insert into tjson values('{"Reference":105, "OrEqual":true}');
 select * from tjson;
 ----------------------
 
+
+                                    
