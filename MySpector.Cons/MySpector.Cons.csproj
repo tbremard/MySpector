@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MySpector.Repository\MySpector.Repo.csproj" />
     <ProjectReference Include="..\MySpector\MySpector.Core.csproj" />
   </ItemGroup>
 
