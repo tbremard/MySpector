@@ -2,12 +2,17 @@
 use MYSPECTOR;
 
 -- ----------- init enum/ types
-INSERT INTO WEB_TARGET_TYPE(NAME) values('HTTP'), ('SQL');
+INSERT INTO WEB_TARGET_TYPE(NAME) values ('HTTP'),
+										 ('SQL'),
+										 ('FILE');
 INSERT INTO XTRAX_TYPE(NAME) VALUES ('Xpath'),
 									('After'),
 									('Before'),
 									('TextToNumber'),
-									('Between');
+									('Between'),
+                                    ('Empty'),
+									('TextReplace'),
+									('LengthOfText');
 INSERT INTO CHECKER_TYPE(NAME) VALUES   ('IsLess'),
 									    ('IsGreater'),
 										('NumberIsDifferent'),
@@ -16,7 +21,6 @@ INSERT INTO CHECKER_TYPE(NAME) VALUES   ('IsLess'),
 										('NumberIsLess'),
 										('TextDoNotContain'),
 										('TextDoContain');
-                                        
 INSERT INTO NOTIFY_TYPE(NAME) VALUES ('Stub'),
 									  ('Mail'),
                                       ('WebCallBack'),

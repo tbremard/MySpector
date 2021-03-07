@@ -15,4 +15,13 @@ namespace MySpector.Objects
             Latency = latency;
         }
     }
+
+    public class InvalidResponse : DownloadResponse
+    {
+        public InvalidResponse(string content, TimeSpan latency)
+            :base(content, false, latency)
+        {
+
+        }
+    }
 }

@@ -6,6 +6,7 @@ using NLog;
 using MySpector.Objects;
 using MySpector.Repo.DbModel;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace MySpector.Repo
 {
@@ -53,6 +54,12 @@ namespace MySpector.Repo
 
             try
             {
+                var clientValues = Enum.GetValues(typeof(TClient));
+                var resolved = new Dictionary<TClient, bool>();
+                foreach (var item in clientValues)
+                {
+                    resolved.Add((TClient)item, false);
+                }
                 string query = "select * from " + table;
                 var items = _connection.Query<TDb>(query).ToList();
                 foreach (var x in items)
@@ -64,6 +71,19 @@ namespace MySpector.Repo
                     {
                         _log.Error($"Enum integrity failed: CheckerType.{x.NAME}: different code between client({clientCode}) and DB({dbCode})");
                         ret = false;
+                    }
+                    else
+                    {
+                        resolved[type] = true;
+                    }
+                }
+                var unresolved = resolved.Where(x => x.Value == false).Select(x => x.Key).ToList();
+                if(unresolved.Count>0)
+                {
+                    ret = false;
+                    foreach (var item in unresolved)
+                    {
+                        _log.Error("Enum: " +typeof(TClient).Name+"." + item + " has no correspondancy in database");
                     }
                 }
             }
