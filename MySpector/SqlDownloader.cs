@@ -9,18 +9,20 @@ namespace MySpector.Core
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public DownloadResponse Download(Trox item)
+        public DownloadResponse Download(IWebTarget target)
         {
-            DownloadResponse ret;
-            if (item.Target == null)
+            if (target == null)
             {
-                _log.Error($"no target is set for item {item.Name}");
+                _log.Error($"no target is set!");
             }
+            if (target.WebTargetType != WebTargetType.SQL)
+                return null;
+            DownloadResponse ret;
             try
             {
                 var watch = new Stopwatch();
                 watch.Start();
-                SqlResponse response = SqlRequest(item);
+                SqlResponse response = SqlRequest(target);
                 watch.Stop();
                 ret = new DownloadResponse(response.Content, response.IsOk, watch.Elapsed);
             }
@@ -32,11 +34,9 @@ namespace MySpector.Core
             return ret;
         }
 
-        private SqlResponse SqlRequest(Trox item)
+        private SqlResponse SqlRequest(IWebTarget target)
         {
-            if (item.Target.WebTargetType != WebTargetType.SQL)
-                return null;
-             var sqlTarget = item.Target as SqlTarget;
+             var sqlTarget = target as SqlTarget;
             _log.Debug(sqlTarget.SqlQuery);
             var ret = new SqlResponse(true, "789");
             return ret;

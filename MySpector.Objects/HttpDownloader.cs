@@ -23,18 +23,22 @@ namespace MySpector.Objects
             return new HttpDownloader();
         }
 
-        public DownloadResponse Download(Trox item)
+        public DownloadResponse Download(IWebTarget target)
         {
             DownloadResponse ret;
-            if (item.Target == null)
+            if (target == null)
             {
-                _log.Error($"no target is set for item {item.Name}");
+                _log.Error($"no target is set !");
+            }
+            if (target.WebTargetType != WebTargetType.HTTP)
+            {
+                return null;
             }
             try
             {
                 var watch = new Stopwatch();
                 watch.Start();
-                HttpResponse response = HttpRequest(item.Target);
+                HttpResponse response = HttpRequest(target);
                 watch.Stop();
                 bool success = response.HttpResponseCode == HttpStatusCode.OK;
                 ret = new DownloadResponse(response.Content, success, watch.Elapsed);
@@ -49,10 +53,6 @@ namespace MySpector.Objects
 
         private HttpResponse HttpRequest(IWebTarget target)
         {
-            if (target.WebTargetType != WebTargetType.HTTP)
-            {
-                return null;
-            }
             var httpTarget = target as HttpTarget;
             _log.Debug(httpTarget.Uri);
 

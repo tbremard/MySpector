@@ -26,7 +26,7 @@ namespace MySpector.UnitTest
             var target = new SqlTarget(connectionString, sqlQuery, provider);
             Trox item = new Trox("test", true, target, null, null, null);
 
-            var data = _sut.Download(item);
+            var data = _sut.Download(target);
 
             Assert.IsTrue(data.Success);
         }

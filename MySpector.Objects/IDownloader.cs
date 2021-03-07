@@ -2,6 +2,6 @@
 {
     public interface IDownloader
     {
-        DownloadResponse Download(Trox item);
+        DownloadResponse Download(IWebTarget target);
     }
 }

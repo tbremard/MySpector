@@ -15,7 +15,8 @@ namespace MySpector.Core
             IDataTruck ret;
             try
             {
-                var response = item.Downloader.Download(item);
+                _log.Debug($"Downloading target of Trox('{item.Name}') ");
+                var response = item.Downloader.Download(item.Target);
                 _log.Debug("Latency: " + Math.Floor( response.Latency.TotalMilliseconds) + "ms");
                 string filePath = GenerateFilePath(item);
                 File.WriteAllText(filePath, response.Content);
