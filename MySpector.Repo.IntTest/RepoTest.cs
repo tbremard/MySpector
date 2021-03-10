@@ -74,6 +74,8 @@ namespace MySpector.Repo.IntTest
             var ret = _sut.GetTargetHttp(idWebTarget);
 
             Assert.IsNotNull(ret);
+            Assert.AreEqual(WebTargetType.HTTP ,ret.WebTargetType);
+            Assert.AreEqual(1, ret.DbId, "Invalid DBID");
             _log.Debug(ret);
         }
 
@@ -186,8 +188,12 @@ namespace MySpector.Repo.IntTest
             var loadedTrox = loadedTroxes.First();
             Assert.AreEqual(CheckerType.TextDoContain, loadedTrox.Checker.Type);
             Assert.AreEqual(WebTargetType.HTTP, loadedTrox.Target.WebTargetType);
+            Assert.IsNotNull(loadedTrox.XtraxChain.DbId, "XtraxChain.DbId");
+            Assert.IsNotNull(loadedTrox.Checker.DbId, "Checker.DbId");
+            Assert.IsNotNull(loadedTrox.NotifyChain.DbId, "NotifyChain.DbId");
             var httpTarget = loadedTrox.Target as HttpTarget;
             Assert.AreEqual(Uri, httpTarget.Uri);
+            Assert.IsNotNull(httpTarget.DbId, "httpTarget.DbId");
         }
 
         [Test]

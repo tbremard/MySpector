@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 
 namespace MySpector.Objects
 {
@@ -6,15 +7,13 @@ namespace MySpector.Objects
     {
         public int? DbId { get; set; }
         public CheckerType Type => CheckerType.NumberIsGreater;
-        public string JsonArg { get; }
+        public string JsonArg { get { return Jsoner.ToJson(_arg); } }
         static Logger _log = LogManager.GetCurrentClassLogger();
-        decimal Reference;
-        bool OrEqual;
+        ComparaisonArg _arg;
 
-        public NumberIsGreaterChecker(decimal reference, bool orEqual)// <<<<<  Need 2 parameters
+        public NumberIsGreaterChecker(ComparaisonArg arg)
         {
-            Reference = reference;
-            OrEqual = orEqual;
+            _arg = arg;
         }
 
         public bool Check(IDataTruck input)
@@ -29,21 +28,21 @@ namespace MySpector.Objects
                 return false;
             }
             decimal Sample = number.Value;
-            if (OrEqual)
+            if (_arg.OrEqual)
             {
-                ret = Sample >= Reference;
+                ret = Sample >= _arg.Reference;
             }
             else
             {
-                ret = Sample > Reference;
+                ret = Sample > _arg.Reference;
             }
-            _log.Debug($"{Sample} > {Reference}: {ret}");
+            _log.Debug($"{Sample} > {_arg.Reference}: {ret}");
             return ret;
         }
 
         public override string ToString()
         {
-            string ret = GetType().Name + " " + Reference;
+            string ret = GetType().Name + " " + _arg.Reference;
             return ret;
         }
 

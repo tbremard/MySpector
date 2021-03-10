@@ -6,15 +6,13 @@ namespace MySpector.Objects
     {
         public int? DbId { get; set; }
         public CheckerType Type => CheckerType.NumberIsLess;
-        public string JsonArg { get; }
+        public string JsonArg { get { return Jsoner.ToJson(_arg); } }
         static Logger _log = LogManager.GetCurrentClassLogger();
-        decimal Reference;
-        bool OrEqual;
+        ComparaisonArg _arg;
 
-        public NumberIsLessChecker(decimal reference, bool orEqual)
+        public NumberIsLessChecker(ComparaisonArg arg)
         {
-            Reference = reference;
-            OrEqual = orEqual;
+            _arg = arg;
         }
 
         public bool Check(IDataTruck input)
@@ -29,15 +27,15 @@ namespace MySpector.Objects
                 return false;
             }
             decimal Sample = number.Value;
-            if (OrEqual)
+            if (_arg.OrEqual)
             {
-                ret = Sample <= Reference;
+                ret = Sample <= _arg.Reference;
             }
             else
             {
-                ret = Sample < Reference;
+                ret = Sample < _arg.Reference;
             }
-            _log.Debug($"{Sample} < {Reference}: {ret}");
+            _log.Debug($"{Sample} < {_arg.Reference}: {ret}");
             return ret;
         }
     }

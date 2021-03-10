@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MySpector.Objects.AfterXtrax" Collapsed="true">
+    <Position X="12.25" Y="4.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAEAAAAAAAIAAAAAAAAIAAQAAAAAAAAA=</HashCode>
+      <FileName>AfterXtrax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySpector.Objects.BeforeXtrax" Collapsed="true">
+    <Position X="10.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAEAAAAAAAIAAAAAAAAIAAQAAAAAAAAA=</HashCode>
+      <FileName>BeforeXtrax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySpector.BetweenXtrax" Collapsed="true">
+    <Position X="9" Y="4.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAIAAAAACIAIAAQAAAAAAAAA=</HashCode>
+      <FileName>BetweenXtrax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MySpector.TextDoContainChecker" Collapsed="true">
+    <Position X="1.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAIAAAAAAAAIAAQAAAAABAAA=</HashCode>
+      <FileName>Checker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MySpector.Objects.NumberIsDifferentChecker" Collapsed="true">
+    <Position X="1.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAiAAAAAAEAAAAAAAIAAAAAAAAAAAQAAAAABAAA=</HashCode>
+      <FileName>NumberIsDifferentChecker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MySpector.Objects.NumberIsEqualChecker" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAiAAAAAAEAAAAAAAIAAAAAAAAAAAQAAAAABAAA=</HashCode>
+      <FileName>NumberIsEqualChecker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MySpector.Objects.NumberIsGreaterChecker" Collapsed="true">
+    <Position X="5.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAEAEAAAAAIAAAAAAAAIAAQAAAAABAAA=</HashCode>
+      <FileName>NumberIsGreaterChecker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MySpector.Objects.NumberIsLessChecker" Collapsed="true">
+    <Position X="3.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAEAAAAAAAIAAAAAAAAIAAQAAAAABAAA=</HashCode>
+      <FileName>NumberIsLessChecker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MySpector.Objects.Xtrax">
+    <Position X="11.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAIAAAAgAAAAAAAAAAAIAAAAAgAAIAAQAAAAABAAA=</HashCode>
+      <FileName>Xtrax.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Next" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="MySpector.Objects.IChecker">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAQAAAAABAAA=</HashCode>
+      <FileName>IChecker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Interface>
+  <Enum Name="MySpector.Objects.CheckerType">
+    <Position X="1.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAABAAAAAACAQAQAAAAAAAEAAAAAAAAAAAAAAABE=</HashCode>
+      <FileName>CheckerType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MySpector.Objects.XtraxType">
+    <Position X="9" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAQAAAAAAAAAIAAAAAAABAAAAgAAAAAAQAwAA=</HashCode>
+      <FileName>XtraxType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

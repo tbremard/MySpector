@@ -336,7 +336,7 @@ namespace MySpector.Repo
             return ret;
         }
 
-        public IWebTarget GetTargetHttp(int idWebTarget)
+        public HttpTarget GetTargetHttp(int idWebTarget)
         {
             HttpTarget ret;
             try
@@ -347,6 +347,7 @@ namespace MySpector.Repo
                 ret = new HttpTarget(target.URI);
                 ret.Method = new HttpMethod(target.METHOD);
                 ret.Version = target.VERSION;
+                ret.DbId = target.ID_WEB_TARGET;
                 if(!string.IsNullOrEmpty(target.HEADERS))
                 {
                     var lines = target.HEADERS.Split('\n').ToList();
@@ -457,21 +458,23 @@ namespace MySpector.Repo
             var xType = MyEnum.Parse<Objects.NotifierType>(myType.NAME);
             var def = new NotifierParam(xType, myDef.ARG);
             var ret = NotifyFactory.Create(def);
+            ret.DbId = myDef.ID_NOTIFY_DEF;
             return ret;
         }
 
         private IChecker mapperChecker(DbModel.checker_def myDef, DbModel.checker_type myType)
         {
             var xType = MyEnum.Parse<Objects.CheckerType>(myType.NAME);
-            var def = new CheckerParam( xType, myDef.ARG);
+            var def = new CheckerParam( xType, myDef.ARG, myDef.ID_CHECKER_DEF);
             var ret = CheckerFactory.Create(def);
+            ret.DbId = myDef.ID_CHECKER_DEF;
             return ret;
         }
 
         private Objects.XtraxDefinition mapperXtrax(DbModel.xtrax_def myDef, DbModel.xtrax_type myType)
         {
             var xType = MyEnum.Parse<Objects.XtraxType>(myType.NAME);
-            var ret = new XtraxDefinition(DbToInt(myDef.ORDER), xType, myDef.ARG);
+            var ret = new XtraxDefinition(DbToInt(myDef.ORDER), xType, myDef.ARG, myDef.ID_XTRAX_DEF);
             return ret;
         }
 

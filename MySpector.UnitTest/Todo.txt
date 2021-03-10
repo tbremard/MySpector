@@ -56,7 +56,7 @@ use MySql ----------------------------------------------------------- : Done
             Downloader = new HttpDownloader();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
 
 Create Repo/test Repo ------------------------------------------------1 : Done
-MUST CHECK ORDERS AND DBIDS
+MUST CHECK ORDERS AND DBIDS    -----------------------------------------------------------------
 Load all data from DB ------------------------------------------------1 : DOING
 console factory / db data --------------------------------------------2
 Xtract Xpath of Xml doc-----------------------------------------------2

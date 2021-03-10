@@ -14,11 +14,11 @@ namespace MySpector.Cons
         public static IList<Trox> CreateLocal()
         {
             var ret = new List<Trox>();
-            ret.Add(CreateZotacMagnus());
+//            ret.Add(CreateZotacMagnus());
             ret.Add(CreateHystouF7());
             ret.Add(CreateAllianzOblig());
-            ret.Add(CreateIdealoPs4Pro());
-            ret.Add(CreateBalticDryIndex());
+    //        ret.Add(CreateIdealoPs4Pro());
+  //          ret.Add(CreateBalticDryIndex());
             return ret;
         }
 
@@ -26,8 +26,8 @@ namespace MySpector.Cons
         {
             string rawString = "/html/body/div/div/div[2]/div/main/div/div[2]/div/div[2]/div/div[1]/strong";
             string escapedString = Escaper.EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}", null);
+            var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
@@ -53,8 +53,8 @@ namespace MySpector.Cons
         {
             string rawString = "/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]";
             string escapedString = Escaper.EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}", null);
+            var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
@@ -71,14 +71,14 @@ namespace MySpector.Cons
         {
             string rawString = "//*[@id=\"goods_price\"]";
             string escapedString = Escaper.EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var afterParam = new XtraxDefinition(1, XtraxType.After, "{\"Prefix\":\"$\"}");
-            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}", null);
+            var afterParam = new XtraxDefinition(1, XtraxType.After, "{\"Prefix\":\"$\"}", null);
+            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);
             xTraxParams.Add(textToNumberParam);
-            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":500, \"OrEqual\":true}");
+            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1000, \"OrEqual\":true}");
             string name = "Hystou: F7";
             string url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html";
             bool enabled = true;
@@ -91,9 +91,9 @@ namespace MySpector.Cons
         {
             string rawString = "/html/head/title";
             string escapedString = Escaper.EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"ab\", \"Suffix\":\"€\"}");
-            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}", null);
+            var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"ab\", \"Suffix\":\"€\"}", null);
+            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(betweenParam);
@@ -111,9 +111,9 @@ namespace MySpector.Cons
         {
             string rawString = "//*[@id=\"description\"]";
             string escapedString = Escaper.EscapeDoubleQuotes(rawString);
-            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}");
-            var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"percent to\", \"Suffix\":\"in the\"}");
-            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"" + escapedString + "\"}", null);
+            var betweenParam = new XtraxDefinition(1, XtraxType.Between, "{\"Prefix\":\"percent to\", \"Suffix\":\"in the\"}", null);
+            var textToNumberParam = new XtraxDefinition(2, XtraxType.TextToNumber, null, null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(betweenParam);

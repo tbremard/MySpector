@@ -34,6 +34,7 @@ namespace MySpector.Objects
                 default:
                     throw new InvalidEnumArgumentException("unknown XtraxType: " + def.XtraxType);
             }
+            ret.DbId = def.DbId;
             return ret;
         }
 
