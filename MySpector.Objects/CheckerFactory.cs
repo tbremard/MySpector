@@ -1,10 +1,13 @@
-﻿using System.ComponentModel;
+﻿using NLog;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace MySpector.Objects
 {
     public class CheckerFactory
     {
+        static Logger _log = LogManager.GetCurrentClassLogger();
+
         public static IChecker Create(CheckerParam param)
         {
             IChecker ret;
@@ -23,7 +26,9 @@ namespace MySpector.Objects
                     ret = new TextDoContainChecker(argText);
                     break;
                 default:
-                    throw new InvalidEnumArgumentException($"CheckerType.{param.Type} is not handled by CheckerFactory");
+                    string message = $"CheckerType.{param.Type} is not handled by CheckerFactory";
+                    _log.Error(message);
+                    throw new InvalidEnumArgumentException(message);
             }
             ret.DbId = param.DbId;
             return ret;

@@ -1,13 +1,24 @@
 ﻿using System.Collections.Generic;
 using MySpector.Objects;
+using NLog;
 
 namespace MySpector.Cons
 {
     class WatchList
     {
-        public static IList<Trox> CreateFromDB()
+        static Logger _log = LogManager.GetCurrentClassLogger();
+
+        public static IList<Trox> LoadFromDB()
         {
-            var ret = new List<Trox>();
+            Repo.Repo repo;
+            repo = new Repo.Repo();
+            bool isConnected = repo.Connect();
+            if (!isConnected)
+            {
+                _log.Error("cannot connect");
+                return new List<Trox>();
+            }
+            var ret = repo.GetAllTroxes();
             return ret;
         }
 
@@ -20,6 +31,24 @@ namespace MySpector.Cons
     //        ret.Add(CreateIdealoPs4Pro());
   //          ret.Add(CreateBalticDryIndex());
             return ret;
+        }
+
+        public static void SaveWatchList(IList<Trox> watchList)
+        {
+            Repo.Repo repo;
+            repo = new Repo.Repo();
+            bool isConnected = repo.Connect();
+            if (!isConnected)
+            {
+                _log.Error("cannot connect");
+                return;
+            }
+            repo.BeginTransaction();
+            foreach (var trox in watchList)
+            {
+                repo.SaveTrox(trox);
+            }
+            repo.Commit();
         }
 
         private static Trox CreateZotacMagnus()

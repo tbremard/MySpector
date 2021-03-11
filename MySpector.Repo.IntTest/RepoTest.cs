@@ -29,7 +29,7 @@ namespace MySpector.Repo.IntTest
         }
 
         [Test]
-        public void GetAllTroxes()
+        public void GetAllTroxes_WhenCalled_ThenListIsNotEmpty()
         {
             var ret = _sut.GetAllTroxes();
 
@@ -58,7 +58,7 @@ namespace MySpector.Repo.IntTest
         }
 
         [Test]
-        public void GetWebTarget()
+        public void GetWebTarget_WhenExist_ThenFound()
         {
             var ret = _sut.GetWebTarget(HTTP_TARGET_ID);
 
@@ -67,7 +67,7 @@ namespace MySpector.Repo.IntTest
         }
 
         [Test]
-        public void GetTargetHttp()
+        public void GetTargetHttp_WhenExist_ThenFound()
         {
             int idWebTarget = HTTP_TARGET_ID;// must be http id
 
@@ -130,7 +130,6 @@ namespace MySpector.Repo.IntTest
             Assert.IsNotNull(id);
             Assert.AreNotEqual(0, id);
         }
-
 
         [Test]
         public void CheckEnum_CheckerType()
@@ -197,7 +196,7 @@ namespace MySpector.Repo.IntTest
         }
 
         [Test]
-        public void SaveWebTarget()
+        public void SaveWebTarget_WhenCalled_ThenDbIdIsSet()
         {
             var target = new HttpTarget("test");
 

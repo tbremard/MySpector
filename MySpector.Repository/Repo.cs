@@ -166,14 +166,15 @@ namespace MySpector.Repo
 
         private void SaveXtraxChain(int? troxDbId, Xtrax x)
         {
+            int order = 0;
             do
             {
-                SaveXtraxSingle(troxDbId, x);
+                SaveXtraxSingle(troxDbId, x, order++);
                 x = x.GetNext();
             } while (x != null);
         }
 
-        private void SaveXtraxSingle(int? troxDbId, Xtrax x)
+        private void SaveXtraxSingle(int? troxDbId, Xtrax x, int order)
         {
             var def = new xtrax_def();
             if (x.DbId.HasValue)
@@ -183,7 +184,7 @@ namespace MySpector.Repo
             def.ID_XTRAX_TYPE = (int)x.Type;
             def.ARG = x.JsonArg;
             def.ID_TROX = troxDbId.Value;
-            def.ORDER = 1;
+            def.ORDER = order;
             string q = @"INSERT INTO xtrax_def(ID_TROX, `ORDER`, ID_XTRAX_TYPE, ARG)
 			                         values(@ID_TROX, @ORDER, @ID_XTRAX_TYPE, @ARG);";
             int? id = InsertData(q, def);
