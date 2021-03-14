@@ -4,9 +4,9 @@
     {
         NumberIsLess = 1,
         NumberIsGreater = 2,
-        NumberIsDifferent = 3,
-        NumberIsEqual=4,
-        TextDoNotContain=7,
-        TextDoContain=8
+        NumberIsEqual = 3,
+        NumberIsDifferent = 4,
+        TextDoContain = 5, 
+        TextDoNotContain = 6,
     }
 }

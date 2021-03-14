@@ -13,14 +13,12 @@ INSERT INTO XTRAX_TYPE(NAME) VALUES ('Xpath'),
                                     ('Empty'),
 									('TextReplace'),
 									('LengthOfText');
-INSERT INTO CHECKER_TYPE(NAME) VALUES   ('IsLess'),
-									    ('IsGreater'),
-										('NumberIsDifferent'),
+INSERT INTO CHECKER_TYPE(NAME) VALUES   ('NumberIsLess'),
+									    ('NumberIsGreater'),
 										('NumberIsEqual'),
-										('NumberIsGreater'),
-										('NumberIsLess'),
-										('TextDoNotContain'),
-										('TextDoContain');
+										('NumberIsDifferent'),
+										('TextDoContain'),
+										('TextDoNotContain');
 INSERT INTO NOTIFY_TYPE(NAME) VALUES ('Stub'),
 									  ('Mail'),
                                       ('WebCallBack'),
@@ -51,18 +49,20 @@ INSERT INTO WEB_TARGET_SQL(ID_WEB_TARGET, CONNECTION_STRING, QUERY, PROVIDER)
 			values(2, 'demo connectionstring', 'demo sql query', 'SQL');
 UPDATE TROX SET ID_WEB_TARGET=@ID_HTTP WHERE ID_TROX=@ID_TROX;
 
-SELECT  LAST_INSERT_ID();
-SET  @MY_ID =LAST_INSERT_ID();
-SELECT  @MY_ID;
+-- SELECT  LAST_INSERT_ID();
+-- SET  @MY_ID =LAST_INSERT_ID();
+-- SELECT  @MY_ID;
 
 select * from WEB_TARGET tar
-    inner join WEB_TARGET_TYPE typ on tar.ID_WEB_TARGET_TYPE = typ.ID_WEB_TARGET_TYPE;           
+    inner join WEB_TARGET_TYPE typ on tar.ID_WEB_TARGET_TYPE = typ.ID_TYPE;           
 select * from WEB_TARGET_HTTP;
 select * from WEB_TARGET_SQL;
 
 
 ------------------       
 SET @ID_TROX=2;
+SELECT @ID_TROX;
+
 INSERT INTO xtrax_def(ID_TROX, `ORDER`, ID_XTRAX_TYPE, ARG)
 			values(@ID_TROX, 0, 1, '{"Path":"/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]"}');
 
@@ -107,7 +107,7 @@ INNER JOIN xtrax_type typ on def.ID_XTRAX_TYPE = typ.ID_TYPE
 WHERE def.ID_TROX = @ID_TROX   
 ORDER BY `ORDER` ASC;
 --
-select * -- def.ID_TROX, def.ORDER, def.ARG, typ.ID_CHECKER_TYPE, typ.NAME 
+select * 
 from checker_def def 
 	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_TYPE 
     WHERE def.ID_TROX = @ID_TROX;  
@@ -116,13 +116,6 @@ select * from NOTIFY_DEF def
 	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_TYPE
 --    INNER JOIN  trox on trox.ID_TROX = def.ID_TROX
     WHERE def.ID_TROX = @ID_TROX;  
-
----------------------
-
-create table tjson(param JSON);
-insert into tjson values('{"Reference":105, "OrEqual":true}');
-select * from tjson;
-----------------------
 
 
                                     
