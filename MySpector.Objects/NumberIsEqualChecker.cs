@@ -7,13 +7,12 @@ namespace MySpector.Objects
         static Logger _log = LogManager.GetCurrentClassLogger();
         public int? DbId { get; set; }
         public CheckerType Type => CheckerType.NumberIsEqual;
-        public string JsonArg { get; }
+        public string JsonArg => Jsoner.ToJson(_arg);
+        private ComparaisonArg _arg;
 
-        decimal Reference;
-
-        public NumberIsEqualChecker(decimal reference)
+        public NumberIsEqualChecker(ComparaisonArg arg)
         {
-            Reference = reference;
+            _arg = arg;
         }
 
         public bool Check(IDataTruck input)
@@ -31,8 +30,8 @@ namespace MySpector.Objects
                 return false;
             }
             decimal Sample = number.Value;
-            ret = Sample == Reference;
-            _log.Debug($"{Sample} == {Reference}: {ret}");
+            ret = Sample == _arg.Reference;
+            _log.Debug($"{Sample} == {_arg.Reference}: {ret}");
             return ret;
         }
     }

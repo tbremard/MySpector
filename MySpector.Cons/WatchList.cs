@@ -60,7 +60,7 @@ namespace MySpector.Cons
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
-            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":800, \"OrEqual\":true}");
+            var checkerParam = new CheckerParam(CheckerType.NumberIsLess, "{\"Reference\":800, \"OrEqual\":true}");
             string name = "Galaxus: Zotac 72070";
             string url = "https://www.galaxus.de/de/s1/product/zotac-zbox-magnus-en72070v-intel-core-i7-9750h-0gb-pc-13590721";
             bool enabled = true;
@@ -87,7 +87,7 @@ namespace MySpector.Cons
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(textToNumberParam);
-            var checkerParam = new CheckerParam(CheckerType.IsGreater, "{\"Reference\":105, \"OrEqual\":true}");
+            var checkerParam = new CheckerParam(CheckerType.NumberIsGreater, "{\"Reference\":105, \"OrEqual\":true}");
             string name = "AllianzOblig";
             string url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04";
             bool enabled = true;
@@ -107,7 +107,7 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(afterParam);
             xTraxParams.Add(textToNumberParam);
-            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1000, \"OrEqual\":true}");
+            var checkerParam = new CheckerParam(CheckerType.NumberIsLess, "{\"Reference\":1000, \"OrEqual\":true}");
             string name = "Hystou: F7";
             string url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html";
             bool enabled = true;
@@ -127,7 +127,7 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(betweenParam);
             xTraxParams.Add(textToNumberParam);
-            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":250, \"OrEqual\":true}");
+            var checkerParam = new CheckerParam(CheckerType.NumberIsLess, "{\"Reference\":250, \"OrEqual\":true}");
             string name = "Idealo: PS4 Pro";
             string url = "https://www.idealo.de/preisvergleich/OffersOfProduct/5113034_-playstation-4-ps4-pro-1tb-sony.html";
             bool enabled = true;
@@ -147,7 +147,7 @@ namespace MySpector.Cons
             xTraxParams.Add(xpathParam);
             xTraxParams.Add(betweenParam);
             xTraxParams.Add(textToNumberParam);
-            var checkerParam = new CheckerParam(CheckerType.IsLess, "{\"Reference\":1100, \"OrEqual\":true}");
+            var checkerParam = new CheckerParam(CheckerType.NumberIsLess, "{\"Reference\":1100, \"OrEqual\":true}");
             string name = "BDI";
             string url = "https://markets.tradingeconomics.com/chart?s=bdiy:ind&span=5y&securify=new&url=commoditybaltic&AUTH=tH0xFlF0V3aKjqyJD51nR45z9WSUuCX4Bal%2FBJBXp%2FY1Pe6%2BxXY9n%2F0Zer2of37E";
             bool enabled = true;

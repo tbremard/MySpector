@@ -21,7 +21,8 @@ namespace MySpector.UnitTest
             var transformer = new TextToNumberXtrax();
             sample.Rule.SetNext(transformer);
             const decimal TARGET_PRICE = 329.52m;
-            var checker = new NumberIsEqualChecker(TARGET_PRICE);
+            var arg = new ComparaisonArg(TARGET_PRICE, true);
+            var checker = new NumberIsEqualChecker(arg);
             HttpTarget target = new HttpTarget("FAKE URI");
             var item = new Trox(sample.Name, true, target, sample.Rule, checker, stubNotifier);
             item.Downloader = new StubDownloader(sample.Data);

@@ -19,7 +19,7 @@ namespace MySpector.UnitTest
         public void Create_WenCheckerTypeIsLess_ThenCheckIsSucess()
         {
             const string arg = "{\"Reference\":1200, \"OrEqual\":true}";
-            var param = new CheckerParam(CheckerType.IsLess, arg);
+            var param = new CheckerParam(CheckerType.NumberIsLess, arg);
 
             var checker = CheckerFactory.Create(param);
 

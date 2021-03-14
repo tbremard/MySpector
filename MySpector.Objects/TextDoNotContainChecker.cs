@@ -7,7 +7,7 @@ namespace MySpector
     {
         public int? DbId { get; set; }
         public CheckerType Type => CheckerType.TextDoNotContain;
-        public string JsonArg { get; }
+        public string JsonArg => throw new NotImplementedException("JsonArg");
 
         string Text;
         string Token;

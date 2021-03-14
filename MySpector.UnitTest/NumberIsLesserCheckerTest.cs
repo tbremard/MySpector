@@ -27,7 +27,7 @@ namespace MySpector.UnitTest
         [TestCase(false, -4, -5, true)]
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, int sample, int reference, bool orEqual)
         {
-            var arg = new ComparaisonArg() { Reference = reference, OrEqual = orEqual };
+            var arg = new ComparaisonArg() { Reference = new decimal(reference), OrEqual = orEqual };
             _sut = new NumberIsLessChecker(arg);
             var input = new DataTruck(null, new decimal(sample));
 

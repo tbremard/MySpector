@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MySpector.TextDoContainChecker" Collapsed="true">
-    <Position X="1.25" Y="3.75" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAAAAAAAAAIAAAAAAAAIAAQAAAAABAAA=</HashCode>
       <FileName>Checker.cs</FileName>
@@ -38,15 +38,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MySpector.Objects.NumberIsEqualChecker" Collapsed="true">
-    <Position X="3.5" Y="4.75" Width="1.5" />
+    <Position X="5.5" Y="4.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAiAAAAAAEAAAAAAAIAAAAAAAAAAAQAAAAABAAA=</HashCode>
+      <HashCode>AAAAAAgAAAAAAEAAAAAAAIAAAAAAAAIAAQAAAAABAAA=</HashCode>
       <FileName>NumberIsEqualChecker.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MySpector.Objects.NumberIsGreaterChecker" Collapsed="true">
-    <Position X="5.5" Y="3.75" Width="1.5" />
+    <Position X="5.5" Y="3.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAEAEAAAAAIAAAAAAAAIAAQAAAAABAAA=</HashCode>
       <FileName>NumberIsGreaterChecker.cs</FileName>
@@ -54,7 +54,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MySpector.Objects.NumberIsLessChecker" Collapsed="true">
-    <Position X="3.5" Y="3.75" Width="1.5" />
+    <Position X="3" Y="3.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAEAAAAAAAIAAAAAAAAIAAQAAAAABAAA=</HashCode>
       <FileName>NumberIsLessChecker.cs</FileName>
@@ -62,7 +62,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MySpector.Objects.Xtrax">
-    <Position X="11.25" Y="1" Width="1.5" />
+    <Position X="11.25" Y="1" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AgAAIAAAAgAAAAAAAAAAAIAAAAAgAAIAAQAAAAABAAA=</HashCode>
       <FileName>Xtrax.cs</FileName>
@@ -85,12 +85,12 @@
   <Enum Name="MySpector.Objects.CheckerType">
     <Position X="1.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAABAAAAAACAQAQAAAAAAAEAAAAAAAAAAAAAAABE=</HashCode>
+      <HashCode>AAAEAABAAAAAACAQAQAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>CheckerType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="MySpector.Objects.XtraxType">
-    <Position X="9" Y="1" Width="1.5" />
+    <Position X="7" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAQAAAAAAAAAIAAAAAAABAAAAgAAAAAAQAwAA=</HashCode>
       <FileName>XtraxType.cs</FileName>

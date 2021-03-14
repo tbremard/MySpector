@@ -50,7 +50,7 @@ namespace MySpector.Repo
             where TDb : IEnumDef
         {
             bool ret = true;
-            if (!typeof(TClient).IsEnum) throw new System.ArgumentException("T must be an enumerated type");
+            if (!typeof(TClient).IsEnum) throw new ArgumentException("T must be an enumerated type");
 
             try
             {
@@ -64,21 +64,26 @@ namespace MySpector.Repo
                 var items = _connection.Query<TDb>(query).ToList();
                 foreach (var x in items)
                 {
-                    var type = MyEnum.Parse<TClient>(x.NAME);
-                    int clientCode = (int)type.ToInt32(CultureInfo.InvariantCulture);
-                    int dbCode = x.ID_TYPE;
-                    if (clientCode != dbCode)
+                    try
                     {
-                        _log.Error($"Enum integrity failed: CheckerType.{x.NAME}: different code between client({clientCode}) and DB({dbCode})");
-                        ret = false;
-                    }
-                    else
-                    {
+                        var type = MyEnum.Parse<TClient>(x.NAME);
+                        int clientCode = (int)type.ToInt32(CultureInfo.InvariantCulture);
+                        int dbCode = x.ID_TYPE;
+                        if (clientCode != dbCode)
+                        {
+                            _log.Error($"Enum integrity failed: CheckerType.{x.NAME}: different code between client({clientCode}) and DB({dbCode})");
+                            ret = false;
+                        }
                         resolved[type] = true;
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        _log.Error($"Cannot parse value from DB: '{x.NAME}' to local Enum." +typeof(TClient).Name+": " + ex.Message);
+                        ret = false;
                     }
                 }
                 var unresolved = resolved.Where(x => x.Value == false).Select(x => x.Key).ToList();
-                if(unresolved.Count>0)
+                if(unresolved.Count > 0)
                 {
                     ret = false;
                     foreach (var item in unresolved)

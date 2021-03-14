@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 
 namespace MySpector.Objects
 {
@@ -7,7 +8,7 @@ namespace MySpector.Objects
         static Logger _log = LogManager.GetCurrentClassLogger();
         public int? DbId { get; set; }
         public CheckerType Type => CheckerType.NumberIsDifferent;
-        public string JsonArg { get; }
+        public string JsonArg => throw new NotImplementedException("JsonArg");
 
         decimal Reference;
 

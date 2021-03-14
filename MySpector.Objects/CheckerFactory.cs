@@ -13,14 +13,19 @@ namespace MySpector.Objects
             IChecker ret;
             switch (param.Type)
             {
-                case CheckerType.IsLess:
+                case CheckerType.NumberIsLess:
                     var argLess = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);
                     ret = new NumberIsLessChecker(argLess);
                     break;
-                case CheckerType.IsGreater:
+                case CheckerType.NumberIsGreater:
                     var argGreater = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);
                     ret = new NumberIsGreaterChecker(argGreater);
                     break;
+                case CheckerType.NumberIsEqual:
+                    var argEqual = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);
+                    ret = new NumberIsEqualChecker(argEqual);
+                    break;
+
                 case CheckerType.TextDoContain:
                     var argText = JsonSerializer.Deserialize<TextDoContainArg>(param.Arg);
                     ret = new TextDoContainChecker(argText);

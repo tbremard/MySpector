@@ -23,7 +23,8 @@ namespace MySpector.UnitTest
         [TestCase(false, -4.1, -5.1)]
         public void Check_WenInputIsValid_ThenOk(bool expectedOutput, double sample, double reference)
         {
-            _sut = new NumberIsEqualChecker(new decimal(reference));
+            var arg = new ComparaisonArg(new decimal(reference), true);
+            _sut = new NumberIsEqualChecker(arg);
             var input = new DataTruck(null, new decimal(sample));
 
             var data = _sut.Check(input);
