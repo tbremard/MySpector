@@ -1,8 +1,7 @@
 ﻿using System;
 using NLog;
 using MySpector.Core;
-using System.Collections.Generic;
-using MySpector.Objects;
+
 namespace MySpector.Cons
 {
     class Program
@@ -13,8 +12,8 @@ namespace MySpector.Cons
         {
             _log.Debug("Starting MySpector...");
 //            var watchList = WatchList.CreateLocal(); // <<<<<<<<< OFFLINE MODE
+//            WatchList.SaveWatchList(watchList);                // <<<<<<<<<< used once to initiate db with content of OFFLINE mode
             var watchList = WatchList.LoadFromDB();    // <<<<<<<<< CONNECTED mode
-//            SaveWatchList(watchList);                // <<<<<<<<<< used once to initiate db with content of OFFLINE mode
             var job = new Job();
             bool isSuccess = job.Process(watchList);
             if (!isSuccess)

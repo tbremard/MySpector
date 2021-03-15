@@ -25,11 +25,11 @@ namespace MySpector.Cons
         public static IList<Trox> CreateLocal()
         {
             var ret = new List<Trox>();
-//            ret.Add(CreateZotacMagnus());
+            ret.Add(CreateZotacMagnus());
             ret.Add(CreateHystouF7());
             ret.Add(CreateAllianzOblig());
-    //        ret.Add(CreateIdealoPs4Pro());
-  //          ret.Add(CreateBalticDryIndex());
+            ret.Add(CreateIdealoPs4Pro());
+            ret.Add(CreateBalticDryIndex());
             return ret;
         }
 

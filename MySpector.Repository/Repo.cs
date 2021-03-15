@@ -99,6 +99,30 @@ namespace MySpector.Repo
             return ret;
         }
 
+        public bool EnableTrox(int troxId, bool enabled)
+        {
+            bool ret;
+            if (_currentTransaction == null)
+            {
+                _log.Error("You must first create a transaction");
+                return false;
+            }
+            var param = new { ENABLED = BoolToDb(enabled), ID_TROX = troxId };
+            string query = @"UPDATE TROX SET ENABLED=@ENABLED WHERE ID_TROX=@ID_TROX;";
+            try
+            {
+                int nbRows = _currentTransaction.Connection.Execute(query, param);
+                _log.Debug($"EnableTrox({troxId}, {enabled}): nbRows: {nbRows}");
+                ret = true;
+            }
+            catch (Exception e)
+            {
+                _log.Error(e);
+                ret = false;
+            }
+            return ret;
+        }
+
         public int? SaveTrox(Trox trox)
         {
             if (_currentTransaction == null)

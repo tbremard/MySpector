@@ -118,6 +118,17 @@ namespace MySpector.Repo.IntTest
         }
 
         [Test]
+        public void EnableTrox_WhenInputIsValid_ThenOk()
+        {
+            _sut.BeginTransaction();
+            var ret = _sut.EnableTrox(8, false);
+            _sut.Commit();
+//            _sut.RollBack();
+
+            Assert.IsTrue(ret);
+        }
+
+        [Test]
         public void SaveTrox_WhenInputIsValid_ThenDbIdIsSet()
         {
             var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax( new AfterArg() { Prefix = "test" }), new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }), new StubNotifier());
