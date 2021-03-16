@@ -25,10 +25,17 @@ namespace MySpector.Objects
                     var argEqual = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);
                     ret = new NumberIsEqualChecker(argEqual);
                     break;
-
+                case CheckerType.NumberIsDifferent:
+                    var argDiff = JsonSerializer.Deserialize<ComparaisonArg>(param.Arg);
+                    ret = new NumberIsDifferentChecker(argDiff);
+                    break;
                 case CheckerType.TextDoContain:
                     var argText = JsonSerializer.Deserialize<TextDoContainArg>(param.Arg);
                     ret = new TextDoContainChecker(argText);
+                    break;
+                case CheckerType.TextDoNotContain:
+                    var argNotContain = JsonSerializer.Deserialize<TextDoContainArg>(param.Arg);
+                    ret = new TextDoContainChecker(argNotContain);
                     break;
                 default:
                     string message = $"CheckerType.{param.Type} is not handled by CheckerFactory";

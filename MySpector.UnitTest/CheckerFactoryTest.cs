@@ -8,24 +8,19 @@ namespace MySpector.UnitTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        //Downloader _sut;
-        //[SetUp]
-        //public void Setup()
-        //{
-        //    _sut = new Downloader();
-        //}
-
-        [Test]
-        public void Create_WenCheckerTypeIsLess_ThenCheckIsSucess()
+        [TestCase(CheckerType.NumberIsLess, "{\"Reference\":1200, \"OrEqual\":true}")]
+        [TestCase(CheckerType.NumberIsDifferent, "{\"Reference\":1200, \"OrEqual\":true}")]
+        [TestCase(CheckerType.NumberIsEqual, "{\"Reference\":1200, \"OrEqual\":true}")]
+        [TestCase(CheckerType.NumberIsGreater, "{\"Reference\":1200, \"OrEqual\":true}")]
+        [TestCase(CheckerType.TextDoContain, "{\"Token\":\"my token\", \"IgnoreCase\":true}")]
+        [TestCase(CheckerType.TextDoNotContain, "{\"Token\":\"my token\", \"IgnoreCase\":true}")]
+        public void Create_WenCheckerTypeIsValid_ThenOk(CheckerType type, string arg)
         {
-            const string arg = "{\"Reference\":1200, \"OrEqual\":true}";
-            var param = new CheckerParam(CheckerType.NumberIsLess, arg);
+            var param = new CheckerParam(type , arg);
 
             var checker = CheckerFactory.Create(param);
 
-            var number = DataTruck.CreateNumber(900m);
-            bool ret = checker.Check(number);
-            Assert.IsTrue(ret);
+            Assert.IsNotNull(checker);
         }
     }
 }

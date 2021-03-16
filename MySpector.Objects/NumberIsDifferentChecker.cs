@@ -9,12 +9,11 @@ namespace MySpector.Objects
         public int? DbId { get; set; }
         public CheckerType Type => CheckerType.NumberIsDifferent;
         public string JsonArg => throw new NotImplementedException("JsonArg");
+        private ComparaisonArg _arg;
 
-        decimal Reference;
-
-        public NumberIsDifferentChecker(decimal reference)
+        public NumberIsDifferentChecker(ComparaisonArg arg)
         {
-            Reference = reference;
+            _arg = arg;
         }
 
         public bool Check(IDataTruck input)
@@ -29,8 +28,8 @@ namespace MySpector.Objects
                 return false;
             }
             decimal Sample = number.Value;
-            ret = Sample != Reference;
-            _log.Debug($"{Sample} != {Reference}: {ret}");
+            ret = Sample != _arg.Reference;
+            _log.Debug($"{Sample} != {_arg.Reference}: {ret}");
             return ret;
         }
     }
