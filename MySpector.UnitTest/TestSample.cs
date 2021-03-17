@@ -23,7 +23,7 @@ namespace MySpector.UnitTest
             //string escapedString = Escaper.EscapeDoubleQuotes(rule);
             //string jsonArg =  "{\"Path\":\"" + escapedString + "\"}";
             var arg = new XpathArg() { Path = rule };
-            var ret = new XpathXtrax(arg);// do not chain other rules here because some test rely on it
+            var ret = new HtmlXpathXtrax(arg);// do not chain other rules here because some test rely on it
             return ret;
         }
 

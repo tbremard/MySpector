@@ -15,15 +15,15 @@ namespace MySpector.UnitTest
         [Test]
         public void GetOutputChained_WhenXmlIsValid_ThenDataIsExtracted()
         {
-            string Html = "<html><head></head><body><div class=\"Z2\"><strong class=\"Z9v\">The price of the item is: 1189,99 EUR</strong></div></body></html>";
-            string Xpath = "/html/body/div/strong";
+            string xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><a><b>xaxa</b><b>toto</b></a>";
+            string Xpath = "/a/b[2]";
             var arg = new XpathArg() { Path = Xpath };
-            var rump = DataTruck.CreateText(Html);
+            var rump = DataTruck.CreateText(xml);
             var rootRule = new XmlXpathXtrax(arg);
 
             var data = rootRule.GetOutputChained(rump);
 
-            string ExpectedOutput = "1189,99";
+            string ExpectedOutput = "toto";
             string actual = data.GetText();
             Assert.AreEqual(ExpectedOutput, actual);
         }

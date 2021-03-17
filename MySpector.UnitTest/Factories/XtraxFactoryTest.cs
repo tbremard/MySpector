@@ -26,7 +26,7 @@ namespace MySpector.UnitTest
         [Test]
         public void Create_WenTwoRules_ThenOk()
         {
-            var xpathParam = new XtraxDefinition(0, XtraxType.Xpath, "{\"Path\":\"/html/body\"}", null);
+            var xpathParam = new XtraxDefinition(0, XtraxType.HtmlXpath, "{\"Path\":\"/html/body\"}", null);
             var afterParam = new XtraxDefinition(1, XtraxType.After, "{\"Prefix\":\"is:\"}", null);
             var xTraxParams = new List<XtraxDefinition>();
             xTraxParams.Add(xpathParam);

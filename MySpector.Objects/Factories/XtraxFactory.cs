@@ -12,9 +12,9 @@ namespace MySpector.Objects
             Xtrax ret;
             switch (def.XtraxType)
             {
-                case XtraxType.Xpath:
+                case XtraxType.HtmlXpath:
                     var xpathArg = Jsoner.FromJson<XpathArg>(def.Arg);
-                    ret = new XpathXtrax(xpathArg);
+                    ret = new HtmlXpathXtrax(xpathArg);
                     break;
                 case XtraxType.After:
                     var argAfter = JsonSerializer.Deserialize<AfterArg>(def.Arg);

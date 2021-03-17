@@ -59,8 +59,8 @@ Create Repo/test Repo ------------------------------------------------1 : Done
 MUST CHECK ORDERS AND DBIDS    -----------------------------------------------------------------
 Load all data from DB ------------------------------------------------1 : Done
 console factory / db data --------------------------------------------2 : Done
-Xtract Xpath of Xml doc-----------------------------------------------2 : Doing <<<<<<<<<<<<<<<<<<
-parse generic json ---------------------------------------------------3
+Xtract Xpath of Xml doc-----------------------------------------------2 : Done
+parse generic json ---------------------------------------------------3 : Doing <<<<<<<<<<<<<<<<<<
 checker : price < x% within y days -----------------------------------4
 
 make public/private Spectors

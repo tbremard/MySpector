@@ -2,7 +2,7 @@
 {
     public enum XtraxType
     {
-        Xpath=1,
+        HtmlXpath=1,
         After=2,
         Before=3,
         TextToNumber=4,
