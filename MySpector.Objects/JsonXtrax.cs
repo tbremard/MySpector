@@ -1,20 +1,20 @@
 ﻿using System;
 using NLog;
 using MySpector.Objects.Args;
-using System.Xml;
+using System.Text.Json;
 
 namespace MySpector.Objects
 {
-    public class XmlXpathXtrax : Xtrax
+    public class JsonXtrax : Xtrax
     {
         public override XtraxType Type => XtraxType.HtmlXpath;
         public override string JsonArg { get { return Jsoner.ToJson(_arg); } }
 
         static Logger _log = LogManager.GetCurrentClassLogger();
         private string NOT_FOUND = "NOT_FOUND";
-        private readonly XpathArg _arg;
+        private readonly JsonArg _arg;
 
-        public XmlXpathXtrax(XpathArg arg)
+        public JsonXtrax(JsonArg arg)
         {
             _arg = arg;
         }
@@ -24,21 +24,20 @@ namespace MySpector.Objects
             IDataTruck ret;
             try
             {
-                _log.Trace($"Extracting XPath from: [{data.PreviewText}]");
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(data.GetText());
-                XmlNode root = doc.DocumentElement;
-                XmlNode node = root.SelectSingleNode(_arg.Path);
-                if (node == null)
+                _log.Trace($"Extracting XPath[{_arg.Path}] from: [{data.PreviewText}]");
+                var doc = JsonDocument.Parse(data.GetText());
+                string[] tokens = _arg.Path.Split('\\');
+                JsonElement node = doc.RootElement;
+                for (int i = 0; i < tokens.Length; i++)
                 {
-                    _log.Error($"Node not found '{_arg.Path}'");
-                    ret = DataTruck.CreateText(NOT_FOUND);
+                    _log.Trace($"GetProperty('{tokens[i]}')");
+                    if (string.IsNullOrEmpty(tokens[i]))
+                        continue;
+                    node = node.GetProperty(tokens[i]);
                 }
-                else
-                {
-                    ret = DataTruck.CreateText(node.InnerText.Trim());
-                    _log.Trace($"Succesfully extracted: [{ret.PreviewText}]");
-                }
+                char[] trimChars = { ' ', '\"' };
+                ret = DataTruck.CreateText(node.GetRawText().Trim(trimChars));
+                _log.Trace($"Succesfully extracted: [{ret.PreviewText}]");
             }
             catch (Exception ex)
             {

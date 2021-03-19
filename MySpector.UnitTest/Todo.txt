@@ -61,6 +61,8 @@ Load all data from DB ------------------------------------------------1 : Done
 console factory / db data --------------------------------------------2 : Done
 Xtract Xpath of Xml doc-----------------------------------------------2 : Done
 parse generic json ---------------------------------------------------3 : Doing <<<<<<<<<<<<<<<<<<
+ProcessOutputGrab : process + args + stdin  ----------------------
+
 checker : price < x% within y days -----------------------------------4
 
 make public/private Spectors

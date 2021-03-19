@@ -13,8 +13,13 @@
     public class XpathArg
     {
         public string Path { get; set; }
-
     }
+    
+    public class JsonArg
+    {
+        public string Path { get; set; }
+    }
+
     public class BetweenArg
     {
         public string Prefix { get; set; }
