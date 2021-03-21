@@ -44,7 +44,6 @@ namespace MySpector.Repo
             return ret;
         }
 
-
         public bool CheckEnumGeneric<TClient, TDb>(string table)
             where TClient : struct, IConvertible
             where TDb : IEnumDef

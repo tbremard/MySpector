@@ -9,6 +9,8 @@
         Between=5,
         Empty=6,
         TextReplace=7,
-        LengthOfText=8
+        LengthOfText=8,
+        XmlXpath = 9,
+        JsonXpath = 10
     }
 }

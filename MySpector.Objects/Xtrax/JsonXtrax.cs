@@ -7,7 +7,7 @@ namespace MySpector.Objects
 {
     public class JsonXtrax : Xtrax
     {
-        public override XtraxType Type => XtraxType.HtmlXpath;
+        public override XtraxType Type => XtraxType.JsonXpath;
         public override string JsonArg { get { return Jsoner.ToJson(_arg); } }
 
         static Logger _log = LogManager.GetCurrentClassLogger();
