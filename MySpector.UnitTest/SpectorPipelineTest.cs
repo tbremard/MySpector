@@ -25,7 +25,7 @@ namespace MySpector.UnitTest
             var checker = new NumberIsEqualChecker(arg);
             HttpTarget target = new HttpTarget("FAKE URI");
             var item = new Trox(sample.Name, true, target, sample.Rule, checker, stubNotifier);
-            item.Downloader = new StubDownloader(sample.Data);
+            item.Grabber = new StubDownloader(sample.Data);
             var sut = new SpectorPipeline(item);
 
             bool isOk = sut.Process();

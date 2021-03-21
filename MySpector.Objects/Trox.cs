@@ -5,7 +5,7 @@ namespace MySpector.Objects
 {
     public class Trox
     {
-        public IGrabber Downloader { get; set; }
+        public IGrabber Grabber { get; set; }
         public bool Enabled { get; } = true;
         public string Name { get; }
         public IGrabTarget Target { get; }
@@ -41,7 +41,7 @@ namespace MySpector.Objects
             XtraxChain = xtraxChain;
             Checker = checker;
             NotifyChain = notifyChain;
-            Downloader = new HttpGrabber();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
+            Grabber = new HttpGrabber();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
         }
     }
 }

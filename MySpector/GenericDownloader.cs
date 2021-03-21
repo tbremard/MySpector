@@ -10,16 +10,16 @@ namespace MySpector.Core
         static Logger _log = LogManager.GetCurrentClassLogger();
         static Random random = new Random((int)DateTime.Now.Ticks);
 
-        public static IDataTruck DownloadToLocalFile(Trox item)
+        public static IDataTruck DownloadToLocalFile(Trox trox)
         {
             IDataTruck ret;
             try
             {
-                _log.Debug($"Downloading target of Trox('{item.Name}') ");
-                var response = item.Downloader.Grab(item.Target);
+                _log.Debug($"Downloading target of Trox('{trox.Name}') ");
+                var response = trox.Grabber.Grab(trox.Target);
                 _log.Debug("Latency: " + Math.Floor( response.Latency.TotalMilliseconds) + "ms");
-                string filePath = GenerateFilePath(item);
-                File.WriteAllText(filePath, response.Content);
+                string filePath = GenerateFilePath(trox);
+                File.WriteAllText(filePath, response.Content);// should put size limit to avoid DOS
                 _log.Debug("File saved: " + filePath);
                 if (!response.Success)
                 {
