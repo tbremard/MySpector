@@ -55,14 +55,15 @@ define database and tables ------------------------------------------ : Done
 use MySql ----------------------------------------------------------- : Done
             Downloader = new HttpDownloader();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
 
-Create Repo/test Repo ------------------------------------------------1 : Done
+Create Repo/test Repo ------------------------------------------------ : Done
 MUST CHECK ORDERS AND DBIDS    -----------------------------------------------------------------
-Load all data from DB ------------------------------------------------1 : Done
-console factory / db data --------------------------------------------2 : Done
-Xtract Xpath of Xml doc-----------------------------------------------2 : Done
-parse generic json ---------------------------------------------------3 : Doing <<<<<<<<<<<<<<<<<<
-ProcessOutputGrab : process + args + stdin  ----------------------
-
+Load all data from DB ------------------------------------------------ : Done
+console factory / db data -------------------------------------------- : Done
+Xtract Xpath of Xml doc----------------------------------------------- : Done
+parse generic json --------------------------------------------------- : Done
+ProcessOutputGrab : process + args + stdin  ----------------------   1 : Doing <<<<<<<<<<<<<<<<<<
+ExcelXtrax :                   ------------------------------------------ TODO 
+Manage data sources by name
 checker : price < x% within y days -----------------------------------4
 
 make public/private Spectors
