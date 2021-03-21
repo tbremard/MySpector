@@ -4,11 +4,11 @@ using MySpector.Objects;
 
 namespace MySpector.UnitTest
 {
-    public class HttpDownloaderTest
+    public class HttpGrabberTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-
         HttpGrabber _sut;
+
         [SetUp]
         public void Setup()
         {
@@ -16,7 +16,7 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        public void Download_WenInputIsValid_ThenOk()
+        public void Grab_WenInputIsValid_ThenOk()
         {
             var httpTarget = new HttpTarget(TestSampleFactory.ZOTAC_EN72070V_GALAXUS_FULL_PAGE.Url);
 
@@ -27,7 +27,7 @@ namespace MySpector.UnitTest
 
         [Test]
         [Ignore("SSL certificate by WebClient is an issue")]
-        public void Download_WenServerSpotRobot_ThenOk()
+        public void Grab_WenServerSpotRobot_ThenOk()
         {
             _log.Debug("xxxxxxxxxxxxx");
             var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url);

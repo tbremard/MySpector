@@ -4,11 +4,11 @@ using MySpector.Objects;
 
 namespace MySpector.UnitTest
 {
-    public class FileLoaderTest
+    public class FileGrabberTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-
         FileGrabber _sut;
+
         [SetUp]
         public void Setup()
         {
@@ -16,7 +16,7 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        public void Download_WenInputIsValid_ThenOk()
+        public void Grab_WenInputIsValid_ThenOk()
         {
             var target = new FileTarget("LocalFile.txt");
 
@@ -26,7 +26,7 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        public void Download_WenInputIsInvalid_ThenKo()
+        public void Grab_WenInputIsInvalid_ThenKo()
         {
             var target = new FileTarget("InvalidPath.txt");
 

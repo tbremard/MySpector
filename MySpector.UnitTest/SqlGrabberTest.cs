@@ -5,7 +5,7 @@ using MySpector.Objects;
 
 namespace MySpector.UnitTest
 {
-    public class SqlDownloaderTest
+    public class SqlGrabberTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -18,7 +18,7 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        public void Download_WenInputIsValid_ThenOk()
+        public void Grab_WenInputIsValid_ThenOk()
         {
             string connectionString = "";
             string sqlQuery = "";
