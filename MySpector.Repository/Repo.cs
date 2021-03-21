@@ -130,7 +130,7 @@ namespace MySpector.Repo
                 _log.Error("You must first create a transaction");
                 return 0;
             }
-            int? targetDbId = SaveWebTarget(trox.Target);
+            int? targetDbId = SaveTarget(trox.Target);
             int? troxDbId = SaveTroxCore(trox);
             AttachWebTargetToTrox(targetDbId, troxDbId);
             SaveXtraxChain(troxDbId, trox.XtraxChain);
@@ -278,7 +278,7 @@ namespace MySpector.Repo
             return troxDbId;
         }
 
-        public int SaveWebTarget(IGrabTarget target)
+        public int SaveTarget(IGrabTarget target)
         {
             if (_currentTransaction == null)
             {
@@ -289,13 +289,13 @@ namespace MySpector.Repo
             switch (target.TargetType)
             {
                 case TargetType.HTTP:
-                    string q = @"INSERT INTO WEB_TARGET(ID_TARGET_TYPE) values(1);
+                    string q = @"INSERT INTO TARGET(ID_TARGET_TYPE) values(1);
                                  SELECT LAST_INSERT_ID();";
                     int webTargetId = _currentTransaction.Connection.Query<int>(q).Single();
                     var http = target as HttpTarget;
                     http.DbId = webTargetId;
                     var dbHttp = new web_target_http() { ID_TARGET = http.DbId.Value, METHOD = http.Method.ToString(), URI = http.Uri };
-                    string query = @"INSERT into WEB_TARGET_HTTP(ID_TARGET, METHOD, URI) values(@ID_TARGET, @Method, @Uri);";
+                    string query = @"INSERT into TARGET_HTTP(ID_TARGET, METHOD, URI) values(@ID_TARGET, @Method, @Uri);";
                     _currentTransaction.Connection.Execute(query, dbHttp);
                     ret = webTargetId;
                     break;

@@ -212,7 +212,7 @@ namespace MySpector.Repo.IntTest
             var target = new HttpTarget("test");
 
             _sut.BeginTransaction();
-            int id = _sut.SaveWebTarget(target);
+            int id = _sut.SaveTarget(target);
             _sut.RollBack();
 
             Assert.AreNotEqual(0, id);
