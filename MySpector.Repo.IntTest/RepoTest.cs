@@ -198,12 +198,14 @@ namespace MySpector.Repo.IntTest
             var loadedTrox = loadedTroxes.First();
             Assert.AreEqual(CheckerType.TextDoContain, loadedTrox.Checker.Type);
             Assert.AreEqual(TargetType.HTTP, loadedTrox.Target.TargetType);
+            Assert.IsNotNull(loadedTrox.DbId, "Trox.DbId");
             Assert.IsNotNull(loadedTrox.XtraxChain.DbId, "XtraxChain.DbId");
             Assert.IsNotNull(loadedTrox.Checker.DbId, "Checker.DbId");
             Assert.IsNotNull(loadedTrox.NotifyChain.DbId, "NotifyChain.DbId");
             var httpTarget = loadedTrox.Target as HttpTarget;
             Assert.AreEqual(Uri, httpTarget.Uri);
             Assert.IsNotNull(httpTarget.DbId, "httpTarget.DbId");
+            Assert.AreEqual(id, loadedTrox.DbId, "Trox.DbId");
         }
 
         [Test]

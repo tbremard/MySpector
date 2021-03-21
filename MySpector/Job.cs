@@ -8,11 +8,11 @@ namespace MySpector.Core
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public bool Process(Trox item)
+        public bool Process(Trox trox)
         {
             _log.Debug($"--------------------");
-            _log.Debug($"Process: {item.Name}");
-            var pipeline = new SpectorPipeline(item);
+            _log.Debug($"Process: {trox.Name} TroxId: {trox.DbId}");
+            var pipeline = new SpectorPipeline(trox);
             bool isDone = pipeline.Process();
             _log.Debug($"isDone: {isDone}");
             return isDone;

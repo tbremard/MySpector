@@ -11,8 +11,9 @@ namespace MySpector.Cons
         static void Main()
         {
             _log.Debug("Starting MySpector...");
-//            var watchList = WatchList.CreateLocal(); // <<<<<<<<< OFFLINE MODE
-//            WatchList.SaveWatchList(watchList);                // <<<<<<<<<< used once to initiate db with content of OFFLINE mode
+            //var watchList = WatchList.CreateLocal(); // <<<<<<<<< OFFLINE MODE
+            //WatchList.SaveWatchList(watchList);                // <<<<<<<<<< used once to initiate db with content of OFFLINE mode
+            //return;
             var watchList = WatchList.LoadFromDB();    // <<<<<<<<< CONNECTED mode
             var job = new Job();
             bool isSuccess = job.Process(watchList);

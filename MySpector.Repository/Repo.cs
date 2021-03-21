@@ -93,6 +93,7 @@ namespace MySpector.Repo
                 var check = GetAllChecker(x.ID_TROX);
                 var notifier = GetAllNotifier(x.ID_TROX);
                 var trox = new Trox(x.NAME, DbToBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault());
+                trox.DbId = x.ID_TROX;
                 ret.Add(trox);
                 _log.Debug("Loaded Trox: " + trox.ToString());
             }

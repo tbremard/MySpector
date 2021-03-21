@@ -12,6 +12,8 @@ namespace MySpector.Objects
         public Xtrax XtraxChain { get; }
         public IChecker Checker { get; }
         public Notifier NotifyChain { get; }
+        public int? DbId { get; set; }
+
         public string FileToken
         {
             get
@@ -25,7 +27,9 @@ namespace MySpector.Objects
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine( $"Trox: Name: {Name}, enabled:{Enabled}");
+            sb.AppendLine( $"Trox.DbId: {DbId}");
+            sb.AppendLine( $"Trox.Name: {Name}");
+            sb.AppendLine( $"Trox.Enabled:{Enabled}");
             sb.AppendLine("WebTarget: " + Target?.ToString());
             sb.AppendLine("Xtrax:" + XtraxChain?.ToString());
             sb.AppendLine("Checker:" + Checker?.ToString());
