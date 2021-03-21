@@ -235,7 +235,7 @@ namespace MySpector.Repo
         private bool AttachWebTargetToTrox(int? targetDbId, int? troxDbId)
         {
             int nbRows;
-            string query = $"UPDATE TROX SET ID_WEB_TARGET={targetDbId} WHERE ID_TROX={troxDbId};";
+            string query = $"UPDATE TROX SET ID_TARGET={targetDbId} WHERE ID_TROX={troxDbId};";
             if (_currentTransaction == null)
             {
                 _log.Error("You must first create a transaction");
@@ -334,8 +334,8 @@ namespace MySpector.Repo
             IGrabTarget ret;
             try
             {
-                string query = @"select ID_TARGET, web_type.ID_TYPE, NAME  from web_target web 
-                                inner join WEB_TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_TARGET_TYPE
+                string query = @"select ID_TARGET, web_type.ID_TYPE, NAME  from target web 
+                                inner join TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_TARGET_TYPE
                                 where web.ID_TARGET =  @ID_TARGET;";
                 object param = new { ID_TARGET = webTargetId };
                 var target = _connection.Query<DbModel.web_target, DbModel.web_target_type, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_TYPE").FirstOrDefault();
