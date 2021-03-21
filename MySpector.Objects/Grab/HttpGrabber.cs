@@ -7,20 +7,20 @@ using System.Diagnostics;
 
 namespace MySpector.Objects
 {
-    public class HttpDownloader : IGrabber
+    public class HttpGrabber : IGrabber
     {
         const string SWITCH_HTTP2_SUPPORT = "System.Net.Http.SocketsHttpHandler.Http2Support";
         const string SWITCH_USE_SOCKET_HTTP_HANDLER = "System.Net.Http.UseSocketsHttpHandler";
 
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public HttpDownloader()
+        public HttpGrabber()
         {
         }
 
-        public static HttpDownloader Create()
+        public static HttpGrabber Create()
         {
-            return new HttpDownloader();
+            return new HttpGrabber();
         }
 
         public GrabResponse Grab(IGrabTarget target)

@@ -41,7 +41,7 @@ namespace MySpector.Objects
             XtraxChain = xtraxChain;
             Checker = checker;
             NotifyChain = notifyChain;
-            Downloader = new HttpDownloader();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
+            Downloader = new HttpGrabber();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
         }
     }
 }

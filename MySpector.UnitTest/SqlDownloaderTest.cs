@@ -9,12 +9,12 @@ namespace MySpector.UnitTest
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        SqlDownloader _sut;
+        SqlGrabber _sut;
 
         [SetUp]
         public void Setup()
         {
-            _sut = new SqlDownloader();
+            _sut = new SqlGrabber();
         }
 
         [Test]

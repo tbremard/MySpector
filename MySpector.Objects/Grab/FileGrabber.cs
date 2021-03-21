@@ -5,7 +5,7 @@ using System.IO;
 
 namespace MySpector.Objects
 {
-    public class FileLoader : IGrabber
+    public class FileGrabber : IGrabber
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 

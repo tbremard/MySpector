@@ -5,7 +5,7 @@ using MySpector.Objects;
 
 namespace MySpector.Core
 {
-    public class SqlDownloader : IGrabber
+    public class SqlGrabber : IGrabber
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -22,23 +22,16 @@ namespace MySpector.Core
             {
                 var watch = new Stopwatch();
                 watch.Start();
-                SqlResponse response = SqlRequest(target);
+                var sqlTarget = target as SqlTarget;
+                _log.Debug(sqlTarget.SqlQuery);
                 watch.Stop();
-                ret = new GrabResponse(response.Content, response.IsOk, watch.Elapsed);
+                ret = new GrabResponse("sql returned value", true, watch.Elapsed);
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
                 ret = new GrabResponse(string.Empty, false, TimeSpan.Zero);
             }
-            return ret;
-        }
-
-        private SqlResponse SqlRequest(IGrabTarget target)
-        {
-             var sqlTarget = target as SqlTarget;
-            _log.Debug(sqlTarget.SqlQuery);
-            var ret = new SqlResponse(true, "789");
             return ret;
         }
     }
