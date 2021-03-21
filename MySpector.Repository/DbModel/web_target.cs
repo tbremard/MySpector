@@ -16,5 +16,6 @@ namespace MySpector.Repo.DbModel
         public virtual web_target_http web_target_http { get; set; }
         public virtual web_target_sql web_target_sql { get; set; }
         public virtual ICollection<trox> trox { get; set; }
+        public int ID_TARGET { get; internal set; }
     }
 }

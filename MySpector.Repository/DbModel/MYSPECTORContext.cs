@@ -19,12 +19,12 @@ namespace MySpector.Repo.DbModel
         public virtual DbSet<checker_type> checker_type { get; set; }
         public virtual DbSet<notify_def> notify_def { get; set; }
         public virtual DbSet<notify_type> notify_type { get; set; }
+        public virtual DbSet<target> target { get; set; }
+        public virtual DbSet<target_http> target_http { get; set; }
+        public virtual DbSet<target_sql> target_sql { get; set; }
+        public virtual DbSet<target_type> target_type { get; set; }
         public virtual DbSet<trox> trox { get; set; }
         public virtual DbSet<trox_closure> trox_closure { get; set; }
-        public virtual DbSet<web_target> web_target { get; set; }
-        public virtual DbSet<web_target_http> web_target_http { get; set; }
-        public virtual DbSet<web_target_sql> web_target_sql { get; set; }
-        public virtual DbSet<web_target_type> web_target_type { get; set; }
         public virtual DbSet<xtrax_def> xtrax_def { get; set; }
         public virtual DbSet<xtrax_type> xtrax_type { get; set; }
 
@@ -103,12 +103,91 @@ namespace MySpector.Repo.DbModel
                 entity.Property(e => e.NAME).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<target>(entity =>
+            {
+                entity.HasKey(e => e.ID_TARGET)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.ID_TARGET_TYPE)
+                    .HasName("FK_ID_WEB_TARGET_TYPE_idx");
+            });
+
+            modelBuilder.Entity<target_http>(entity =>
+            {
+                entity.HasKey(e => e.ID_TARGET)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.ID_TARGET)
+                    .HasName("FK_ID_WEB_TARGET_idx");
+
+                entity.Property(e => e.CONTENT).HasMaxLength(1000);
+
+                entity.Property(e => e.HEADERS).HasMaxLength(1000);
+
+                entity.Property(e => e.METHOD)
+                    .IsRequired()
+                    .HasColumnType("enum('GET','POST','PUT','DELETE')")
+                    .HasDefaultValueSql("'GET'");
+
+                entity.Property(e => e.URI)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.VERSION)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasDefaultValueSql("'1.1'");
+
+                entity.HasOne(d => d.ID_TARGETNavigation)
+                    .WithOne(p => p.target_http)
+                    .HasForeignKey<target_http>(d => d.ID_TARGET)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ID_WEB_TARGET1");
+            });
+
+            modelBuilder.Entity<target_sql>(entity =>
+            {
+                entity.HasKey(e => e.ID_TARGET)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.ID_TARGET)
+                    .HasName("FK_ID_WEB_TARGET_idx");
+
+                entity.Property(e => e.CONNECTION_STRING)
+                    .IsRequired()
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.PROVIDER)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.QUERY)
+                    .IsRequired()
+                    .HasMaxLength(1000);
+
+                entity.HasOne(d => d.ID_TARGETNavigation)
+                    .WithOne(p => p.target_sql)
+                    .HasForeignKey<target_sql>(d => d.ID_TARGET)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ID_WEB_TARGET2");
+            });
+
+            modelBuilder.Entity<target_type>(entity =>
+            {
+                entity.HasKey(e => new { e.ID_TYPE, e.NAME })
+                    .HasName("PRIMARY");
+
+                entity.Property(e => e.ID_TYPE).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.NAME).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<trox>(entity =>
             {
                 entity.HasKey(e => e.ID_TROX)
                     .HasName("PRIMARY");
 
-                entity.HasIndex(e => e.ID_WEB_TARGET)
+                entity.HasIndex(e => e.ID_TARGET)
                     .HasName("FK_ID_WEB_TARGET_idx");
 
                 entity.Property(e => e.ID_TROX).HasColumnType("int unsigned");
@@ -121,9 +200,9 @@ namespace MySpector.Repo.DbModel
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.HasOne(d => d.ID_WEB_TARGETNavigation)
+                entity.HasOne(d => d.ID_TARGETNavigation)
                     .WithMany(p => p.trox)
-                    .HasForeignKey(d => d.ID_WEB_TARGET)
+                    .HasForeignKey(d => d.ID_TARGET)
                     .HasConstraintName("FK_ID_WEB_TARGET");
             });
 
@@ -152,85 +231,6 @@ namespace MySpector.Repo.DbModel
                     .HasForeignKey(d => d.ID_PARENT)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ID_PARENT");
-            });
-
-            modelBuilder.Entity<web_target>(entity =>
-            {
-                entity.HasKey(e => e.ID_WEB_TARGET)
-                    .HasName("PRIMARY");
-
-                entity.HasIndex(e => e.ID_WEB_TARGET_TYPE)
-                    .HasName("FK_ID_WEB_TARGET_TYPE_idx");
-            });
-
-            modelBuilder.Entity<web_target_http>(entity =>
-            {
-                entity.HasKey(e => e.ID_WEB_TARGET)
-                    .HasName("PRIMARY");
-
-                entity.HasIndex(e => e.ID_WEB_TARGET)
-                    .HasName("FK_ID_WEB_TARGET_idx");
-
-                entity.Property(e => e.CONTENT).HasMaxLength(1000);
-
-                entity.Property(e => e.HEADERS).HasMaxLength(1000);
-
-                entity.Property(e => e.METHOD)
-                    .IsRequired()
-                    .HasColumnType("enum('GET','POST','PUT','DELETE')")
-                    .HasDefaultValueSql("'GET'");
-
-                entity.Property(e => e.URI)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.VERSION)
-                    .IsRequired()
-                    .HasMaxLength(5)
-                    .HasDefaultValueSql("'1.1'");
-
-                entity.HasOne(d => d.ID_WEB_TARGETNavigation)
-                    .WithOne(p => p.web_target_http)
-                    .HasForeignKey<web_target_http>(d => d.ID_WEB_TARGET)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ID_WEB_TARGET1");
-            });
-
-            modelBuilder.Entity<web_target_sql>(entity =>
-            {
-                entity.HasKey(e => e.ID_WEB_TARGET)
-                    .HasName("PRIMARY");
-
-                entity.HasIndex(e => e.ID_WEB_TARGET)
-                    .HasName("FK_ID_WEB_TARGET_idx");
-
-                entity.Property(e => e.CONNECTION_STRING)
-                    .IsRequired()
-                    .HasMaxLength(1000);
-
-                entity.Property(e => e.PROVIDER)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.QUERY)
-                    .IsRequired()
-                    .HasMaxLength(1000);
-
-                entity.HasOne(d => d.ID_WEB_TARGETNavigation)
-                    .WithOne(p => p.web_target_sql)
-                    .HasForeignKey<web_target_sql>(d => d.ID_WEB_TARGET)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ID_WEB_TARGET2");
-            });
-
-            modelBuilder.Entity<web_target_type>(entity =>
-            {
-                entity.HasKey(e => new { e.ID_TYPE, e.NAME })
-                    .HasName("PRIMARY");
-
-                entity.Property(e => e.ID_TYPE).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.NAME).HasMaxLength(50);
             });
 
             modelBuilder.Entity<xtrax_def>(entity =>
