@@ -1,24 +1,31 @@
 -- https://shop.westerndigital.com/de-de/products/internal-drives/wd-red-sata-ssd#WDS200T1R0A
 use MYSPECTOR;
-
--- ----------- init enum/ types
-INSERT INTO WEB_TARGET_TYPE(NAME) values ('HTTP'),
-										 ('SQL'),
-										 ('FILE');
-INSERT INTO XTRAX_TYPE(NAME) VALUES ('Xpath'),
-									('After'),
-									('Before'),
-									('TextToNumber'),
-									('Between'),
-                                    ('Empty'),
-									('TextReplace'),
-									('LengthOfText');
+-- --------- init enum/ types
+INSERT INTO TARGET_TYPE(NAME) values 
+        ('HTTP'   , 1), 
+        ('SQL'    , 2), 
+        ('FILE'   , 3),
+        ('PROCESS', 4);
+                                         
+INSERT INTO XTRAX_TYPE(NAME) VALUES 
+        ('Before'      ,  1),
+        ('After'       ,  2),
+        ('Between'     ,  3),
+        ('TextToNumber',  4),
+        ('Empty'       ,  5),
+        ('TextReplace' ,  6),
+        ('LengthOfText',  7),
+        ('HtmlXpath'   ,  8),
+        ('XmlXpath'    ,  9),
+        ('JsonXpath'   , 10);
+                                    
 INSERT INTO CHECKER_TYPE(NAME) VALUES   ('NumberIsLess'),
 									    ('NumberIsGreater'),
 										('NumberIsEqual'),
 										('NumberIsDifferent'),
 										('TextDoContain'),
 										('TextDoNotContain');
+                                        
 INSERT INTO NOTIFY_TYPE(NAME) VALUES ('Stub'),
 									  ('Mail'),
                                       ('WebCallBack'),
@@ -39,6 +46,8 @@ INSERT INTO TROX_CLOSURE(ID_PARENT, ID_CHILD) values(@ID_ROOT, @ID_TROX);
 ------------------
 SELECT * FROM TROX;
 SELECT * FROM TROX_closure;
+
+UPDATE TROX SET ENABLED=0 WHERE ID_TROX=7;
 ----------------------
 INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(1);-- http
 SET  @ID_HTTP =LAST_INSERT_ID();

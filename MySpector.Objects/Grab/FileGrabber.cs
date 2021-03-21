@@ -11,7 +11,7 @@ namespace MySpector.Objects
 
         public GrabResponse Grab(IGrabTarget target)
         {
-            if (target.TargetType != GrabTargetType.FILE)
+            if (target.TargetType != TargetType.FILE)
             {
                 return new InvalidResponse("target has invalid type:" + target.TargetType, TimeSpan.Zero);
             }

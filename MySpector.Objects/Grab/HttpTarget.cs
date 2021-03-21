@@ -11,7 +11,7 @@ namespace MySpector.Objects
         public string Version { get; set; }
         public IList<HeaderEntry> Headers { get; }
         public string Content { get; set; }
-        public GrabTargetType TargetType => GrabTargetType.HTTP;
+        public TargetType TargetType => TargetType.HTTP;
 
         public HttpTarget(string uri)
         {
@@ -34,7 +34,7 @@ namespace MySpector.Objects
 
     public class InvalidTarget : IGrabTarget
     {
-        public GrabTargetType TargetType => throw new System.NotImplementedException();
+        public TargetType TargetType => throw new System.NotImplementedException();
     }
 }
 

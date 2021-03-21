@@ -8,12 +8,12 @@
             Path = path;
         }
 
-        public GrabTargetType TargetType => GrabTargetType.FILE;
+        public TargetType TargetType => TargetType.FILE;
     }
     
     public class ProcessTarget : IGrabTarget
     {
-        public GrabTargetType TargetType => GrabTargetType.PROCESS;
+        public TargetType TargetType => TargetType.PROCESS;
 
         public string FileName { get; set; }
         public string Arguments { get; set; }

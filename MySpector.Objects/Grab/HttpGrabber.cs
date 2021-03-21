@@ -30,7 +30,7 @@ namespace MySpector.Objects
             {
                 _log.Error($"no target is set !");
             }
-            if (target.TargetType != GrabTargetType.HTTP)
+            if (target.TargetType != TargetType.HTTP)
             {
                 return null;
             }

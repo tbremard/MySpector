@@ -2,14 +2,14 @@
 {
     public enum XtraxType
     {
-        HtmlXpath=1,
-        After=2,
-        Before=3,
-        TextToNumber=4,
-        Between=5,
-        Empty=6,
-        TextReplace=7,
-        LengthOfText=8,
+        Before = 1,
+        After = 2,
+        Between = 3,
+        TextToNumber = 4,
+        Empty=5,
+        TextReplace=6,
+        LengthOfText=7,
+        HtmlXpath = 8,
         XmlXpath = 9,
         JsonXpath = 10
     }

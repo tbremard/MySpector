@@ -2,6 +2,6 @@
 {
     public interface IGrabTarget
     {
-        public GrabTargetType TargetType { get; }
+        public TargetType TargetType { get; }
     }
 }

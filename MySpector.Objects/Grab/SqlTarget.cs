@@ -5,7 +5,7 @@
         public string ConnectionString { get; }
         public string SqlQuery { get; }
         public string Provider { get; }
-        public GrabTargetType TargetType => GrabTargetType.SQL;
+        public TargetType TargetType => TargetType.SQL;
 
         public SqlTarget(string connectionString, string sqlQuery, string provider)
         {

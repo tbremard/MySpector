@@ -288,7 +288,7 @@ namespace MySpector.Repo
             int ret = 0;
             switch (target.TargetType)
             {
-                case GrabTargetType.HTTP:
+                case TargetType.HTTP:
                     string q = @"INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(1);
                                  SELECT LAST_INSERT_ID();";
                     int webTargetId = _currentTransaction.Connection.Query<int>(q).Single();
@@ -299,7 +299,7 @@ namespace MySpector.Repo
                     _currentTransaction.Connection.Execute(query, dbHttp);
                     ret = webTargetId;
                     break;
-                case GrabTargetType.SQL:
+                case TargetType.SQL:
                     break;
                 default:
                     break;
@@ -341,10 +341,10 @@ namespace MySpector.Repo
                 var target = _connection.Query<DbModel.web_target, DbModel.web_target_type, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_TYPE").FirstOrDefault();
                 switch (target.Type)
                 {
-                    case Objects.GrabTargetType.HTTP:
+                    case Objects.TargetType.HTTP:
                         ret = GetTargetHttp(target.IdWebTarget);
                         break;
-                    case Objects.GrabTargetType.SQL:
+                    case Objects.TargetType.SQL:
                         ret = GetTargetSql(target.IdWebTarget);
                         break;
                     default:
@@ -412,7 +412,7 @@ namespace MySpector.Repo
         private WebTargetReference mapperWebTarget(DbModel.web_target target, DbModel.web_target_type myType)
         {
             var ret = new WebTargetReference();
-            ret.Type = MyEnum.Parse<Objects.GrabTargetType>(myType.NAME);
+            ret.Type = MyEnum.Parse<Objects.TargetType>(myType.NAME);
             ret.IdWebTarget = target.ID_WEB_TARGET;
             return ret;
         }

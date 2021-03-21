@@ -15,7 +15,7 @@ namespace MySpector.Core
             {
                 _log.Error($"no target is set!");
             }
-            if (target.TargetType != GrabTargetType.SQL)
+            if (target.TargetType != TargetType.SQL)
                 return null;
             GrabResponse ret;
             try

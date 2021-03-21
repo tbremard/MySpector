@@ -11,7 +11,7 @@ namespace MySpector.Objects
         public GrabResponse Grab(IGrabTarget target)
         {
             GrabResponse ret;
-            if (target.TargetType != GrabTargetType.PROCESS)
+            if (target.TargetType != TargetType.PROCESS)
             {
                 return new InvalidResponse("target has invalid type:" + target.TargetType, TimeSpan.Zero);
             }
