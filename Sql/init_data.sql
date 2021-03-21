@@ -1,13 +1,13 @@
 -- https://shop.westerndigital.com/de-de/products/internal-drives/wd-red-sata-ssd#WDS200T1R0A
 use MYSPECTOR;
 -- --------- init enum/ types
-INSERT INTO TARGET_TYPE(NAME) values 
+INSERT INTO TARGET_TYPE(NAME, ID_TYPE) values 
         ('HTTP'   , 1), 
         ('SQL'    , 2), 
         ('FILE'   , 3),
         ('PROCESS', 4);
                                          
-INSERT INTO XTRAX_TYPE(NAME) VALUES 
+INSERT INTO XTRAX_TYPE(NAME, ID_TYPE) VALUES 
         ('Before'      ,  1),
         ('After'       ,  2),
         ('Between'     ,  3),
@@ -31,7 +31,7 @@ INSERT INTO NOTIFY_TYPE(NAME) VALUES ('Stub'),
                                       ('WebCallBack'),
                                       ('Twitter');
 -- -----------------------------
-select * from WEB_TARGET_TYPE;
+select * from TARGET_TYPE;
 select * from XTRAX_TYPE;
 select * from CHECKER_TYPE;
 select * from NOTIFY_TYPE;
@@ -49,23 +49,25 @@ SELECT * FROM TROX_closure;
 
 UPDATE TROX SET ENABLED=0 WHERE ID_TROX=7;
 ----------------------
-INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(1);-- http
+INSERT INTO TARGET(ID_TARGET_TYPE) values(1);-- http
 SET  @ID_HTTP =LAST_INSERT_ID();
-INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(2);-- sql
-INSERT into WEB_TARGET_HTTP(ID_WEB_TARGET, METHOD, URI) 
-			values(1, 'GET', 'https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04');
-INSERT INTO WEB_TARGET_SQL(ID_WEB_TARGET, CONNECTION_STRING, QUERY, PROVIDER)
-			values(2, 'demo connectionstring', 'demo sql query', 'SQL');
-UPDATE TROX SET ID_WEB_TARGET=@ID_HTTP WHERE ID_TROX=@ID_TROX;
+INSERT INTO TARGET(ID_TARGET_TYPE) values(2);-- sql
+SET  @ID_SQL =LAST_INSERT_ID();
+
+INSERT into TARGET_HTTP(ID_TARGET, METHOD, URI) 
+			values(@ID_HTTP, 'GET', 'https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04');
+INSERT INTO TARGET_SQL(ID_TARGET, CONNECTION_STRING, QUERY, PROVIDER)
+			values(@ID_SQL, 'demo connectionstring', 'demo sql query', 'SQL');
+UPDATE TROX SET ID_TARGET=@ID_HTTP WHERE ID_TROX=@ID_TROX;
 
 -- SELECT  LAST_INSERT_ID();
 -- SET  @MY_ID =LAST_INSERT_ID();
 -- SELECT  @MY_ID;
 
-select * from WEB_TARGET tar
-    inner join WEB_TARGET_TYPE typ on tar.ID_WEB_TARGET_TYPE = typ.ID_TYPE;           
-select * from WEB_TARGET_HTTP;
-select * from WEB_TARGET_SQL;
+select * from TARGET tar
+    inner join TARGET_TYPE typ on tar.ID_TARGET_TYPE = typ.ID_TYPE;           
+select * from TARGET_HTTP;
+select * from TARGET_SQL;
 
 
 ------------------       

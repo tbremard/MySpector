@@ -88,7 +88,7 @@ namespace MySpector.Repo
             {
                 if (DbToBool(x.IS_DIRECTORY))
                     continue;
-                var target = GetWebTarget(x.ID_WEB_TARGET);
+                var target = GetWebTarget(x.ID_TARGET);
                 var xtrax = GetAllXtrax(x.ID_TROX);
                 var check = GetAllChecker(x.ID_TROX);
                 var notifier = GetAllNotifier(x.ID_TROX);
@@ -289,13 +289,13 @@ namespace MySpector.Repo
             switch (target.TargetType)
             {
                 case TargetType.HTTP:
-                    string q = @"INSERT INTO WEB_TARGET(ID_WEB_TARGET_TYPE) values(1);
+                    string q = @"INSERT INTO WEB_TARGET(ID_TARGET_TYPE) values(1);
                                  SELECT LAST_INSERT_ID();";
                     int webTargetId = _currentTransaction.Connection.Query<int>(q).Single();
                     var http = target as HttpTarget;
                     http.DbId = webTargetId;
-                    var dbHttp = new web_target_http() { ID_WEB_TARGET = http.DbId.Value, METHOD = http.Method.ToString(), URI = http.Uri };
-                    string query = @"INSERT into WEB_TARGET_HTTP(ID_WEB_TARGET, METHOD, URI) values(@ID_WEB_TARGET, @Method, @Uri);";
+                    var dbHttp = new web_target_http() { ID_TARGET = http.DbId.Value, METHOD = http.Method.ToString(), URI = http.Uri };
+                    string query = @"INSERT into WEB_TARGET_HTTP(ID_TARGET, METHOD, URI) values(@ID_TARGET, @Method, @Uri);";
                     _currentTransaction.Connection.Execute(query, dbHttp);
                     ret = webTargetId;
                     break;
@@ -334,10 +334,10 @@ namespace MySpector.Repo
             IGrabTarget ret;
             try
             {
-                string query = @"select ID_WEB_TARGET, web_type.ID_TYPE, NAME  from web_target web 
-                                inner join WEB_TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_WEB_TARGET_TYPE
-                                where web.ID_WEB_TARGET =  @ID_WEB_TARGET;";
-                object param = new { ID_WEB_TARGET = webTargetId };
+                string query = @"select ID_TARGET, web_type.ID_TYPE, NAME  from web_target web 
+                                inner join WEB_TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_TARGET_TYPE
+                                where web.ID_TARGET =  @ID_TARGET;";
+                object param = new { ID_TARGET = webTargetId };
                 var target = _connection.Query<DbModel.web_target, DbModel.web_target_type, WebTargetReference>(query, mapperWebTarget, param: param, splitOn: "ID_TYPE").FirstOrDefault();
                 switch (target.Type)
                 {
@@ -366,13 +366,13 @@ namespace MySpector.Repo
             HttpTarget ret;
             try
             {
-                string query = @"select * from web_target_http http where http.ID_WEB_TARGET = @ID_WEB_TARGET;";
-                object param = new { ID_WEB_TARGET = idWebTarget };
+                string query = @"select * from target_http http where http.ID_TARGET = @ID_TARGET;";
+                object param = new { ID_TARGET = idWebTarget };
                 var target = _connection.Query<DbModel.web_target_http>(query, param: param).FirstOrDefault();
                 ret = new HttpTarget(target.URI);
                 ret.Method = new HttpMethod(target.METHOD);
                 ret.Version = target.VERSION;
-                ret.DbId = target.ID_WEB_TARGET;
+                ret.DbId = target.ID_TARGET;
                 if(!string.IsNullOrEmpty(target.HEADERS))
                 {
                     var lines = target.HEADERS.Split('\n').ToList();
@@ -396,8 +396,8 @@ namespace MySpector.Repo
             IGrabTarget ret;
             try
             {
-                string query = @"select * from web_target_sql sq where sq.ID_WEB_TARGET = @ID_WEB_TARGET;";
-                object param = new { ID_WEB_TARGET = idWebTarget };
+                string query = @"select * from target_sql sq where sq.ID_TARGET = @ID_TARGET;";
+                object param = new { ID_TARGET = idWebTarget };
                 var target = _connection.Query<DbModel.web_target_sql>(query, param: param).FirstOrDefault();
                 ret = new SqlTarget(target.CONNECTION_STRING, target.QUERY, target.PROVIDER);
             }
@@ -413,7 +413,7 @@ namespace MySpector.Repo
         {
             var ret = new WebTargetReference();
             ret.Type = MyEnum.Parse<Objects.TargetType>(myType.NAME);
-            ret.IdWebTarget = target.ID_WEB_TARGET;
+            ret.IdWebTarget = target.ID_TARGET;
             return ret;
         }
 
