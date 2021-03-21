@@ -3,7 +3,7 @@ using System;
 
 namespace MySpector.UnitTest
 {
-    public class StubDownloader : IDownloader
+    public class StubDownloader : IGrabber
     {
         public StubDownloader(IDataTruck data)
         {
@@ -12,9 +12,9 @@ namespace MySpector.UnitTest
 
         public IDataTruck Data { get; }
 
-        public DownloadResponse Download(IWebTarget target)
+        public GrabResponse Grab(IGrabTarget target)
         {
-            var ret = new DownloadResponse(Data.GetText(), true, TimeSpan.Zero);
+            var ret = new GrabResponse(Data.GetText(), true, TimeSpan.Zero);
             return ret;
         }
     }

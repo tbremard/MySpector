@@ -20,7 +20,7 @@ namespace MySpector.UnitTest
         {
             var target = new FileTarget("LocalFile.txt");
 
-            var data = _sut.Download(target);
+            var data = _sut.Grab(target);
 
             Assert.IsTrue(data.Success);
         }
@@ -30,7 +30,7 @@ namespace MySpector.UnitTest
         {
             var target = new FileTarget("InvalidPath.txt");
 
-            var data = _sut.Download(target);
+            var data = _sut.Grab(target);
 
             Assert.IsFalse(data.Success);
         }

@@ -1,11 +1,11 @@
 ﻿namespace MySpector.Objects
 {
-    public class SqlTarget : IWebTarget
+    public class SqlTarget : IGrabTarget
     {
         public string ConnectionString { get; }
         public string SqlQuery { get; }
         public string Provider { get; }
-        public WebTargetType WebTargetType => WebTargetType.SQL;
+        public GrabTargetType TargetType => GrabTargetType.SQL;
 
         public SqlTarget(string connectionString, string sqlQuery, string provider)
         {

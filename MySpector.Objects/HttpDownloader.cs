@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace MySpector.Objects
 {
-    public class HttpDownloader : IDownloader
+    public class HttpDownloader : IGrabber
     {
         const string SWITCH_HTTP2_SUPPORT = "System.Net.Http.SocketsHttpHandler.Http2Support";
         const string SWITCH_USE_SOCKET_HTTP_HANDLER = "System.Net.Http.UseSocketsHttpHandler";
@@ -23,14 +23,14 @@ namespace MySpector.Objects
             return new HttpDownloader();
         }
 
-        public DownloadResponse Download(IWebTarget target)
+        public GrabResponse Grab(IGrabTarget target)
         {
-            DownloadResponse ret;
+            GrabResponse ret;
             if (target == null)
             {
                 _log.Error($"no target is set !");
             }
-            if (target.WebTargetType != WebTargetType.HTTP)
+            if (target.TargetType != GrabTargetType.HTTP)
             {
                 return null;
             }
@@ -41,17 +41,17 @@ namespace MySpector.Objects
                 HttpResponse response = HttpRequest(target);
                 watch.Stop();
                 bool success = response.HttpResponseCode == HttpStatusCode.OK;
-                ret = new DownloadResponse(response.Content, success, watch.Elapsed);
+                ret = new GrabResponse(response.Content, success, watch.Elapsed);
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
-                ret = new DownloadResponse(string.Empty, false, TimeSpan.Zero);
+                ret = new GrabResponse(string.Empty, false, TimeSpan.Zero);
             }
             return ret;
         }
 
-        private HttpResponse HttpRequest(IWebTarget target)
+        private HttpResponse HttpRequest(IGrabTarget target)
         {
             var httpTarget = target as HttpTarget;
             _log.Debug(httpTarget.Uri);

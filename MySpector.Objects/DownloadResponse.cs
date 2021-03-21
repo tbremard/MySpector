@@ -2,13 +2,13 @@
 
 namespace MySpector.Objects
 {
-    public class DownloadResponse
+    public class GrabResponse
     {
         public string Content { get; }
         public bool Success { get; }
         public TimeSpan Latency { get; }
 
-        public DownloadResponse(string content, bool success, TimeSpan latency)
+        public GrabResponse(string content, bool success, TimeSpan latency)
         {
             Content = content;
             Success = success;
@@ -16,7 +16,7 @@ namespace MySpector.Objects
         }
     }
 
-    public class InvalidResponse : DownloadResponse
+    public class InvalidResponse : GrabResponse
     {
         public InvalidResponse(string content, TimeSpan latency)
             :base(content, false, latency)

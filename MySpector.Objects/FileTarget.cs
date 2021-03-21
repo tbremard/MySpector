@@ -1,6 +1,6 @@
 ﻿namespace MySpector.Objects
 {
-    public class FileTarget : IWebTarget
+    public class FileTarget : IGrabTarget
     {
         public string Path { get; private set; }
         public FileTarget(string path)
@@ -8,6 +8,6 @@
             Path = path;
         }
 
-        public WebTargetType WebTargetType => WebTargetType.FILE;
+        public GrabTargetType TargetType => GrabTargetType.FILE;
     }
 }

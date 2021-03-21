@@ -5,36 +5,36 @@ using MySpector.Objects;
 
 namespace MySpector.Core
 {
-    public class SqlDownloader : IDownloader
+    public class SqlDownloader : IGrabber
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public DownloadResponse Download(IWebTarget target)
+        public GrabResponse Grab(IGrabTarget target)
         {
             if (target == null)
             {
                 _log.Error($"no target is set!");
             }
-            if (target.WebTargetType != WebTargetType.SQL)
+            if (target.TargetType != GrabTargetType.SQL)
                 return null;
-            DownloadResponse ret;
+            GrabResponse ret;
             try
             {
                 var watch = new Stopwatch();
                 watch.Start();
                 SqlResponse response = SqlRequest(target);
                 watch.Stop();
-                ret = new DownloadResponse(response.Content, response.IsOk, watch.Elapsed);
+                ret = new GrabResponse(response.Content, response.IsOk, watch.Elapsed);
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
-                ret = new DownloadResponse(string.Empty, false, TimeSpan.Zero);
+                ret = new GrabResponse(string.Empty, false, TimeSpan.Zero);
             }
             return ret;
         }
 
-        private SqlResponse SqlRequest(IWebTarget target)
+        private SqlResponse SqlRequest(IGrabTarget target)
         {
              var sqlTarget = target as SqlTarget;
             _log.Debug(sqlTarget.SqlQuery);

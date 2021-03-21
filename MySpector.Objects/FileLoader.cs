@@ -5,15 +5,15 @@ using System.IO;
 
 namespace MySpector.Objects
 {
-    public class FileLoader : IDownloader
+    public class FileLoader : IGrabber
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public DownloadResponse Download(IWebTarget target)
+        public GrabResponse Grab(IGrabTarget target)
         {
-            if (target.WebTargetType != WebTargetType.FILE)
+            if (target.TargetType != GrabTargetType.FILE)
             {
-                return new InvalidResponse("target has invalid type:" + target.WebTargetType, TimeSpan.Zero);
+                return new InvalidResponse("target has invalid type:" + target.TargetType, TimeSpan.Zero);
             }
             var fileTarget = target as FileTarget;
             if(!File.Exists(fileTarget.Path))
@@ -26,7 +26,7 @@ namespace MySpector.Objects
             watch.Start();
             string content = File.ReadAllText(fileTarget.Path);
             watch.Stop();
-            var ret = new DownloadResponse(content, true, watch.Elapsed);
+            var ret = new GrabResponse(content, true, watch.Elapsed);
             return ret;
         }
     }

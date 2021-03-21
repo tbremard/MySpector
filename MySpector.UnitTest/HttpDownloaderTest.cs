@@ -20,7 +20,7 @@ namespace MySpector.UnitTest
         {
             var httpTarget = new HttpTarget(TestSampleFactory.ZOTAC_EN72070V_GALAXUS_FULL_PAGE.Url);
 
-            var data = _sut.Download(httpTarget);
+            var data = _sut.Grab(httpTarget);
 
             Assert.IsTrue(data.Success);
         }
@@ -32,7 +32,7 @@ namespace MySpector.UnitTest
             _log.Debug("xxxxxxxxxxxxx");
             var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url);
 
-            var data = _sut.Download(httpTarget);
+            var data = _sut.Grab(httpTarget);
 
             Assert.IsTrue(data.Success);
         }

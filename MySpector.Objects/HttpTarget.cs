@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace MySpector.Objects
 {
-    public class HttpTarget : IWebTarget
+    public class HttpTarget : IGrabTarget
     {
         public int? DbId { get; set; }
         public HttpMethod Method { get; set; }
@@ -11,7 +11,7 @@ namespace MySpector.Objects
         public string Version { get; set; }
         public IList<HeaderEntry> Headers { get; }
         public string Content { get; set; }
-        public WebTargetType WebTargetType => WebTargetType.HTTP;
+        public GrabTargetType TargetType => GrabTargetType.HTTP;
 
         public HttpTarget(string uri)
         {
@@ -32,9 +32,9 @@ namespace MySpector.Objects
         }
     }
 
-    public class InvalidTarget : IWebTarget
+    public class InvalidTarget : IGrabTarget
     {
-        public WebTargetType WebTargetType => throw new System.NotImplementedException();
+        public GrabTargetType TargetType => throw new System.NotImplementedException();
     }
 }
 

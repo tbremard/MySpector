@@ -40,7 +40,7 @@ namespace MySpector.Repo
 
         public bool WebTargetType()
         {
-            bool ret = CheckEnumGeneric<WebTargetType, web_target_type>("WEB_TARGET_TYPE");
+            bool ret = CheckEnumGeneric<GrabTargetType, web_target_type>("WEB_TARGET_TYPE");
             return ret;
         }
 
