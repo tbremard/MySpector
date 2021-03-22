@@ -47,7 +47,7 @@ INSERT INTO TROX_CLOSURE(ID_PARENT, ID_CHILD) values(@ID_ROOT, @ID_TROX);
 SELECT * FROM TROX;
 SELECT * FROM TROX_closure;
 
-UPDATE TROX SET ENABLED=0 WHERE ID_TROX=7;
+-- UPDATE TROX SET ENABLED=0 WHERE ID_TROX=7;
 ----------------------
 INSERT INTO TARGET(ID_TARGET_TYPE) values(1);-- http
 SET  @ID_HTTP =LAST_INSERT_ID();
@@ -65,10 +65,11 @@ UPDATE TROX SET ID_TARGET=@ID_HTTP WHERE ID_TROX=@ID_TROX;
 -- SELECT  @MY_ID;
 
 select * from TARGET tar
-    inner join TARGET_TYPE typ on tar.ID_TARGET_TYPE = typ.ID_TYPE;           
-select * from TARGET_HTTP;
-select * from TARGET_SQL;
-
+    inner join TARGET_TYPE typ on tar.ID_TARGET_TYPE = typ.ID_TYPE
+    inner join TARGET_HTTP http on tar.ID_TARGET= http.ID_TARGET;
+select * from TARGET tar
+    inner join TARGET_TYPE typ on tar.ID_TARGET_TYPE = typ.ID_TYPE
+    inner join TARGET_SQL _sql on tar.ID_TARGET= _sql.ID_TARGET;
 
 ------------------       
 SET @ID_TROX=2;
@@ -92,14 +93,13 @@ VALUES(@ID_TROX, 0, 1, '{"Message":"This message comes from DB"}');
 
 -- display http target of trox 
 select  @ID_TROX;
-select * from web_target web 
-inner join WEB_TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_WEB_TARGET_TYPE
-INNER JOIN TROX trox on trox.ID_WEB_TARGET = web.ID_WEB_TARGET
+select * from target web 
+inner join TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_TARGET_TYPE
+INNER JOIN TROX trox on trox.ID_TARGET = web.ID_TARGET
 where trox.ID_TROX = @ID_TROX;
 --
-select * from web_target_http http where http.ID_WEB_TARGET = 1;
-select * from web_target_sql sq where sq.ID_WEB_TARGET = 2;
-
+select * from target_http http where http.ID_TARGET = 1;
+select * from target_sql sq where sq.ID_TARGET = 2;
 
 -- Display all checkers
 select * from checker_type;
@@ -128,8 +128,9 @@ from checker_def def
 --
 select * from NOTIFY_DEF def 
 	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_TYPE
---    INNER JOIN  trox on trox.ID_TROX = def.ID_TROX
     WHERE def.ID_TROX = @ID_TROX;  
 
+select * from result_history;
+INSERT INTO result_history(ID_TROX, ZE_TEXT, ZE_NUMBER, TIMESTAMP, LATENCY_MS)
+VALUES(@ID_TROX, 'result text', 123, now(), 456);
 
-                                    

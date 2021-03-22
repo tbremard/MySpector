@@ -44,6 +44,7 @@ namespace MySpector.Core
                     return false;
                 }
                 _log.Debug($"Extraction of '{Name}' = " + data.GetText());
+
                 bool isSignaled = _checker.Check(data);
                 if (isSignaled)
                 {

@@ -18,14 +18,14 @@ namespace MySpector.Core
             return isDone;
         }
 
-        public bool Process(IList<Trox> watchList)
+        public bool Process(IList<Trox> troxList)
         {
             bool ret = true;
             _log.Debug("############################");
-            _log.Debug("Processing " + watchList.Count + " items");
-            foreach (var item in watchList)
+            _log.Debug("Processing " + troxList.Count + " items");
+            foreach (var trox in troxList)
             {
-                ret &= Process(item);
+                ret &= Process(trox);
             }
             _log.Debug("############################");
             return ret;

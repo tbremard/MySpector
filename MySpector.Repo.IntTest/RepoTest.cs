@@ -2,6 +2,7 @@ using MySpector.Objects;
 using MySpector.Objects.Args;
 using NLog;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -141,6 +142,22 @@ namespace MySpector.Repo.IntTest
             Assert.IsNotNull(id);
             Assert.AreNotEqual(0, id);
         }
+
+        [Test]
+        public void SaveResult_WhenInputIsValid_ThenDbIdIsSet()
+        {
+            IDataTruck truck = DataTruck.CreateText("This is a result");
+            var result = new Result(TROX_ID, truck, TimeSpan.Zero);
+
+            _sut.BeginTransaction();
+            int? id = _sut.SaveResult(result);
+            _sut.Commit();
+            //_sut.RollBack();
+
+            Assert.IsNotNull(id);
+            Assert.AreNotEqual(0, id);
+        }
+
 
         [Test]
         public void CheckEnum_CheckerType()

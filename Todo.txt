@@ -1,4 +1,4 @@
-﻿+Transformation: Replace(text, old, new) : DONE
++Transformation: Replace(text, old, new) : DONE
 
 +Check : 
 textDoContain    : Done
@@ -61,13 +61,14 @@ Load all data from DB ------------------------------------------------ : Done
 console factory / db data -------------------------------------------- : Done
 Xtract Xpath of Xml doc----------------------------------------------- : Done
 parse generic json --------------------------------------------------- : Done
-ProcessOutputGrab : process + args + stdin  ----------------------   1 : Doing <<<<<<<<<<<<<<<<<<
-ExcelXtrax :                   ------------------------------------------ TODO 
-Manage data sources by name
-checker : price < x% within y days -----------------------------------4
+ProcessOutputGrab : process + args + stdin  ----------------------     : Done
+Manage data sources by name         ---------------------------------- : Done
+Result of extraction is versionned                                     :  1
+checker : price < x% within y days -----------------------------------    2
+each webrequest saves the latency. -----------------------------------    3
+ExcelXtrax :                   ---------------------------------------    4 
 
 make public/private Spectors
 make page display all public Spectors
 
-each webrequest saves the latency.
 it is possible to trigger a notification when latency is above a given limit

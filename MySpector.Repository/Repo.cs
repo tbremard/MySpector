@@ -124,6 +124,16 @@ namespace MySpector.Repo
             return ret;
         }
 
+        public int? SaveResult(Result result)
+        {
+            string sql = "INSERT INTO result_history(ID_TROX, ZE_TEXT, ZE_NUMBER, TIMESTAMP, LATENCY_MS)"+
+                          "VALUES(@ID_TROX, @ZE_TEXT, @ZE_NUMBER, now(), @LATENCY)";
+            var param = new { ID_TROX = result.TroxId, ZE_TEXT = result.Truck.GetText(), ZE_NUMBER = result.Truck.GetNumber(), LATENCY = result.Latency.TotalMilliseconds };
+            int? dbId = InsertData(sql, param);
+            result.DbId = dbId;
+            return dbId;
+        }
+
         public int? SaveTrox(Trox trox)
         {
             if (_currentTransaction == null)
