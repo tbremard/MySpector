@@ -4,6 +4,8 @@ namespace MySpector.Core
 {
     public class ServiceLocator
     {
+        public Repository Repo { get; }
+
         private static ServiceLocator _instance;
 
         public static ServiceLocator Instance
@@ -15,11 +17,9 @@ namespace MySpector.Core
             }
         }
 
-        public Repo Repo { get; internal set; }
-
         private ServiceLocator()
         {
-
+            Repo = new Repository();
         }
     }
 }

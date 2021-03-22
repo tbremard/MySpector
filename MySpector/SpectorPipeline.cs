@@ -7,18 +7,18 @@ namespace MySpector.Core
     public class SpectorPipeline
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
-        public string Name => _item?.Name;
+        public string Name => _trox?.Name;
         private Xtrax _xtrax;
         private IChecker _checker;
         private Notifier _notifier;
-        private Trox _item;
+        private Trox _trox;
 
-        public SpectorPipeline(Trox item)
+        public SpectorPipeline(Trox trox)
         {
-            _item = item;
-            _xtrax = item.XtraxChain;
-            _checker = item.Checker;
-            _notifier = item.NotifyChain;
+            _trox = trox;
+            _xtrax = trox.XtraxChain;
+            _checker = trox.Checker;
+            _notifier = trox.NotifyChain;
         }
 
         public bool Process()
@@ -26,12 +26,12 @@ namespace MySpector.Core
             bool ret;
             try
             {
-                if (!_item.Enabled)
+                if (!_trox.Enabled)
                 {
-                    _log.Debug($"{_item.Name} is disabled");
+                    _log.Debug($"{_trox.Name} is disabled");
                     return false;
                 }
-                var truck = GenericDownloader.DownloadToLocalFile(_item);
+                var truck = GenericDownloader.DownloadToLocalFile(_trox);
                 if (truck == null)
                 {
                     _log.Error("Error in Download: Aborting processing");
@@ -44,7 +44,10 @@ namespace MySpector.Core
                     return false;
                 }
                 _log.Debug($"Extraction of '{Name}' = " + data.GetText());
-
+                Result result = new Result(_trox.DbId, data, TimeSpan.Zero);
+                ServiceLocator.Instance.Repo.BeginTransaction();
+                ServiceLocator.Instance.Repo.SaveResult(result);
+                ServiceLocator.Instance.Repo.Commit();
                 bool isSignaled = _checker.Check(data);
                 if (isSignaled)
                 {

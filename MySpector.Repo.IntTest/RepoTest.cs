@@ -15,11 +15,11 @@ namespace MySpector.Repo.IntTest
         const int HTTP_TARGET_ID = 1;
         const int SQL_TARGET_ID = 2;
 
-        Repo _sut;
+        Repository _sut;
         [SetUp]
         public void Setup()
         {
-            _sut = new Repo();
+            _sut = new Repository();
             _sut.Connect();
         }
 

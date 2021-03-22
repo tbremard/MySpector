@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MySpector.Core;
 using MySpector.Objects;
 using NLog;
 
@@ -10,15 +11,14 @@ namespace MySpector.Cons
 
         public static IList<Trox> LoadFromDB()
         {
-            Repo.Repo repo;
-            repo = new Repo.Repo();
-            bool isConnected = repo.Connect();
+            
+            bool isConnected = ServiceLocator.Instance.Repo.Connect();
             if (!isConnected)
             {
                 _log.Error("cannot connect");
                 return new List<Trox>();
             }
-            var ret = repo.GetAllTroxes();
+            var ret = ServiceLocator.Instance.Repo.GetAllTroxes();
             return ret;
         }
 
@@ -35,20 +35,19 @@ namespace MySpector.Cons
 
         public static void SaveWatchList(IList<Trox> watchList)
         {
-            Repo.Repo repo;
-            repo = new Repo.Repo();
-            bool isConnected = repo.Connect();
+            
+            bool isConnected = ServiceLocator.Instance.Repo.Connect();
             if (!isConnected)
             {
                 _log.Error("cannot connect");
                 return;
             }
-            repo.BeginTransaction();
+            ServiceLocator.Instance.Repo.BeginTransaction();
             foreach (var trox in watchList)
             {
-                repo.SaveTrox(trox);
+                ServiceLocator.Instance.Repo.SaveTrox(trox);
             }
-            repo.Commit();
+            ServiceLocator.Instance.Repo.Commit();
         }
 
         private static Trox CreateZotacMagnus()

@@ -12,7 +12,7 @@ using System.Net.Http;
 namespace MySpector.Repo
 {
     //https://www.youtube.com/watch?v=Et2khGnrIqc&feature=youtu.be
-    public class Repo
+    public class Repository
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
         IDbConnection _connection;
@@ -229,10 +229,15 @@ namespace MySpector.Repo
         private int? InsertData(string sql, object param)
         {
             int? dbId;
-            string q = @"SELECT LAST_INSERT_ID();";
+            if (_currentTransaction == null)
+            {
+                _log.Error("You must first create a transaction");
+                return null;
+            }
             try
             {
                 _currentTransaction.Connection.Execute(sql, param);
+                string q = @"SELECT LAST_INSERT_ID();";
                 dbId = _currentTransaction.Connection.Query<int>(q).Single();
             }
             catch (Exception e)
@@ -345,7 +350,7 @@ namespace MySpector.Repo
             IGrabTarget ret;
             try
             {
-                string query = @"select ID_TARGET, web_type.ID_TYPE, NAME  from target web 
+                string query = @"select ID_TARGET, web.NAME, web_type.ID_TYPE, web_type.NAME  from target web 
                                 inner join TARGET_TYPE web_type on web_type.ID_TYPE = web.ID_TARGET_TYPE
                                 where web.ID_TARGET =  @ID_TARGET;";
                 object param = new { ID_TARGET = webTargetId };

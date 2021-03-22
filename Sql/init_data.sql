@@ -76,10 +76,10 @@ SET @ID_TROX=2;
 SELECT @ID_TROX;
 
 select * from xtrax_def where ID_TROX=@ID_TROX;
-update xtrax_def set ID_xtrax_type = 8 where ID_xtrax_def = 1;
+-- update xtrax_def set ID_xtrax_type = 8 where ID_xtrax_def = 1;
 
 INSERT INTO xtrax_def(ID_TROX, `ORDER`, ID_XTRAX_TYPE, ARG)
-			values(@ID_TROX, 0, 9, '{"Path":"/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]"}');
+			values(@ID_TROX, 0, 8, '{"Path":"/html/body/div[2]/div/header/div/div/div/div/div/div[1]/div[2]/div[1]/div[1]/div/span[3]"}');
 
 INSERT INTO xtrax_def(ID_TROX, `ORDER`, ID_XTRAX_TYPE, ARG)
 			values(@ID_TROX, 1, 4, null);
