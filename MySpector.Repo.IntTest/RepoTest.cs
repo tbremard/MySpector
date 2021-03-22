@@ -151,8 +151,8 @@ namespace MySpector.Repo.IntTest
 
             _sut.BeginTransaction();
             int? id = _sut.SaveResult(result);
-            _sut.Commit();
-            //_sut.RollBack();
+            //_sut.Commit();
+            _sut.RollBack();
 
             Assert.IsNotNull(id);
             Assert.AreNotEqual(0, id);

@@ -130,7 +130,8 @@ select * from NOTIFY_DEF def
 	INNER JOIN NOTIFY_TYPE typ on def.ID_NOTIFY_TYPE = typ.ID_TYPE
     WHERE def.ID_TROX = @ID_TROX;  
 
-select * from result_history;
 INSERT INTO result_history(ID_TROX, ZE_TEXT, ZE_NUMBER, TIMESTAMP, LATENCY_MS)
 VALUES(@ID_TROX, 'result text', 123, now(), 456);
+
+select * from result_history;
 
