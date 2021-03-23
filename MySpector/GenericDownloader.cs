@@ -10,12 +10,12 @@ namespace MySpector.Core
         static Logger _log = LogManager.GetCurrentClassLogger();
         static Random random = new Random((int)DateTime.Now.Ticks);
 
-        public static IDataTruck DownloadToLocalFile(Trox trox)
+        public static LocalFile DownloadToLocalFile(Trox trox)
         {
-            IDataTruck ret;
+            LocalFile ret = new LocalFile();
             try
             {
-                _log.Debug($"Downloading target of Trox('{trox.Name}') ");
+                _log.Debug($"Downloading target: [{trox.Name}/{trox.Target.Name}]) ");
                 var response = trox.Grabber.Grab(trox.Target);
                 _log.Debug("Latency: " + Math.Floor( response.Latency.TotalMilliseconds) + "ms");
                 string filePath = GenerateFilePath(trox);
@@ -26,7 +26,8 @@ namespace MySpector.Core
                     _log.Error("Error in download");
                     return null;
                 }
-                ret = DataTruck.CreateText(response.Content);
+                ret.Truck = DataTruck.CreateText(response.Content);
+                ret.Latency = response.Latency;
             }
             catch (Exception ex)
             {

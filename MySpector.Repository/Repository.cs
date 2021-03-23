@@ -17,6 +17,8 @@ namespace MySpector.Repo
         static Logger _log = LogManager.GetCurrentClassLogger();
         IDbConnection _connection;
         public EnumIntegrity EnumIntegrity { get; private set; }
+        IDbTransaction _currentTransaction;
+
         public bool Connect()
         {
             string connectionString = "Server=localhost;Database=MYSPECTOR;Uid=root; Pwd=123456789;";
@@ -124,11 +126,11 @@ namespace MySpector.Repo
             return ret;
         }
 
-        public int? SaveResult(Result result)
+        public int? SaveResult(ResultStorage result)
         {
             string sql = "INSERT INTO result_history(ID_TROX, ZE_TEXT, ZE_NUMBER, TIMESTAMP, LATENCY_MS)"+
                           "VALUES(@ID_TROX, @ZE_TEXT, @ZE_NUMBER, now(), @LATENCY)";
-            var param = new { ID_TROX = result.TroxId, ZE_TEXT = result.Truck.GetText(), ZE_NUMBER = result.Truck.GetNumber(), LATENCY = result.Latency.TotalMilliseconds };
+            var param = new { ID_TROX = result.TroxId, ZE_TEXT = result.Result.GetText(), ZE_NUMBER = result.Result.GetNumber(), LATENCY = result.File.Latency.TotalMilliseconds };
             int? dbId = InsertData(sql, param);
             result.DbId = dbId;
             return dbId;
@@ -323,9 +325,12 @@ namespace MySpector.Repo
             return ret;
         }
 
-        IDbTransaction _currentTransaction;
         public void BeginTransaction()
         {
+            if(_connection==null)
+            {
+                Connect();
+            }
             _currentTransaction = _connection.BeginTransaction();
         }
 

@@ -63,10 +63,13 @@ Xtract Xpath of Xml doc----------------------------------------------- : Done
 parse generic json --------------------------------------------------- : Done
 ProcessOutputGrab : process + args + stdin  ----------------------     : Done
 Manage data sources by name         ---------------------------------- : Done
-Result of extraction is versionned                                     :  1
+Result of extraction is versionned                                     : Done
+each webrequest saves the latency. -----------------------------------    1
 checker : price < x% within y days -----------------------------------    2
-each webrequest saves the latency. -----------------------------------    3
-ExcelXtrax :                   ---------------------------------------    4 
+flush report spec fonctionnelles   -------------------------------------- 3
+ ExcelXtrax :                   ---------------------------------------    4
+ Scheduler                                             -------------------- 5 
+
 
 make public/private Spectors
 make page display all public Spectors

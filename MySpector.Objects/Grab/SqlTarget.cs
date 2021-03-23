@@ -2,10 +2,11 @@
 {
     public class SqlTarget : IGrabTarget
     {
+        public TargetType TargetType => TargetType.SQL;
+        public string Name { get; set; }
         public string ConnectionString { get; }
         public string SqlQuery { get; }
         public string Provider { get; }
-        public TargetType TargetType => TargetType.SQL;
 
         public SqlTarget(string connectionString, string sqlQuery, string provider)
         {

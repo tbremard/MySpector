@@ -134,4 +134,3 @@ INSERT INTO result_history(ID_TROX, ZE_TEXT, ZE_NUMBER, TIMESTAMP, LATENCY_MS)
 VALUES(@ID_TROX, 'result text', 123, now(), 456);
 
 select * from result_history;
-

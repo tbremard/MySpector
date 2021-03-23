@@ -147,7 +147,8 @@ namespace MySpector.Repo.IntTest
         public void SaveResult_WhenInputIsValid_ThenDbIdIsSet()
         {
             IDataTruck truck = DataTruck.CreateText("This is a result");
-            var result = new Result(TROX_ID, truck, TimeSpan.Zero);
+            var file = new LocalFile() { FilePath = "c:\\toto.txt", Latency = TimeSpan.Zero, Truck = DataTruck.CreateText("input data") };
+            var result = new ResultStorage(TROX_ID, truck, file);
 
             _sut.BeginTransaction();
             int? id = _sut.SaveResult(result);

@@ -5,13 +5,14 @@ namespace MySpector.Objects
 {
     public class HttpTarget : IGrabTarget
     {
+        public TargetType TargetType => TargetType.HTTP;
+        public string Name { get; set; }
         public int? DbId { get; set; }
         public HttpMethod Method { get; set; }
         public string Uri { get; set; }
         public string Version { get; set; }
         public IList<HeaderEntry> Headers { get; }
         public string Content { get; set; }
-        public TargetType TargetType => TargetType.HTTP;
 
         public HttpTarget(string uri)
         {
@@ -34,6 +35,7 @@ namespace MySpector.Objects
 
     public class InvalidTarget : IGrabTarget
     {
+        public string Name => "InvalidTarget";
         public TargetType TargetType => throw new System.NotImplementedException();
     }
 }
