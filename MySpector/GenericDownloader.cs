@@ -26,6 +26,7 @@ namespace MySpector.Core
                     _log.Error("Error in download");
                     return null;
                 }
+                ret.FilePath = filePath;
                 ret.Truck = DataTruck.CreateText(response.Content);
                 ret.Latency = response.Latency;
             }

@@ -128,9 +128,16 @@ namespace MySpector.Repo
 
         public int? SaveResult(ResultStorage result)
         {
-            string sql = "INSERT INTO result_history(ID_TROX, ZE_TEXT, ZE_NUMBER, TIMESTAMP, LATENCY_MS)"+
-                          "VALUES(@ID_TROX, @ZE_TEXT, @ZE_NUMBER, now(), @LATENCY)";
-            var param = new { ID_TROX = result.TroxId, ZE_TEXT = result.Result.GetText(), ZE_NUMBER = result.Result.GetNumber(), LATENCY = result.File.Latency.TotalMilliseconds };
+            string sql = "INSERT INTO result_history(ID_TROX, TIMESTAMP, LATENCY_MS, IN_DATA, OUT_TEXT, OUT_NUMBER)" +
+                          "VALUES(@ID_TROX, now(), @LATENCY, @IN_DATA, @OUT_TEXT, @OUT_NUMBER)";
+            var param = new
+            {
+                ID_TROX = result.TroxId,
+                IN_DATA = result.File.FilePath,
+                OUT_TEXT = result.Result.GetText(), 
+                OUT_NUMBER = result.Result.GetNumber(), 
+                LATENCY = result.File.Latency.TotalMilliseconds 
+            };
             int? dbId = InsertData(sql, param);
             result.DbId = dbId;
             return dbId;
@@ -244,6 +251,7 @@ namespace MySpector.Repo
             }
             catch (Exception e)
             {
+                _log.Error(sql);
                 _log.Error(e);
                 dbId = null;
             }
