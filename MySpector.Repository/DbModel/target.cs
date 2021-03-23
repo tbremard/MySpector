@@ -12,6 +12,7 @@ namespace MySpector.Repo.DbModel
 
         public int ID_TARGET { get; set; }
         public int ID_TARGET_TYPE { get; set; }
+        public string NAME { get; set; }
 
         public virtual target_http target_http { get; set; }
         public virtual target_sql target_sql { get; set; }

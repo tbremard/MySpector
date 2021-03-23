@@ -19,6 +19,7 @@ namespace MySpector.Repo.DbModel
         public virtual DbSet<checker_type> checker_type { get; set; }
         public virtual DbSet<notify_def> notify_def { get; set; }
         public virtual DbSet<notify_type> notify_type { get; set; }
+        public virtual DbSet<result_history> result_history { get; set; }
         public virtual DbSet<target> target { get; set; }
         public virtual DbSet<target_http> target_http { get; set; }
         public virtual DbSet<target_sql> target_sql { get; set; }
@@ -103,6 +104,33 @@ namespace MySpector.Repo.DbModel
                 entity.Property(e => e.NAME).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<result_history>(entity =>
+            {
+                entity.HasKey(e => e.ID_RESULT)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.ID_TROX)
+                    .HasName("FK_ID_TROX_789_idx");
+
+                entity.Property(e => e.ID_RESULT).HasColumnType("int unsigned");
+
+                entity.Property(e => e.ID_TROX).HasColumnType("int unsigned");
+
+                entity.Property(e => e.IN_DATA).HasMaxLength(100);
+
+                entity.Property(e => e.LATENCY_MS).HasColumnType("int unsigned");
+
+                entity.Property(e => e.OUT_NUMBER).HasColumnType("decimal(20,10)");
+
+                entity.Property(e => e.OUT_TEXT).HasMaxLength(100);
+
+                entity.HasOne(d => d.ID_TROXNavigation)
+                    .WithMany(p => p.result_history)
+                    .HasForeignKey(d => d.ID_TROX)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ID_TROX_789");
+            });
+
             modelBuilder.Entity<target>(entity =>
             {
                 entity.HasKey(e => e.ID_TARGET)
@@ -110,6 +138,8 @@ namespace MySpector.Repo.DbModel
 
                 entity.HasIndex(e => e.ID_TARGET_TYPE)
                     .HasName("FK_ID_WEB_TARGET_TYPE_idx");
+
+                entity.Property(e => e.NAME).HasMaxLength(100);
             });
 
             modelBuilder.Entity<target_http>(entity =>
