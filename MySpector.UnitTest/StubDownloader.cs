@@ -14,7 +14,7 @@ namespace MySpector.UnitTest
 
         public GrabResponse Grab(IGrabTarget target)
         {
-            var ret = new GrabResponse(Data.GetText(), true, TimeSpan.Zero);
+            var ret = new GrabResponse(Data.GetText(), true, TimeSpan.Zero, null);
             return ret;
         }
     }

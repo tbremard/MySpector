@@ -16,7 +16,7 @@ namespace MySpector.Core
             try
             {
                 _log.Debug($"Downloading target: [{trox.Name}/{trox.Target.Name}]) ");
-                var response = trox.Grabber.Grab(trox.Target);
+                GrabResponse response = trox.Grabber.Grab(trox.Target);
                 _log.Debug("Latency: " + Math.Floor( response.Latency.TotalMilliseconds) + "ms");
                 string filePath = GenerateFilePath(trox);
                 File.WriteAllText(filePath, response.Content);// should put size limit to avoid DOS
@@ -25,6 +25,10 @@ namespace MySpector.Core
                 ret.Truck = DataTruck.CreateText(response.Content);
                 ret.Latency = response.Latency;
                 ret.GrabSuccess = response.Success;
+                if(!response.Success)
+                {
+                    ret.ErrorMessage.AppendLine(response.ErrorMessage);
+                }
             }
             catch (Exception ex)
             {

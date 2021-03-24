@@ -13,7 +13,7 @@ namespace MySpector.Objects
             GrabResponse ret;
             if (target.TargetType != TargetType.PROCESS)
             {
-                return new InvalidResponse("target has invalid type:" + target.TargetType, TimeSpan.Zero);
+                return new InvalidResponse(null, TimeSpan.Zero, "Target has invalid type:" + target.TargetType);
             }
             var processTarget = target as ProcessTarget;
             try
@@ -40,13 +40,13 @@ namespace MySpector.Objects
                 _log.Debug("process.HasExited: " + process.HasExited);
                 _log.Debug("process.ExitCode: "+ process.ExitCode);
                 _log.Debug("process.Elapsed: " + watch.Elapsed);
-                ret = new GrabResponse(stdOut, true, watch.Elapsed);
+                ret = new GrabResponse(stdOut, true, watch.Elapsed, null);
             }
             catch (Exception ex)
             {
                 string message = ex.ToString();
                 _log.Error(message);
-                return new InvalidResponse(message, TimeSpan.Zero);
+                return new InvalidResponse(message, TimeSpan.Zero, ex.Message);
             }
             return ret;
         }

@@ -41,12 +41,12 @@ namespace MySpector.Objects
                 HttpResponse response = HttpRequest(target);
                 watch.Stop();
                 bool success = response.HttpResponseCode == HttpStatusCode.OK;
-                ret = new GrabResponse(response.Content, success, watch.Elapsed);
+                ret = new GrabResponse(response.Content, success, watch.Elapsed, null);
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
-                ret = new GrabResponse("Error: "+ ex.Message, false, TimeSpan.Zero);
+                ret = new GrabResponse(null, false, TimeSpan.Zero, "Error: " + ex.Message);
             }
             return ret;
         }

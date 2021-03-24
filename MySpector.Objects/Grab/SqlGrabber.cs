@@ -25,12 +25,12 @@ namespace MySpector.Core
                 var sqlTarget = target as SqlTarget;
                 _log.Debug(sqlTarget.SqlQuery);
                 watch.Stop();
-                ret = new GrabResponse("sql returned value", true, watch.Elapsed);
+                ret = new GrabResponse("sql returned value", true, watch.Elapsed, null);
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
-                ret = new GrabResponse(string.Empty, false, TimeSpan.Zero);
+                ret = new GrabResponse(string.Empty, false, TimeSpan.Zero, ex.Message);
             }
             return ret;
         }

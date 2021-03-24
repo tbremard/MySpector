@@ -13,20 +13,20 @@ namespace MySpector.Objects
         {
             if (target.TargetType != TargetType.FILE)
             {
-                return new InvalidResponse("target has invalid type:" + target.TargetType, TimeSpan.Zero);
+                return new InvalidResponse(null, TimeSpan.Zero, "Target has invalid type:" + target.TargetType);
             }
             var fileTarget = target as FileTarget;
             if(!File.Exists(fileTarget.Path))
             {
                 string message = "File not found: " + fileTarget.Path;
                 _log.Error(message);
-                return new InvalidResponse(message, TimeSpan.Zero);
+                return new InvalidResponse(null, TimeSpan.Zero, message);
             }
             var watch = new Stopwatch();
             watch.Start();
             string content = File.ReadAllText(fileTarget.Path);
             watch.Stop();
-            var ret = new GrabResponse(content, true, watch.Elapsed);
+            var ret = new GrabResponse(content, true, watch.Elapsed, null);
             return ret;
         }
     }
