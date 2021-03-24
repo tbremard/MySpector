@@ -64,13 +64,12 @@ parse generic json --------------------------------------------------- : Done
 ProcessOutputGrab : process + args + stdin  ----------------------     : Done
 Manage data sources by name         ---------------------------------- : Done
 Result of extraction is versionned                                     : Done
-each webrequest saves the latency. ----------------------------------- : Done  -------save file Path in DB
-checker : price < x% within y days -----------------------------------    2
-flush report spec fonctionnelles   -------------------------------------- 3
+each webrequest saves the latency. ----------------------------------- : Done
+flush report spec fonctionnelles   -------------------------------------- 1 -----------------------
+checker : price < x% within y days ----------------------------------- :   2
  ExcelXtrax :                   --------------------------------------    4
  Scheduler                                           -------------------- 5 
  Alert on latency criteria ----------------------------------------------
-
 
 make public/private Spectors
 make page display all public Spectors

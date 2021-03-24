@@ -46,7 +46,7 @@ namespace MySpector.Objects
             catch (Exception ex)
             {
                 _log.Error(ex);
-                ret = new GrabResponse(string.Empty, false, TimeSpan.Zero);
+                ret = new GrabResponse("Error: "+ ex.Message, false, TimeSpan.Zero);
             }
             return ret;
         }

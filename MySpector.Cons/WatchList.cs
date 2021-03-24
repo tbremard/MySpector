@@ -25,6 +25,7 @@ namespace MySpector.Cons
         public static IList<Trox> CreateLocal()
         {
             var ret = new List<Trox>();
+            //            ret.Add(CreateSSdNas());
             ret.Add(CreateZotacMagnus());
             ret.Add(CreateHystouF7());
             ret.Add(CreateAllianzOblig());
@@ -35,7 +36,6 @@ namespace MySpector.Cons
 
         public static void SaveWatchList(IList<Trox> watchList)
         {
-            
             bool isConnected = ServiceLocator.Instance.Repo.Connect();
             if (!isConnected)
             {
@@ -49,6 +49,25 @@ namespace MySpector.Cons
             }
             ServiceLocator.Instance.Repo.Commit();
         }
+
+        private static Trox CreateSSdNas()
+        {
+            string rawString = "/html/body/section/div/div/section/div/div/div[1]/div/div/div[2]/div[4]/div[1]/div[5]/div/div/div[1]/p";
+            string escapedString = Escaper.EscapeDoubleQuotes(rawString);
+            var xpathParam = new XtraxDefinition(0, XtraxType.HtmlXpath, "{\"Path\":\"" + escapedString + "\"}", null);
+            var textToNumberParam = new XtraxDefinition(1, XtraxType.TextToNumber, null, null);
+            var xTraxParams = new List<XtraxDefinition>();
+            xTraxParams.Add(xpathParam);
+            xTraxParams.Add(textToNumberParam);
+            var checkerParam = new CheckerParam(CheckerType.NumberIsLess, "{\"Reference\":150, \"OrEqual\":true}");
+            string name = "WD Red: NAS SATA 2 TB";
+            string url = "https://shop.westerndigital.com/de-de/products/internal-drives/wd-red-sata-2-5-ssd#WDS200T1R0A";
+            bool enabled = true;
+            var target = new HttpTarget(url);
+            Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
+            return ret;
+        }
+
 
         private static Trox CreateZotacMagnus()
         {

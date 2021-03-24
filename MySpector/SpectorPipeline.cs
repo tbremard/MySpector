@@ -31,25 +31,36 @@ namespace MySpector.Core
                     _log.Debug($"{_trox.Name} is disabled");
                     return false;
                 }
+                IDataTruck data = null;
                 var file = GenericDownloader.DownloadToLocalFile(_trox);
-                if (file == null)
+                if (!file.GrabSuccess)
                 {
-                    _log.Error("Error in Download: Aborting processing");
-                    return false;
+                    string msg = "Error in Download: Aborting processing";
+                    _log.Error(msg);
+                    file.ErrorMessage.AppendLine(msg);
                 }
-                var data = _xtrax.GetOutputChained(file.Truck);
-                if (data.GetText() == XtraxConst.NOT_FOUND)
+                else
                 {
-                    _log.Error($"Data extraction failed for item: '{Name}'");
-                    return false;
+                    data = _xtrax.GetOutputChained(file.Truck);
+                    if (data.GetText() == XtraxConst.NOT_FOUND)
+                    {
+                        string msg = $"Data extraction failed for item: '{Name}'";
+                        _log.Error(msg);
+                        file.ErrorMessage.AppendLine(msg);
+                        file.XtraxSuccess = false;
+                    }
+                    else
+                    {
+                        file.XtraxSuccess = true;
+                    }
+                    _log.Debug($"Extraction of '{Name}' = " + data.GetText());
+                    file.IsSignaled = _checker.Check(data);
                 }
-                _log.Debug($"Extraction of '{Name}' = " + data.GetText());
                 ResultStorage result = new ResultStorage(_trox.DbId, data, file);
                 ServiceLocator.Instance.Repo.BeginTransaction();
                 ServiceLocator.Instance.Repo.SaveResult(result);
                 ServiceLocator.Instance.Repo.Commit();
-                bool isSignaled = _checker.Check(data);
-                if (isSignaled)
+                if (file.IsSignaled)
                 {
                     _notifier.NotifyChained("Pipeline triggered alert");
                 }

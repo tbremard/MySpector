@@ -80,6 +80,16 @@ namespace MySpector.Objects
             return ret;
         }
 
+        public static IDataTruck Empty
+        {
+            get
+            {
+                IDataTruck ret = CreateText(string.Empty);
+                return ret;
+            }
+        }
+
+
         public static IDataTruck CreateTextFromFile(string filePath)
         {
             if (!File.Exists(filePath))

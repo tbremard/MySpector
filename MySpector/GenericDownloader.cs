@@ -12,7 +12,7 @@ namespace MySpector.Core
 
         public static LocalFile DownloadToLocalFile(Trox trox)
         {
-            LocalFile ret = new LocalFile();
+            var ret = new LocalFile();
             try
             {
                 _log.Debug($"Downloading target: [{trox.Name}/{trox.Target.Name}]) ");
@@ -21,18 +21,19 @@ namespace MySpector.Core
                 string filePath = GenerateFilePath(trox);
                 File.WriteAllText(filePath, response.Content);// should put size limit to avoid DOS
                 _log.Debug("File saved: " + filePath);
-                if (!response.Success)
-                {
-                    _log.Error("Error in download");
-                    return null;
-                }
                 ret.FilePath = filePath;
                 ret.Truck = DataTruck.CreateText(response.Content);
                 ret.Latency = response.Latency;
+                ret.GrabSuccess = response.Success;
             }
             catch (Exception ex)
             {
                 _log.Error(ex);
+                ret.Truck = DataTruck.Empty;
+                ret.GrabSuccess = false;
+                ret.FilePath = null;
+                ret.Latency = TimeSpan.Zero;
+                ret.ErrorMessage.AppendLine(ex.Message);
                 return null;
             }
             return ret;

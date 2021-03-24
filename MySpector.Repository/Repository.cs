@@ -128,15 +128,24 @@ namespace MySpector.Repo
 
         public int? SaveResult(ResultStorage result)
         {
-            string sql = "INSERT INTO result_history(ID_TROX, TIMESTAMP, LATENCY_MS, IN_DATA, OUT_TEXT, OUT_NUMBER)" +
-                          "VALUES(@ID_TROX, now(), @LATENCY, @IN_DATA, @OUT_TEXT, @OUT_NUMBER)";
+            if(result.TroxId is null)
+            {
+                _log.Error("TroxId is null ==> cannot attach result");
+                return null;
+            }
+            string sql = "INSERT INTO result_history(ID_TROX, TIMESTAMP, LATENCY_MS, IN_DATA, OUT_TEXT, OUT_NUMBER, GRAB_SUCCESS, XTRAX_SUCCESS, IS_SIGNALED, ERROR_MSG)" +
+                          "VALUES(@ID_TROX, now(), @LATENCY, @IN_DATA, @OUT_TEXT, @OUT_NUMBER, @GRAB_SUCCESS, @XTRAX_SUCCESS, @IS_SIGNALED, @ERROR_MSG)";
             var param = new
             {
                 ID_TROX = result.TroxId,
+                LATENCY = result.File.Latency.TotalMilliseconds,
                 IN_DATA = result.File.FilePath,
-                OUT_TEXT = result.Result.GetText(), 
-                OUT_NUMBER = result.Result.GetNumber(), 
-                LATENCY = result.File.Latency.TotalMilliseconds 
+                OUT_TEXT = result.Result?.GetText(), 
+                OUT_NUMBER = result.Result?.GetNumber(),
+                GRAB_SUCCESS = result.File.GrabSuccess,
+                XTRAX_SUCCESS = result.File.XtraxSuccess,
+                IS_SIGNALED = result.File.IsSignaled,
+                ERROR_MSG = result.File.ErrorMessage.ToString()
             };
             int? dbId = InsertData(sql, param);
             result.DbId = dbId;
@@ -156,6 +165,7 @@ namespace MySpector.Repo
             SaveXtraxChain(troxDbId, trox.XtraxChain);
             SaveChecker(troxDbId, trox.Checker);
             SaveNotifyChain(troxDbId, trox.NotifyChain);
+            trox.DbId = troxDbId;
             return troxDbId;
         }
 

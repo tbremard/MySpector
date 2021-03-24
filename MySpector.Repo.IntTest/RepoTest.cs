@@ -141,6 +141,7 @@ namespace MySpector.Repo.IntTest
 
             Assert.IsNotNull(id);
             Assert.AreNotEqual(0, id);
+            Assert.AreEqual(id, trox.DbId);
         }
 
         [Test]
