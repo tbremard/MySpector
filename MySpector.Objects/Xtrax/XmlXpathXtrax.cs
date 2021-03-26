@@ -31,7 +31,9 @@ namespace MySpector.Objects
                 XmlNode node = root.SelectSingleNode(_arg.Path);
                 if (node == null)
                 {
-                    _log.Error($"Node not found '{_arg.Path}'");
+                    string message = $"Node not found '{_arg.Path}'";
+                    _log.Error(message);
+                    ErrorMessage.AppendLine(message);
                     ret = DataTruck.CreateText(NOT_FOUND);
                 }
                 else
@@ -43,6 +45,7 @@ namespace MySpector.Objects
             catch (Exception ex)
             {
                 _log.Error(ex);
+                ErrorMessage.AppendLine(ex.Message);
                 ret = DataTruck.CreateText(NOT_FOUND);
             }
             return ret;

@@ -23,7 +23,9 @@ namespace MySpector.Objects
             IDataTruck ret;
             if (string.IsNullOrEmpty(text))
             {
-                _log.Error("Input is empty: cannot replace content");
+                string message = "Input is empty: cannot replace content";
+                _log.Error(message);
+                ErrorMessage.AppendLine(message);
                 return DataTruck.CreateText(string.Empty);
             }
             _log.Trace("Replacing content of '" + data.PreviewText + "'");
@@ -39,6 +41,7 @@ namespace MySpector.Objects
             catch (Exception ex)
             {
                 _log.Error(ex);
+                ErrorMessage.AppendLine(ex.Message);
                 ret = DataTruck.CreateText(XtraxConst.NOT_FOUND);
             }
             return ret;

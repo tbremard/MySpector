@@ -22,7 +22,9 @@ namespace MySpector.Objects
             string content = data.GetText();
             if (!content.Contains(_arg.Prefix))
             {
-                _log.Error($"data do not contain '{_arg.Prefix}'");
+                string message = $"data do not contain '{_arg.Prefix}'";
+                _log.Error(message);
+                ErrorMessage.AppendLine(message);
                 ret = DataTruck.CreateText(XtraxConst.NOT_FOUND);
             }
             else

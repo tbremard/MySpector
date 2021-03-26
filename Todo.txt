@@ -65,11 +65,14 @@ ProcessOutputGrab : process + args + stdin  ----------------------     : Done
 Manage data sources by name         ---------------------------------- : Done
 Result of extraction is versionned                                     : Done
 each webrequest saves the latency. ----------------------------------- : Done
-flush report spec fonctionnelles   -------------------------------------- 1 -----------------------
+flush report spec fonctionnelles   ------------------------------------: Done
+error of HtmlXpathXtrax should be reported to result                    -------1
+full debug output of Pipeline should be added to result  ---------------------2
 checker : price < x% within y days ----------------------------------- :   2
  ExcelXtrax :                   --------------------------------------    4
  Scheduler                                           -------------------- 5 
- Alert on latency criteria ----------------------------------------------
+ Alert on latency criteria ---------------------------------------------- 6 
+ define acceptance criteria for benchmarking
 
 make public/private Spectors
 make page display all public Spectors

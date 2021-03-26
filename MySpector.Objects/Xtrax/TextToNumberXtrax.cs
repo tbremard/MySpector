@@ -17,7 +17,9 @@ namespace MySpector.Objects
             decimal ret;
             if (string.IsNullOrEmpty(textNumber))
             {
-                _log.Error("Input: NULL");
+                string message = "Input: NULL";
+                _log.Error(message);
+                ErrorMessage.AppendLine(message);
                 dataOut = new DataTruck(textNumber, null);
                 return dataOut;
             }

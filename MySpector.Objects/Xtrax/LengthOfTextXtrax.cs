@@ -15,7 +15,9 @@ namespace MySpector.Objects
             string content = data.GetText();
             if (string.IsNullOrEmpty(content))
             {
-                _log.Error("Text is empty : return 0");
+                string message = "Text is empty : return 0";
+                _log.Error(message);
+                ErrorMessage.AppendLine(message);
                 return DataTruck.CreateNumber(0);
             }
             string trimmed = content.Trim();

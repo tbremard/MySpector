@@ -42,6 +42,7 @@ namespace MySpector.Objects
             catch (Exception ex)
             {
                 _log.Error(ex);
+                ErrorMessage.AppendLine(ex.Message);
                 ret = DataTruck.CreateText(NOT_FOUND);
             }
             return ret;

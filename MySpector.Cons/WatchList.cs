@@ -130,6 +130,7 @@ namespace MySpector.Cons
             string url = "https://www.hystou.com/Gaming-Mini-PC-F7-with-Nvidia-GeForce-GTX-1650-p177717.html";
             bool enabled = true;
             var target = new HttpTarget(url);
+            target.Name = "hystou.com/Gaming-Mini-PC-F7";
             Trox ret = CreateSpecificItem(xTraxParams, checkerParam, name, target, enabled);
             return ret;
         }

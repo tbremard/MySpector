@@ -22,7 +22,9 @@ namespace MySpector.Objects
             string content = data.GetText();
             if (!content.Contains(_arg.Suffix))
             {
-                _log.Error($"data do not contain '{_arg.Suffix}'");
+                string message = $"data do not contain '{_arg.Suffix}'";
+                _log.Error(message);
+                ErrorMessage.AppendLine(message);
                 ret = DataTruck.CreateText(XtraxConst.NOT_FOUND);
             }
             else

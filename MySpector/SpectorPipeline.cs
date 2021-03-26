@@ -44,6 +44,8 @@ namespace MySpector.Core
                     data = _xtrax.GetOutputChained(file.Truck);
                     if (data.GetText() == XtraxConst.NOT_FOUND)
                     {
+                        var xtraxError = _xtrax.GetErrorChained();
+                        file.ErrorMessage.Append(xtraxError);
                         string msg = $"Data extraction failed for item: '{Name}'";
                         _log.Error(msg);
                         file.ErrorMessage.AppendLine(msg);
