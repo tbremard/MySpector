@@ -12,6 +12,8 @@ namespace MySpector.Cons
 
         static void Main()
         {
+            LogManager.ConfigurationChanged += ConfigurationChanged;
+            LogManager.ConfigurationReloaded += ConfigurationReloaded;
             IList<Trox> watchList;
             _log.Debug("Starting MySpector...");
             bool offline = false;
@@ -31,8 +33,19 @@ namespace MySpector.Cons
             {
                 _log.Error($"isSuccess: {isSuccess}: at least one error occured");
             }
+            LogManager.Shutdown();
             _log.Debug("Press a key...");
             Console.ReadKey();
+        }
+
+        private static void ConfigurationReloaded(object sender, NLog.Config.LoggingConfigurationReloadedEventArgs e)
+        {
+            _log.Debug("Nlog::ConfigurationReloaded !");
+        }
+
+        private static void ConfigurationChanged(object sender, NLog.Config.LoggingConfigurationChangedEventArgs e)
+        {
+            _log.Debug("Nlog::ConfigurationChanged !");
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 
 namespace MySpector.Core
 {
+
     public class SpectorPipeline
     {
         static Logger _log = LogManager.GetCurrentClassLogger();
@@ -12,6 +13,7 @@ namespace MySpector.Core
         private IChecker _checker;
         private Notifier _notifier;
         private Trox _trox;
+        private MemoryLogger _memoryLogger;
 
         public SpectorPipeline(Trox trox)
         {
@@ -19,6 +21,7 @@ namespace MySpector.Core
             _xtrax = trox.XtraxChain;
             _checker = trox.Checker;
             _notifier = trox.NotifyChain;
+            _memoryLogger = new MemoryLogger();
         }
 
         public bool Process()
@@ -31,6 +34,7 @@ namespace MySpector.Core
                     _log.Debug($"{_trox.Name} is disabled");
                     return false;
                 }
+                _memoryLogger.Start();
                 IDataTruck data = null;
                 var file = GenericDownloader.DownloadToLocalFile(_trox);
                 if (!file.GrabSuccess)
@@ -58,14 +62,18 @@ namespace MySpector.Core
                     _log.Debug($"Extraction of '{Name}' = " + data.GetText());
                     file.IsSignaled = _checker.Check(data);
                 }
-                ResultStorage result = new ResultStorage(_trox.DbId, data, file);
-                ServiceLocator.Instance.Repo.BeginTransaction();
-                ServiceLocator.Instance.Repo.SaveResult(result);
-                ServiceLocator.Instance.Repo.Commit();
                 if (file.IsSignaled)
                 {
                     _notifier.NotifyChained("Pipeline triggered alert");
                 }
+
+                _log.Debug("this is dumped in memory");
+                var memContent = _memoryLogger.Stop();
+                _log.Debug("no more in memory");
+                ResultStorage result = new ResultStorage(_trox.DbId, data, file);
+                ServiceLocator.Instance.Repo.BeginTransaction();
+                ServiceLocator.Instance.Repo.SaveResult(result);
+                ServiceLocator.Instance.Repo.Commit();
                 ret = true;
             }
             catch (Exception ex)
