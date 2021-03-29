@@ -3,6 +3,7 @@ using NLog;
 using MySpector.Core;
 using System.Collections.Generic;
 using MySpector.Objects;
+using NLog.Config;
 
 namespace MySpector.Cons
 {
@@ -38,12 +39,12 @@ namespace MySpector.Cons
             Console.ReadKey();
         }
 
-        private static void ConfigurationReloaded(object sender, NLog.Config.LoggingConfigurationReloadedEventArgs e)
+        private static void ConfigurationReloaded(object sender, LoggingConfigurationReloadedEventArgs e)
         {
             _log.Debug("Nlog::ConfigurationReloaded !");
         }
 
-        private static void ConfigurationChanged(object sender, NLog.Config.LoggingConfigurationChangedEventArgs e)
+        private static void ConfigurationChanged(object sender, LoggingConfigurationChangedEventArgs e)
         {
             _log.Debug("Nlog::ConfigurationChanged !");
         }

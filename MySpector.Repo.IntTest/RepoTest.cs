@@ -149,7 +149,7 @@ namespace MySpector.Repo.IntTest
         {
             IDataTruck truck = DataTruck.CreateText("This is a result");
             var file = new LocalFile() { FilePath = "c:\\toto.txt", Latency = TimeSpan.Zero, Truck = DataTruck.CreateText("input data") };
-            var result = new ResultStorage(TROX_ID, truck, file);
+            var result = new ResultStorage(TROX_ID, truck, file, null);
 
             _sut.BeginTransaction();
             int? id = _sut.SaveResult(result);

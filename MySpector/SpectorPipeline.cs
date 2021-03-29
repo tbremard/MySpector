@@ -68,9 +68,9 @@ namespace MySpector.Core
                 }
 
                 _log.Debug("this is dumped in memory");
-                var memContent = _memoryLogger.Stop();
+                var memoryLog = _memoryLogger.Stop();
                 _log.Debug("no more in memory");
-                ResultStorage result = new ResultStorage(_trox.DbId, data, file);
+                ResultStorage result = new ResultStorage(_trox.DbId, data, file, memoryLog);
                 ServiceLocator.Instance.Repo.BeginTransaction();
                 ServiceLocator.Instance.Repo.SaveResult(result);
                 ServiceLocator.Instance.Repo.Commit();

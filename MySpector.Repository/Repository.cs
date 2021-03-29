@@ -133,8 +133,8 @@ namespace MySpector.Repo
                 _log.Error("TroxId is null ==> cannot attach result");
                 return null;
             }
-            string sql = "INSERT INTO result_history(ID_TROX, TIMESTAMP, LATENCY_MS, IN_DATA, OUT_TEXT, OUT_NUMBER, GRAB_SUCCESS, XTRAX_SUCCESS, IS_SIGNALED, ERROR_MSG)" +
-                          "VALUES(@ID_TROX, now(), @LATENCY, @IN_DATA, @OUT_TEXT, @OUT_NUMBER, @GRAB_SUCCESS, @XTRAX_SUCCESS, @IS_SIGNALED, @ERROR_MSG)";
+            string sql = "INSERT INTO result_history(ID_TROX, TIMESTAMP, LATENCY_MS, IN_DATA, OUT_TEXT, OUT_NUMBER, GRAB_SUCCESS, XTRAX_SUCCESS, IS_SIGNALED, ERROR_MSG, LOG)" +
+                          "VALUES(@ID_TROX, now(), @LATENCY, @IN_DATA, @OUT_TEXT, @OUT_NUMBER, @GRAB_SUCCESS, @XTRAX_SUCCESS, @IS_SIGNALED, @ERROR_MSG, @LOG)";
             var param = new
             {
                 ID_TROX = result.TroxId,
@@ -145,7 +145,8 @@ namespace MySpector.Repo
                 GRAB_SUCCESS = result.File.GrabSuccess,
                 XTRAX_SUCCESS = result.File.XtraxSuccess,
                 IS_SIGNALED = result.File.IsSignaled,
-                ERROR_MSG = result.File.ErrorMessage.ToString()
+                ERROR_MSG = result.File.ErrorMessage?.ToString(),
+                LOG = result.MemoryLog?.ToString()
             };
             int? dbId = InsertData(sql, param);
             result.DbId = dbId;
