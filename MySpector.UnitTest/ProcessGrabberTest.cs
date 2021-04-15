@@ -24,7 +24,7 @@ namespace MySpector.UnitTest
 
             _log.Debug(data.Content);
             Assert.IsTrue(data.Success);
-            Assert.IsTrue(data.Content.Contains("Configuration IP "), "Invalid Content");
+            Assert.IsTrue(data.Content.Contains("Ethernet"), "Invalid Content");
         }
 
         [Test]
