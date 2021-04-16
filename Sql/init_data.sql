@@ -107,6 +107,8 @@ select * from checker_def def
 	INNER JOIN checker_type typ on def.ID_CHECKER_TYPE = typ.ID_TYPE;
 
 SELECT * FROM TROX;
+update TROX set enabled = 1 where ID_TROX IN (2,6,7,8,9,10);
+
 -- display DEPENDENCIES of trox 
 SET @ID_TROX = 37;
 select *,@HTTP_ID=web.ID_WEB_TARGET from web_target web 
@@ -133,5 +135,9 @@ select * from NOTIFY_DEF def
 INSERT INTO result_history(ID_TROX, ZE_TEXT, ZE_NUMBER, TIMESTAMP, LATENCY_MS)
 VALUES(@ID_TROX, 'result text', 123, now(), 456);
 
-select * from result_history;
+select * from result_history where id_trox = 2;
 
+alter TABLE `MYSPECTOR`.`RESULT_HISTORY` 
+add column   `LOG` TEXT NULL;
+
+select * from result_history where ID_RESULT = 87;

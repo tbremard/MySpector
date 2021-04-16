@@ -4,6 +4,9 @@ using System.Net.Http;
 using NLog;
 using System.Security.Authentication;
 using System.Diagnostics;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+
 
 namespace MySpector.Objects
 {
@@ -54,8 +57,7 @@ namespace MySpector.Objects
         private HttpResponse HttpRequest(IGrabTarget target)
         {
             var httpTarget = target as HttpTarget;
-            _log.Debug(httpTarget.Uri);
-
+            _log.Debug($"Grabbing: {httpTarget.Method} {httpTarget.Uri}");
             SetSwitch(SWITCH_HTTP2_SUPPORT, true);
             SetSwitch(SWITCH_USE_SOCKET_HTTP_HANDLER, true);
 #if HTTP_DEBUG
@@ -78,12 +80,10 @@ namespace MySpector.Objects
             }
             else
             {
-                //            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
                 request.Headers.Add("User-Agent", "Mozilla/5.0");
                 //request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                 request.Headers.Add("Accept", "*/*");
                 request.Headers.Add("Accept-Language", "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3");
-                //            request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
                 request.Headers.Add("Connection", "keep-alive");
                 request.Headers.Add("Upgrade-Insecure-Requests", "1");
                 request.Headers.Add("Cache-Control", "max-age=0 ");
@@ -93,18 +93,32 @@ namespace MySpector.Objects
             var handler = new HttpClientHandler();
             //X509Certificate2 certificate = GetMyX509Certificate();
             //handler.ClientCertificates.Add(certificate);
-            handler.UseDefaultCredentials = true;
-            handler.SslProtocols = SslProtocols.Tls13 | SslProtocols.Tls12;
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            handler.UseDefaultCredentials = false;
+            handler.SslProtocols = SslProtocols.Tls13 | SslProtocols.Tls12;// | SslProtocols.Tls | SslProtocols.Ssl3 | SslProtocols.Ssl2;
+            handler.ServerCertificateCustomValidationCallback = CertificateValidationCallback;
             var client = new HttpClient(handler);
-            var myGetTask = client.SendAsync(request);
-            var response = myGetTask.Result;
             var ret = new HttpResponse();
-            ret.HttpResponseCode = response.StatusCode;
-            ret.Content = response.Content.ReadAsStringAsync().Result;
+            try
+            {
+                var myGetTask = client.SendAsync(request);
+                var response = myGetTask.Result;
+                ret.HttpResponseCode = response.StatusCode;
+                ret.Content = response.Content.ReadAsStringAsync().Result;
+            }
+            catch
+            {
+                handler.Dispose();
+                client.Dispose();
+                throw;
+            }
             handler.Dispose();
             client.Dispose();
             return ret;
+        }
+
+        private bool CertificateValidationCallback(HttpRequestMessage message,  X509Certificate2 certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
         }
 
         private void SetSwitch(string switchName, bool switchValue)
