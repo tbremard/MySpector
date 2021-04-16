@@ -105,14 +105,24 @@ namespace MySpector.Objects
                 ret.HttpResponseCode = response.StatusCode;
                 ret.Content = response.Content.ReadAsStringAsync().Result;
             }
-            catch
+            catch (Exception e)
+            {
+                if (e.InnerException?.InnerException is AuthenticationException)
+                {
+                    _log.Error("SSL link cannot established: Maybe there is incompatibility between ciphers of Server and local Operating system");
+                    _log.Error(e);
+                    throw new Exception("SSL link cannot established");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            finally
             {
                 handler.Dispose();
                 client.Dispose();
-                throw;
             }
-            handler.Dispose();
-            client.Dispose();
             return ret;
         }
 
