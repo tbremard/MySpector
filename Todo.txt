@@ -21,17 +21,17 @@ MailNotifier     : Problem : need Smtp Tls server
 WebCallback      :     TODO
 TwitterNotifier  :     TODO
 
-textToNumber must be an element of Xtrax : Done
-xtrax: implement replace() : done
+textToNumber must be an element of Xtrax                                 : Done
+xtrax: implement replace()                                               : done
 LengthOfTextXtraxRule        --------------------------------------------: done 
 
 Checker must be available on text : Contains / DoNotContain
-create test to isolate Title with Between operator   : Done
+create test to isolate Title with Between operator                       : Done
 create use case to check if number Greater than reference(Allianz oblig) : Done  
 create use case to check if number is Different than reference           : Done  
 
-Rename "XtraxRule" to "Trox"-----------------------------------------: Done
-ConsoleRunner    : Done
+Rename "XtraxRule" to "Xtrax"-----------------------------------------  : Done
+ConsoleRunner                                                           : Done
 
 Database : each Ressource can be linked to a set of pipelines
 a pipeline do not need to have a checker or notifier: it can only save data
@@ -68,13 +68,21 @@ each webrequest saves the latency. ----------------------------------- : Done
 flush report spec fonctionnelles   ------------------------------------: Done
 error of HtmlXpathXtrax should be reported to result                  -: Done
 full debug output of Pipeline should be added to result  --------------: Done
-checker : price < x% within y days ----------------------------------- :   2
- ExcelXtrax :                   --------------------------------------    4
- Scheduler                                           -------------------- 5 
- Alert on latency criteria ---------------------------------------------- 6 
- define acceptance criteria for benchmarking
+Alert on latency criteria -------------------------------------------- : 1
+timeout for Grabbers          -----------------------------------------: 2
+Scheduler                                           -------------------: 3
+define acceptance criteria for benchmarking           -----------------: 4
+Anyone can attach its notification on any existing public pipeline ----: 5
+run python script, then get output + exit code                    -----: 6
+logger layout config on trox object
 
 make public/private Spectors
 make page display all public Spectors
 
 it is possible to trigger a notification when latency is above a given limit
+
+checker : price < x% within y days ----------------------------------- : v2
+ExcelXtrax :                   --------------------------------------  : v2
+Use variables in operations, and configure set of variables            : v2
+
+

@@ -108,6 +108,7 @@ select * from checker_def def
 
 SELECT * FROM TROX;
 update TROX set enabled = 1 where ID_TROX IN (2,6,7,8,9,10);
+update TROX set enabled = 0 where ID_TROX IN (3);
 
 -- display DEPENDENCIES of trox 
 SET @ID_TROX = 37;
