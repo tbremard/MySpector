@@ -94,7 +94,7 @@ namespace MySpector.Repo
                 var xtrax = GetAllXtrax(x.ID_TROX);
                 var check = GetAllChecker(x.ID_TROX);
                 var notifier = GetAllNotifier(x.ID_TROX);
-                var trox = new Trox(x.NAME, DbToBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault());
+                var trox = new Trox(x.NAME, DbToBool(x.ENABLED), target, XtraxFactory.CreateChain(xtrax), check.FirstOrDefault(), notifier.FirstOrDefault(), null);
                 trox.DbId = x.ID_TROX;
                 ret.Add(trox);
                 _log.Debug("Loaded Trox: " + trox.ToString());
@@ -165,7 +165,7 @@ namespace MySpector.Repo
             AttachWebTargetToTrox(targetDbId, troxDbId);
             SaveXtraxChain(troxDbId, trox.XtraxChain);
             SaveChecker(troxDbId, trox.Checker);
-            SaveNotifyChain(troxDbId, trox.NotifyChain);
+            SaveNotifyChain(troxDbId, trox.NotifyChainStandard);
             trox.DbId = troxDbId;
             return troxDbId;
         }
@@ -545,7 +545,7 @@ namespace MySpector.Repo
 
         private Objects.Trox mapperTrox(DbModel.trox trox, DbModel.target webTarget, DbModel.target_type webTargetType, DbModel.target_http webTargetHttp)
         {
-            var ret = new Objects.Trox(trox.NAME, DbToBool(trox.ENABLED), null, null, null, null);
+            var ret = new Objects.Trox(trox.NAME, DbToBool(trox.ENABLED), null, null, null, null, null);
             return ret;
         }
 

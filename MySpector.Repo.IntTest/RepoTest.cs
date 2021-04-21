@@ -132,7 +132,13 @@ namespace MySpector.Repo.IntTest
         [Test]
         public void SaveTrox_WhenInputIsValid_ThenDbIdIsSet()
         {
-            var trox = new Trox("test", true, new HttpTarget("test"), new AfterXtrax( new AfterArg() { Prefix = "test" }), new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }), new StubNotifier());
+            var trox = new Trox("test", 
+                true, 
+                new HttpTarget("test"), 
+                new AfterXtrax( new AfterArg() { Prefix = "test" }), 
+                new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }), 
+                new StubNotifier(),
+                null);
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);
@@ -201,7 +207,8 @@ namespace MySpector.Repo.IntTest
                                 new HttpTarget(Uri),
                                 new AfterXtrax(new AfterArg() { Prefix = "test" }),
                                 new TextDoContainChecker(new TextDoContainArg() { IgnoreCase = true, Token = "test" }),
-                                new StubNotifier());
+                                new StubNotifier(),
+                                null);
 
             _sut.BeginTransaction();
             int? id = _sut.SaveTrox(trox);
@@ -220,7 +227,7 @@ namespace MySpector.Repo.IntTest
             Assert.IsNotNull(loadedTrox.DbId, "Trox.DbId");
             Assert.IsNotNull(loadedTrox.XtraxChain.DbId, "XtraxChain.DbId");
             Assert.IsNotNull(loadedTrox.Checker.DbId, "Checker.DbId");
-            Assert.IsNotNull(loadedTrox.NotifyChain.DbId, "NotifyChain.DbId");
+            Assert.IsNotNull(loadedTrox.NotifyChainStandard.DbId, "NotifyChain.DbId");
             var httpTarget = loadedTrox.Target as HttpTarget;
             Assert.AreEqual(Uri, httpTarget.Uri);
             Assert.IsNotNull(httpTarget.DbId, "httpTarget.DbId");

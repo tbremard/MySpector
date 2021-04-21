@@ -26,14 +26,13 @@ namespace MySpector.UnitTest
         }
 
         [Test]
-        [Ignore("Robot detector => http 403 / forbidden")]
-        public void Grab_WenServerSpotRobot_ThenOk()
+        public void Grab_WenForbidden_ThenNoSuccess()
         {
-            var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url);
+            var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url); // spots robot => ask user to auth : HTTP 403 
 
             var data = _sut.Grab(httpTarget);
 
-            Assert.IsTrue(data.Success, data.ErrorMessage);
+            Assert.IsFalse(data.Success, "Server should prevent to call this url");
         }
 
         [TestCase("https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04")]

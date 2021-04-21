@@ -11,7 +11,8 @@ namespace MySpector.Objects
         public IGrabTarget Target { get; }
         public Xtrax XtraxChain { get; }
         public IChecker Checker { get; }
-        public Notifier NotifyChain { get; }
+        public Notifier NotifyChainStandard { get; }
+        public Notifier NotifyChainError { get; }
         public int? DbId { get; set; }
 
         public string FileToken
@@ -33,18 +34,19 @@ namespace MySpector.Objects
             sb.AppendLine("WebTarget: " + Target?.ToString());
             sb.AppendLine("Xtrax:" + XtraxChain?.ToString());
             sb.AppendLine("Checker:" + Checker?.ToString());
-            sb.AppendLine("Notify:" + NotifyChain?.ToString());
+            sb.AppendLine("Notify:" + NotifyChainStandard?.ToString());
             return sb.ToString();
         }
 
-        public Trox(string name, bool enabled, IGrabTarget target, Xtrax xtraxChain, IChecker checker, Notifier notifyChain)
+        public Trox(string name, bool enabled, IGrabTarget target, Xtrax xtraxChain, IChecker checker, Notifier notifyChainStandard, Notifier notifyChainError)
         {
             Name = name;
             Target = target;
             Enabled = enabled;
             XtraxChain = xtraxChain;
             Checker = checker;
-            NotifyChain = notifyChain;
+            NotifyChainStandard = notifyChainStandard;
+            NotifyChainError = notifyChainError;
             Grabber = new HttpGrabber();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
         }
     }

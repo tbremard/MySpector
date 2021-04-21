@@ -20,7 +20,7 @@ namespace MySpector.Core
             _trox = trox;
             _xtrax = trox.XtraxChain;
             _checker = trox.Checker;
-            _notifier = trox.NotifyChain;
+            _notifier = trox.NotifyChainStandard;
             _memoryLogger = new MemoryLogger();
         }
 
