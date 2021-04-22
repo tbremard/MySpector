@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace MySpector.Objects
@@ -24,6 +25,8 @@ namespace MySpector.Objects
                 return ret;
             }
         }
+
+        public TimeSpan MaxLatency { get; set; }
 
         public override string ToString()
         {

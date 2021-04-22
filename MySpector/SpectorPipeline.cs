@@ -66,7 +66,10 @@ namespace MySpector.Core
                 {
                     _notifier.NotifyChained("Pipeline triggered alert");
                 }
-
+                if (file.Latency > _trox.MaxLatency)
+                {
+                    _trox.NotifyChainError.NotifyChained($"Latency limit reached: {file.Latency}>{_trox.MaxLatency}");
+                }
                 _log.Debug("this is dumped in memory");
                 var memoryLog = _memoryLogger.Stop();
                 _log.Debug("no more in memory");

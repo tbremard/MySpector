@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using MySpector.Core;
 using MySpector.Objects;
+using System;
 
 namespace MySpector.UnitTest
 {
@@ -46,12 +47,13 @@ namespace MySpector.UnitTest
             var arg = new ComparaisonArg(TARGET_PRICE, true);
             var checker = new NumberIsEqualChecker(arg);
             HttpTarget target = new HttpTarget("FAKE URI");
-            var item = new Trox(sample.Name, true, target, sample.Rule, checker, stubNotifier, stubNotifierError);
-            var stubGrabber = Substitute.For<IGrabber>();// new StubDownloader(sample.Data);
-            var highLatency = new GrabResponse(sample.Data.GetText(), true, new System.TimeSpan(1, 0, 0), null);
+            var trox = new Trox(sample.Name, true, target, sample.Rule, checker, stubNotifier, stubNotifierError);
+            trox.MaxLatency = new TimeSpan(0, 1, 0);
+            var stubGrabber = Substitute.For<IGrabber>();
+            var highLatency = new GrabResponse(sample.Data.GetText(), true, new TimeSpan(1, 0, 0), null);
             stubGrabber.Grab(Arg.Any<IGrabTarget>()).Returns(highLatency);
-            item.Grabber = stubGrabber;
-            var sut = new SpectorPipeline(item);
+            trox.Grabber = stubGrabber;
+            var sut = new SpectorPipeline(trox);
 
             bool isOk = sut.Process();
 
