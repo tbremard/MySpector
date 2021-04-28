@@ -68,8 +68,8 @@ each webrequest saves the latency. ----------------------------------- : Done
 flush report spec fonctionnelles   ------------------------------------: Done
 error of HtmlXpathXtrax should be reported to result                  -: Done
 full debug output of Pipeline should be added to result  --------------: Done
-Alert on latency criteria -------------------------------------------- : 1
-timeout for Grabbers          -----------------------------------------: 2
+Alert on latency criteria -------------------------------------------- : Done
+timeout for Grabbers          -----------------------------------------: 1
 Scheduler                                           -------------------: 3
 define acceptance criteria for benchmarking           -----------------: 4
 Anyone can attach its notification on any existing public pipeline ----: 5

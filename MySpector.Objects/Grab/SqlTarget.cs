@@ -4,6 +4,7 @@
     {
         public TargetType TargetType => TargetType.SQL;
         public string Name { get; set; }
+        public int TimeoutMs { get; set; }
         public string ConnectionString { get; }
         public string SqlQuery { get; }
         public string Provider { get; }

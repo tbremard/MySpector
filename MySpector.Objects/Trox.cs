@@ -49,7 +49,14 @@ namespace MySpector.Objects
             XtraxChain = xtraxChain;
             Checker = checker;
             NotifyChainStandard = notifyChainStandard;
-            NotifyChainError = notifyChainError;
+            if(notifyChainError is null)
+            {
+                NotifyChainError = new StubNotifier();
+            }
+            else
+            {
+                NotifyChainError = notifyChainError;
+            }
             Grabber = new HttpGrabber();// use instead ServiceLocator.Instance.CreateDownloader(target.Type)
         }
     }

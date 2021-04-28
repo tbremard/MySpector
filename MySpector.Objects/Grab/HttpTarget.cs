@@ -6,6 +6,7 @@ namespace MySpector.Objects
     public class HttpTarget : IGrabTarget
     {
         public TargetType TargetType => TargetType.HTTP;
+        public int TimeoutMs { get; set; }
         public string Name { get; set; }
         public int? DbId { get; set; }
         public HttpMethod Method { get; set; }
@@ -31,12 +32,6 @@ namespace MySpector.Objects
         {
             return "HttpTarget->"+ Uri;
         }
-    }
-
-    public class InvalidTarget : IGrabTarget
-    {
-        public string Name => "InvalidTarget";
-        public TargetType TargetType => throw new System.NotImplementedException();
     }
 }
 

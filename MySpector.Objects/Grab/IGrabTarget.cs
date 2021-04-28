@@ -4,5 +4,6 @@
     {
         public TargetType TargetType { get; }
         public string Name { get; }
+        public int TimeoutMs { get; }
     }
 }

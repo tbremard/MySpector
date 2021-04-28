@@ -18,7 +18,7 @@ namespace MySpector.UnitTest
         [Test]
         public void Grab_WenInputIsValid_ThenOk()
         {
-            var target = new ProcessTarget() { FileName = "cmd.exe", Arguments = "/c ipconfig", StandardInput = null, WaitForExitMs = null };
+            var target = new ProcessTarget() { FileName = "cmd.exe", Arguments = "/c ipconfig", StandardInput = null};
 
             var data = _sut.Grab(target);
 
@@ -30,11 +30,35 @@ namespace MySpector.UnitTest
         [Test]
         public void Grab_WenInputIsInvalid_ThenKo()
         {
-            var target = new ProcessTarget() { FileName = "xxxxxxxxxxxxxx.exe", Arguments = "xxxxxxxxxx", StandardInput = null, WaitForExitMs = null };
+            var target = new ProcessTarget() { FileName = "xxxxxxxxxxxxxx.exe", Arguments = "xxxxxxxxxx", StandardInput = null};
 
             var data = _sut.Grab(target);
 
             Assert.IsFalse(data.Success);
+        }
+
+        [Test]
+        public void Grab_WenTimeoutIsReached_ThenKo()
+        {
+            var target = new ProcessTarget() { FileName = "cmd.exe", Arguments = "/c ping localhost -w 1000 -n 4", StandardInput = null};
+            target.TimeoutMs = 3000;
+
+            var data = _sut.Grab(target);
+
+            _log.Debug(data.Content);
+            Assert.IsFalse(data.Success);
+        }
+
+        [Test]
+        public void Grab_WenTimeoutIsNotReached_ThenOk()
+        {
+            var target = new ProcessTarget() { FileName = "cmd.exe", Arguments = "/c ping localhost -w 1000 -n 4", StandardInput = null };
+            target.TimeoutMs = 5000;
+
+            var data = _sut.Grab(target);
+
+            _log.Debug(data.Content);
+            Assert.IsTrue(data.Success);
         }
     }
 }
