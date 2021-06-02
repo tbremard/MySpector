@@ -28,9 +28,9 @@ namespace MySpector.UnitTest
         [Test]
         public void Grab_WenForbidden_ThenNoSuccess()
         {
-            var httpTarget = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url); // spots robot => ask user to auth : HTTP 403 
+            var target = new HttpTarget(TestSampleFactory.PS4_SATURN_FULL_PAGE.Url); // spots robot => ask user to auth : HTTP 403 
 
-            var data = _sut.Grab(httpTarget);
+            var data = _sut.Grab(target);
 
             Assert.IsFalse(data.Success, "Server should prevent to call this url");
         }
@@ -41,11 +41,25 @@ namespace MySpector.UnitTest
         //[TestCase("https://shop.westerndigital.com/de-de/products/internal-drives/wd-red-sata-2-5-ssd#WDS200T1R0A")] disabled because failing on Win7 because of OS restriction on cipher available on SSL
         public void Grab_WhenHttps_ThenOk(string url)
         {
-            var httpTarget = new HttpTarget(url);
+            var target = new HttpTarget(url);
 
-            var data = _sut.Grab(httpTarget);
+            var data = _sut.Grab(target);
 
             Assert.IsTrue(data.Success);
+        }
+
+        [Test]
+        public void Grab_WenTimeoutIsReached_ThenKo()
+        {
+            string url = "https://allianz-fonds.webfg.net/sheet/fund/FR0013192572/730?date_entree=2018-04-04";
+            var target = new HttpTarget(url);
+            target.TimeoutMs = 1000;
+
+            var data = _sut.Grab(target);
+
+            _log.Debug("Latency: " + data.Latency.TotalMilliseconds + " ms");
+            Assert.LessOrEqual(data.Latency.TotalMilliseconds, target.TimeoutMs);
+            Assert.IsFalse(data.Success);
         }
     }
 }

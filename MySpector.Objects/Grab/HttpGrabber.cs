@@ -6,7 +6,7 @@ using System.Security.Authentication;
 using System.Diagnostics;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-
+using System.Threading.Tasks;
 
 namespace MySpector.Objects
 {
@@ -31,7 +31,7 @@ namespace MySpector.Objects
             GrabResponse ret;
             if (target == null)
             {
-                _log.Error($"no target is set !");
+                _log.Error($"No target is set !");
             }
             if (target.TargetType != TargetType.HTTP)
             {
@@ -43,13 +43,23 @@ namespace MySpector.Objects
                 watch.Start();
                 HttpResponse response = HttpRequest(target);
                 watch.Stop();
-                bool success = response.HttpResponseCode == HttpStatusCode.OK;
                 string errorMessage = null;
-                if (!success)
+                bool codeIsOk = false;
+                if (response.TimedOut)
                 {
-                    errorMessage = "response.HttpResponseCode: " + response.HttpResponseCode+Environment.NewLine+response.Content;
-                    _log.Error(errorMessage);
+                    errorMessage = "Http timedout : " + target.TimeoutMs + "ms";
+                    watch.Reset();
                 }
+                else
+                {
+                    codeIsOk = response.HttpResponseCode == HttpStatusCode.OK;
+                    if (!codeIsOk)
+                    {
+                        errorMessage = "response.HttpResponseCode: " + response.HttpResponseCode + Environment.NewLine + response.Content;
+                        _log.Error(errorMessage);
+                    }
+                }
+                bool success = codeIsOk && !response.TimedOut;
                 ret = new GrabResponse(response.Content, success, watch.Elapsed, errorMessage);
             }
             catch (Exception ex)
@@ -79,20 +89,11 @@ namespace MySpector.Objects
             request.Headers.Clear();
             if (httpTarget.Headers.Count != 0)
             {
-                foreach (var x in httpTarget.Headers)
-                {
-                    request.Headers.Add(x.Key, x.Value);
-                }
+                SetHeaders(httpTarget, request);
             }
             else
             {
-                request.Headers.Add("User-Agent", "Mozilla/5.0");
-                //request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                request.Headers.Add("Accept", "*/*");
-                request.Headers.Add("Accept-Language", "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3");
-                request.Headers.Add("Connection", "keep-alive");
-                request.Headers.Add("Upgrade-Insecure-Requests", "1");
-                request.Headers.Add("Cache-Control", "max-age=0 ");
+                DefaultHeaders(request);
             }
             request.Version = new Version(2, 0);
             //            var client = new HttpClient(new LoggingHandler(new HttpClientHandler()));
@@ -103,13 +104,23 @@ namespace MySpector.Objects
             handler.SslProtocols = SslProtocols.Tls13 | SslProtocols.Tls12;// | SslProtocols.Tls | SslProtocols.Ssl3 | SslProtocols.Ssl2;
             handler.ServerCertificateCustomValidationCallback = CertificateValidationCallback;
             var client = new HttpClient(handler);
+            if (target.TimeoutMs > 0)
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(target.TimeoutMs);
+            }
             var ret = new HttpResponse();
             try
             {
-                var myGetTask = client.SendAsync(request);
-                var response = myGetTask.Result;
+                _log.Debug("Send request...");
+                var requestTask = client.SendAsync(request);
+                _log.Debug("request is sent");
+                var response = requestTask.Result;
+                _log.Debug("result is loaded");
                 ret.HttpResponseCode = response.StatusCode;
+                _log.Debug("HttpResponseCode =" + ret.HttpResponseCode);
                 ret.Content = response.Content.ReadAsStringAsync().Result;
+                ret.TimedOut = false;
+                _log.Debug("response is loaded");
             }
             catch (Exception e)
             {
@@ -118,6 +129,11 @@ namespace MySpector.Objects
                     _log.Error("SSL link cannot established: Maybe there is incompatibility between ciphers of Server and local Operating system");
                     _log.Error(e);
                     throw new Exception("SSL link cannot established");
+                }
+                else if (e.InnerException is TaskCanceledException)
+                {
+                    _log.Error("Timeout trigerred!");
+                    ret.TimedOut = true;
                 }
                 else
                 {
@@ -130,6 +146,25 @@ namespace MySpector.Objects
                 client.Dispose();
             }
             return ret;
+        }
+
+        private static void SetHeaders(HttpTarget httpTarget, HttpRequestMessage request)
+        {
+            foreach (var x in httpTarget.Headers)
+            {
+                request.Headers.Add(x.Key, x.Value);
+            }
+        }
+
+        private static void DefaultHeaders(HttpRequestMessage request)
+        {
+            request.Headers.Add("User-Agent", "Mozilla/5.0");
+            //request.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("Accept-Language", "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3");
+            request.Headers.Add("Connection", "keep-alive");
+            request.Headers.Add("Upgrade-Insecure-Requests", "1");
+            request.Headers.Add("Cache-Control", "max-age=0 ");
         }
 
         private bool CertificateValidationCallback(HttpRequestMessage message,  X509Certificate2 certificate, X509Chain chain, SslPolicyErrors errors)
